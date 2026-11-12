@@ -1,0 +1,46 @@
+{
+ "n_subjects": 67,
+ "n_ok": 67,
+ "id_set_differences": {
+  "phantom_ids": [],
+  "recon_ids": [],
+  "table_ids": [],
+  "lac_ids": []
+ },
+ "unmapped_series": [],
+ "duplicates": {
+  "phantom_sha256": [],
+  "label_histogram": [],
+  "phantom_shape": [],
+  "density_table": [],
+  "lac_sha256": []
+ },
+ "recon_slices": {
+  "576": 32,
+  "512": 20,
+  "640": 13,
+  "448": 2
+ },
+ "recon_inplane": {
+  "[768, 768]": 67
+ },
+ "recon_min": {
+  "-1000": 67
+ },
+ "recon_max_range": [
+  685,
+  7144
+ ],
+ "recon_geometry_tags_present": [],
+ "recon_modality": {
+  "OT": 67
+ },
+ "n_labels_present": {
+  "47": 67
+ },
+ "xlsx_vs_conv_mismatch": {},
+ "fraction_sum_range": [
+  0.9622,
+  1.0
+ ]
+}

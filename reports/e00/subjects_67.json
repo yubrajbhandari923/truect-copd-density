@@ -1,0 +1,2012 @@
+[
+ {
+  "id": "10313",
+  "projection_series": "008",
+  "development_exposed": true,
+  "phantom_file": "phantom_10313_1308_1802_1340_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1340,
+   1802,
+   1308
+  ],
+  "phantom_sha256": "97f9b96a15059396ca291e854f027f06579ba5af7aed4a6af67d0be267c9ec06",
+  "n_labels_present": 47,
+  "recon_shape": [
+   576,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 1785,
+  "recon_frac_at_min": 0.4619122670020586,
+  "recon_frac_eq_m1000": 0.4619122670020586,
+  "n_views": 9000,
+  "table_sha256": "e14aaa8d3ccffaf9e6348bb7211687b327d4b33c8031a575d13aeb1e4954cad0",
+  "lac_sha256": "0fbbf0ed340aeaa03f33c9c7f63a8c5093543d368d00d96d085efafa663b13b1",
+  "emphysema_density": 0.06242997814680984,
+  "emphysema_voxel_frac_of_lung": 0.15936859371547865,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "10368",
+  "projection_series": "052",
+  "development_exposed": false,
+  "phantom_file": "phantom_10368_1348_1822_1196_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1196,
+   1822,
+   1348
+  ],
+  "phantom_sha256": "69db15951a73fc362ef9d140a8378e47e7cae27ad9b5bfdd9cbd6d87277fd190",
+  "n_labels_present": 47,
+  "recon_shape": [
+   512,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 1071,
+  "recon_frac_at_min": 0.4584612614578671,
+  "recon_frac_eq_m1000": 0.4584612614578671,
+  "n_views": 8000,
+  "table_sha256": "f501d82d46cf1c8bdf1b051f716e209e71b8439a85c75a4eca8d4dc04112bb7b",
+  "lac_sha256": "fc8010fb24e9a485961335758473fb558bad4ce5db83c832c347221f64cbe627",
+  "emphysema_density": 0.05555681064726259,
+  "emphysema_voxel_frac_of_lung": 0.11416724979189864,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "10379",
+  "projection_series": "016",
+  "development_exposed": false,
+  "phantom_file": "phantom_10379_1368_1752_1196_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1196,
+   1752,
+   1368
+  ],
+  "phantom_sha256": "c5610e878c9f380de6ed304993b7676001c09545bc4fa8995f54f28ceaae88dd",
+  "n_labels_present": 47,
+  "recon_shape": [
+   512,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 1318,
+  "recon_frac_at_min": 0.44810645778973895,
+  "recon_frac_eq_m1000": 0.44810645778973895,
+  "n_views": 8000,
+  "table_sha256": "fb0f713118e58f82df959b5caa6c2e327c8938b8f5c8aee4d22440f15a638b90",
+  "lac_sha256": "1c9477d21c22047aeb3cec934fa92ca51ad24482eae98b8449c4088e822bb674",
+  "emphysema_density": 0.08339505818696609,
+  "emphysema_voxel_frac_of_lung": 0.003831431049042918,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "10785",
+  "projection_series": "018",
+  "development_exposed": false,
+  "phantom_file": "phantom_10785_1118_1416_1152_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1152,
+   1416,
+   1118
+  ],
+  "phantom_sha256": "0c0aa37ef28b8955f0ffa390d6381767bc58d02d771178a329a6dc4df4f51ff4",
+  "n_labels_present": 47,
+  "recon_shape": [
+   512,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 996,
+  "recon_frac_at_min": 0.5131634606255425,
+  "recon_frac_eq_m1000": 0.5131634606255425,
+  "n_views": 8000,
+  "table_sha256": "ee4b3e7dcf85702a2fef37b7bb2ea2bd4238636d107ff2dc353554e7b1b96539",
+  "lac_sha256": "2f13f7d637bbe2c486c5ab6473a4b6fc59df833e1faa7fadcdf36d4665f67934",
+  "emphysema_density": 0.02446425196704805,
+  "emphysema_voxel_frac_of_lung": 0.42283139901468286,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "10997",
+  "projection_series": "002",
+  "development_exposed": false,
+  "phantom_file": "phantom_10997_1206_1532_1290_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1290,
+   1532,
+   1206
+  ],
+  "phantom_sha256": "6eeae777e47b00f85a2d75907663c1ef9e4eb9df29f3aa93e5c787ace100c856",
+  "n_labels_present": 47,
+  "recon_shape": [
+   576,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 1057,
+  "recon_frac_at_min": 0.48251076097841616,
+  "recon_frac_eq_m1000": 0.48251076097841616,
+  "n_views": 9000,
+  "table_sha256": "19dc68bffde9a7d1e01da96daa2b6174e84669210ab6b4d4e93f18b35512e345",
+  "lac_sha256": "3c055787e53d53bcd9d13a55a8b05e9e8edd78a0815e53921638c1258051ee27",
+  "emphysema_density": 0.06836041359041621,
+  "emphysema_voxel_frac_of_lung": 0.09188597966409154,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "11006",
+  "projection_series": "021",
+  "development_exposed": false,
+  "phantom_file": "phantom_11006_1124_1736_1252_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1252,
+   1736,
+   1124
+  ],
+  "phantom_sha256": "a03cdb94648fe6c70fd40b7f14bb390878fccb511b69edd69ab0b1b46f3afe0d",
+  "n_labels_present": 47,
+  "recon_shape": [
+   512,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 2558,
+  "recon_frac_at_min": 0.46847712993621826,
+  "recon_frac_eq_m1000": 0.46847712993621826,
+  "n_views": 8000,
+  "table_sha256": "9399c447905ef055e7ccc49af6f1526afafedd7cbcbb9170aaee6843a7c17be8",
+  "lac_sha256": "df31cb750a7b5c08aa0e1c93967624c36532b7176a82a15655a5e0230f06a278",
+  "emphysema_density": 0.04377001086371121,
+  "emphysema_voxel_frac_of_lung": 0.1737325944216192,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "11028",
+  "projection_series": "034",
+  "development_exposed": false,
+  "phantom_file": "phantom_11028_1444_2000_1140_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1140,
+   2000,
+   1444
+  ],
+  "phantom_sha256": "9d333ab89aec5b49891448aa871b67b88d16c9ee8ff65f81e72f9319599628d3",
+  "n_labels_present": 47,
+  "recon_shape": [
+   512,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 967,
+  "recon_frac_at_min": 0.434744656085968,
+  "recon_frac_eq_m1000": 0.434744656085968,
+  "n_views": 8000,
+  "table_sha256": "be4b518411c4e57cec3d119bcc41873b952c544be31adafe90c3aa7295547770",
+  "lac_sha256": "c317be913b1c3c99b29af899cf37f4ae98b0fed25fa811f71a9a26a93955a84a",
+  "emphysema_density": 0.06723350766064977,
+  "emphysema_voxel_frac_of_lung": 0.030247567704192957,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "11065",
+  "projection_series": "010",
+  "development_exposed": false,
+  "phantom_file": "phantom_11065_1182_1728_1348_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1348,
+   1728,
+   1182
+  ],
+  "phantom_sha256": "c75302a542eda6f2ca57c0981adf9d2c365e110199b147510b4fa99a2072e380",
+  "n_labels_present": 47,
+  "recon_shape": [
+   576,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 1275,
+  "recon_frac_at_min": 0.49768522050645614,
+  "recon_frac_eq_m1000": 0.49768522050645614,
+  "n_views": 9000,
+  "table_sha256": "406899d1f2463a63c783a970b7dc5cc4c2301effd4f95c7f166f08451db6f466",
+  "lac_sha256": "797e017be4459ed9d7324f040efa3df442e193ac1b132b5eda18060d2dac2320",
+  "emphysema_density": 0.0398549669141797,
+  "emphysema_voxel_frac_of_lung": 0.5427830711269394,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "11746",
+  "projection_series": "012",
+  "development_exposed": false,
+  "phantom_file": "phantom_11746_1246_1708_1536_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1536,
+   1708,
+   1246
+  ],
+  "phantom_sha256": "cd7a3dd784e602eb5c2f8998ba9908ddd9ea21184b98f75edf368ef30bb5de39",
+  "n_labels_present": 47,
+  "recon_shape": [
+   640,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 2412,
+  "recon_frac_at_min": 0.45933694574568007,
+  "recon_frac_eq_m1000": 0.45933694574568007,
+  "n_views": 10000,
+  "table_sha256": "c7ec0ddb0409527acb9b185c01c2217c8a31c4f7d995c27dfb5db0c2b81fc785",
+  "lac_sha256": "5cdf5332286e2ee4724a401ebf3e122c3e6126de12d17ade099d519fb69cee14",
+  "emphysema_density": 0.06242230675342474,
+  "emphysema_voxel_frac_of_lung": 0.03683160268219532,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "11829",
+  "projection_series": "050",
+  "development_exposed": false,
+  "phantom_file": "phantom_11829_1364_1842_1256_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1256,
+   1842,
+   1364
+  ],
+  "phantom_sha256": "4d41654e831296a5a92c0745e9711399b0f76d5f339e7b001e7e6956c36879c5",
+  "n_labels_present": 47,
+  "recon_shape": [
+   576,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 877,
+  "recon_frac_at_min": 0.47053885165555975,
+  "recon_frac_eq_m1000": 0.47053885165555975,
+  "n_views": 9000,
+  "table_sha256": "3fb19ab63140120750bb6528834f251b65884c6ca6a2cc4413cbd5720b3f3db7",
+  "lac_sha256": "c28dbbdf08bc7f6a466560841da20e2e3a9f79131abf28071329af01a49fbf97",
+  "emphysema_density": 0.05207625339804412,
+  "emphysema_voxel_frac_of_lung": 0.005569892699470453,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "11989",
+  "projection_series": "000",
+  "development_exposed": false,
+  "phantom_file": "phantom_11989_1370_2166_1540_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1540,
+   2166,
+   1370
+  ],
+  "phantom_sha256": "b84ddcb32dd989cd6448d790f51c3fe4fc420c891def67b3df5916b70ac9e4b6",
+  "n_labels_present": 47,
+  "recon_shape": [
+   576,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 3939,
+  "recon_frac_at_min": 0.40514389673868817,
+  "recon_frac_eq_m1000": 0.40514389673868817,
+  "n_views": 9000,
+  "table_sha256": "2681aea4a94af7bfa2e5118111f2153736acf2b190767e427401555263e84633",
+  "lac_sha256": "f6bff5f0afe6cf85dea358be014da68222434298d01459d479f773a0296abe73",
+  "emphysema_density": 0.06934353288260149,
+  "emphysema_voxel_frac_of_lung": 0.02718747333134838,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "12960",
+  "projection_series": "028",
+  "development_exposed": false,
+  "phantom_file": "phantom_12960_1364_1706_1504_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1504,
+   1706,
+   1364
+  ],
+  "phantom_sha256": "dc6be370e73db3c460f37689573a7bdbb873a09beeff3016617ce09c28a69081",
+  "n_labels_present": 47,
+  "recon_shape": [
+   640,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 1656,
+  "recon_frac_at_min": 0.4882148583730062,
+  "recon_frac_eq_m1000": 0.4882148583730062,
+  "n_views": 10000,
+  "table_sha256": "a376fb0ba5c6094106514e121aa38eb735f9346090c2ef6bc741324ef922a095",
+  "lac_sha256": "df3258bc7edc01eed1421155946843905cfdb058a795e245f02922ee390e0955",
+  "emphysema_density": 0.05127390024391952,
+  "emphysema_voxel_frac_of_lung": 0.03133402575028502,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "13060",
+  "projection_series": "036",
+  "development_exposed": false,
+  "phantom_file": "phantom_13060_1242_1928_1432_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1432,
+   1928,
+   1242
+  ],
+  "phantom_sha256": "6bdcb7d404647be9f67d8e2ffd50afaab966c777c4428ec2647d82a8e121cd6f",
+  "n_labels_present": 47,
+  "recon_shape": [
+   640,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 1033,
+  "recon_frac_at_min": 0.4660869227515327,
+  "recon_frac_eq_m1000": 0.4660869227515327,
+  "n_views": 10000,
+  "table_sha256": "fcd22cfc9b963690dcc27c8716d00b2065b8580355ccb525dd1719aa5851bcd4",
+  "lac_sha256": "bf602e796e3b8cf30c9990084d6f91b0017dc48fd1f9f1ca74341fcfae0483f8",
+  "emphysema_density": 0.05269467089325747,
+  "emphysema_voxel_frac_of_lung": 0.07543880671169942,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "13799",
+  "projection_series": "035",
+  "development_exposed": false,
+  "phantom_file": "phantom_13799_1390_1726_1246_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1246,
+   1726,
+   1390
+  ],
+  "phantom_sha256": "ff7ab44c2e2e0fbdfe5ba2b7cd074075b0386eb7bdb0e2c82bf02661f73714a3",
+  "n_labels_present": 47,
+  "recon_shape": [
+   576,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 1019,
+  "recon_frac_at_min": 0.4555423612947817,
+  "recon_frac_eq_m1000": 0.4555423612947817,
+  "n_views": 9000,
+  "table_sha256": "cf44b23711c849f3d2aa262471a761b34a659b59a25103141c316108867705da",
+  "lac_sha256": "adf8af2e2eace59da6740201d3c61e83f88aefcdae49e6db2595c2d1c96b6555",
+  "emphysema_density": 0.02295289767321641,
+  "emphysema_voxel_frac_of_lung": 0.11364659491518482,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "13981",
+  "projection_series": "066",
+  "development_exposed": false,
+  "phantom_file": "phantom_13981_1126_1700_1436_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1436,
+   1700,
+   1126
+  ],
+  "phantom_sha256": "a64a2b2bae632ebb6d7d19f1094b1c921c9ff96ef658f2239e2b383ea3680244",
+  "n_labels_present": 47,
+  "recon_shape": [
+   640,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 986,
+  "recon_frac_at_min": 0.48791656494140623,
+  "recon_frac_eq_m1000": 0.48791656494140623,
+  "n_views": 10000,
+  "table_sha256": "0567fd3945d7e18f5dec9b969a6ce0c14847e314493ccbc05b9a62eff0ebcb29",
+  "lac_sha256": "4af926fe5685e0abb49f454f00df04c0f8ee3ea0dce950e75d9180b7852ab9d2",
+  "emphysema_density": 0.06574667824471718,
+  "emphysema_voxel_frac_of_lung": 0.028577229706124665,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "14023",
+  "projection_series": "033",
+  "development_exposed": false,
+  "phantom_file": "phantom_14023_1142_1712_1500_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1500,
+   1712,
+   1142
+  ],
+  "phantom_sha256": "a32fbe922cb8f3e8f4dc116a5cb10dd11ad7f99426518c4845004d98c5cfc174",
+  "n_labels_present": 47,
+  "recon_shape": [
+   576,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 4386,
+  "recon_frac_at_min": 0.4778170085247652,
+  "recon_frac_eq_m1000": 0.4778170085247652,
+  "n_views": 9000,
+  "table_sha256": "5274357ee849f8f8bca8b5b2815a30079a366f9194f369702e1161d412cb6a71",
+  "lac_sha256": "4845dc1b34733e5052b226d3d072986856750e24234f115a7e9cbd5d904965c3",
+  "emphysema_density": 0.02392992255621488,
+  "emphysema_voxel_frac_of_lung": 0.041934942724865844,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "14402",
+  "projection_series": "043",
+  "development_exposed": false,
+  "phantom_file": "phantom_14402_1174_1746_1432_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1432,
+   1746,
+   1174
+  ],
+  "phantom_sha256": "19321914cb39ff41305b7deb0c0035b98e5189db3c03d4882edaa28a8554750e",
+  "n_labels_present": 47,
+  "recon_shape": [
+   576,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 2758,
+  "recon_frac_at_min": 0.4835912857526614,
+  "recon_frac_eq_m1000": 0.4835912857526614,
+  "n_views": 9000,
+  "table_sha256": "dd966468467c486b7c499228e3108175f352d7e0b63bf91b06c6500f535dd1c5",
+  "lac_sha256": "1d181002aae7cfeee92ff99cdc021295048b965a376447c049745de94d064458",
+  "emphysema_density": 0.03040420538802111,
+  "emphysema_voxel_frac_of_lung": 0.5273401194969541,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "14449",
+  "projection_series": "017",
+  "development_exposed": false,
+  "phantom_file": "phantom_14449_1268_1744_1228_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1228,
+   1744,
+   1268
+  ],
+  "phantom_sha256": "60b5580e9df0e848370d40dac4f3ac980e5c06ec55294bb30d9c9ca867874c76",
+  "n_labels_present": 47,
+  "recon_shape": [
+   512,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 1654,
+  "recon_frac_at_min": 0.46497373779614765,
+  "recon_frac_eq_m1000": 0.46497373779614765,
+  "n_views": 8000,
+  "table_sha256": "c0428e097be9c67bb9880782200d445aff96fc8963a103d1d3da25a4a76e8268",
+  "lac_sha256": "3cbd7c7f4f5d9ab4b043f8e573329ee1db36607d6a48ff86ba1d7d1b7d59f887",
+  "emphysema_density": 0.05635183680122575,
+  "emphysema_voxel_frac_of_lung": 0.41032100695622664,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "14603",
+  "projection_series": "064",
+  "development_exposed": false,
+  "phantom_file": "phantom_14603_1080_1718_1380_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1380,
+   1718,
+   1080
+  ],
+  "phantom_sha256": "5cb5d655794ad783994f81c8636b6b663f7a2f7e56b9645961eec4f64bc3cd94",
+  "n_labels_present": 47,
+  "recon_shape": [
+   576,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 1974,
+  "recon_frac_at_min": 0.500292342386128,
+  "recon_frac_eq_m1000": 0.500292342386128,
+  "n_views": 9000,
+  "table_sha256": "d87c9b0d9262ea1d6515a6dd7b74da26c00e2116a942dcc6c6c03be5105129bb",
+  "lac_sha256": "1f00cd5c4f6bfc783ff40feb45df1fec80364081abd3cf9e49e4ed08a7858ca6",
+  "emphysema_density": 0.04291349353438143,
+  "emphysema_voxel_frac_of_lung": 2.897907355012119e-05,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "14827",
+  "projection_series": "045",
+  "development_exposed": false,
+  "phantom_file": "phantom_14827_1272_1656_1106_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1106,
+   1656,
+   1272
+  ],
+  "phantom_sha256": "e2cf832616ceab62b415dc4ee13c7a8b465180ca45b5c5ecd43eb31be7e8e862",
+  "n_labels_present": 47,
+  "recon_shape": [
+   448,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 3537,
+  "recon_frac_at_min": 0.45845311785501147,
+  "recon_frac_eq_m1000": 0.45845311785501147,
+  "n_views": 7000,
+  "table_sha256": "7ce721f6bc755000df2e7be7329866a5b901a575138c35c0a102099644f394da",
+  "lac_sha256": "af3ec82bcfe638a4e6132b7cc9c3feb21e82c0b1658d47f88be2f122d04d0d8c",
+  "emphysema_density": 0.04749807845930677,
+  "emphysema_voxel_frac_of_lung": 0.0015174109837074478,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "15679",
+  "projection_series": "047",
+  "development_exposed": false,
+  "phantom_file": "phantom_15679_1416_1902_1368_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1368,
+   1902,
+   1416
+  ],
+  "phantom_sha256": "17e56d5fdc50250b2de1c8e90f095230878c399e7b4a36365645acf1938d6e1f",
+  "n_labels_present": 47,
+  "recon_shape": [
+   512,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 7144,
+  "recon_frac_at_min": 0.41917017433378434,
+  "recon_frac_eq_m1000": 0.41917017433378434,
+  "n_views": 8000,
+  "table_sha256": "321d745882035d8fe7c2ccf6446f89f57a3c45ceaeca750eb988a9a22e409086",
+  "lac_sha256": "e0f599d3af587d9bb1cb1d987968e8ae35d42260b137a5cb74790e3e5c8a75cb",
+  "emphysema_density": 0.0260670536674109,
+  "emphysema_voxel_frac_of_lung": 0.11216913975100112,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "16217",
+  "projection_series": "051",
+  "development_exposed": false,
+  "phantom_file": "phantom_16217_934_1494_1416_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1416,
+   1494,
+   934
+  ],
+  "phantom_sha256": "dd5ad4d4502cf0bf05ac4e11cf0d6ce1e38f37fa07f012155ac93824460dc340",
+  "n_labels_present": 47,
+  "recon_shape": [
+   576,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 3108,
+  "recon_frac_at_min": 0.5388415566197148,
+  "recon_frac_eq_m1000": 0.5388415566197148,
+  "n_views": 9000,
+  "table_sha256": "905eeebcc698f467de87a79ebafea76adca55150435cabcdb07d37398d5fdbf8",
+  "lac_sha256": "3b0d0194f777d0464f72c87953f16a44454e9d6eb7e9563cc000e97b9aea9513",
+  "emphysema_density": 0.06435133320466481,
+  "emphysema_voxel_frac_of_lung": 0.020441493945757973,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "16390",
+  "projection_series": "040",
+  "development_exposed": false,
+  "phantom_file": "phantom_16390_1024_1574_1440_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1440,
+   1574,
+   1024
+  ],
+  "phantom_sha256": "2959b5776c8bc38b08ca742fdb1fc0c029ba105827d68457dae07aaab0cbaa22",
+  "n_labels_present": 47,
+  "recon_shape": [
+   576,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 3993,
+  "recon_frac_at_min": 0.5082732718667866,
+  "recon_frac_eq_m1000": 0.5082732718667866,
+  "n_views": 9000,
+  "table_sha256": "548385e4730bbbc93759bb46512b11b80ed24a164d4670140713d707b008017e",
+  "lac_sha256": "3948eb8a7655a2cb3bc2a81fe3e48f6def54785bdc9adc20c28368431f679cba",
+  "emphysema_density": 0.0233433750720111,
+  "emphysema_voxel_frac_of_lung": 0.510398971901283,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "16747",
+  "projection_series": "030",
+  "development_exposed": false,
+  "phantom_file": "phantom_16747_1050_1750_1340_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1340,
+   1750,
+   1050
+  ],
+  "phantom_sha256": "addf9070f73c7cfb53ec485d676372fa2222b3cd82fce08250a43601781f78f1",
+  "n_labels_present": 47,
+  "recon_shape": [
+   576,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 1822,
+  "recon_frac_at_min": 0.5147805390534578,
+  "recon_frac_eq_m1000": 0.5147805390534578,
+  "n_views": 9000,
+  "table_sha256": "0cde0100201f18e61a7631fba69865698b1f4ad6c284c898702a2db0fedaa66e",
+  "lac_sha256": "e6fad2b15e8e868b18b036eb32ac8f1602c61764c41e6edb0d6c7997cdefa0f0",
+  "emphysema_density": 0.07256597798592279,
+  "emphysema_voxel_frac_of_lung": 0.34235200531000837,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "16783",
+  "projection_series": "065",
+  "development_exposed": false,
+  "phantom_file": "phantom_16783_1164_1744_1396_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1396,
+   1744,
+   1164
+  ],
+  "phantom_sha256": "77a1075950eda097bab01be9c8e8528c2baf54086ed6d83827838cba162826a7",
+  "n_labels_present": 47,
+  "recon_shape": [
+   640,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 776,
+  "recon_frac_at_min": 0.4874019569820828,
+  "recon_frac_eq_m1000": 0.4874019569820828,
+  "n_views": 10000,
+  "table_sha256": "0ffd6638fce65ce89a2a777faafa2ccc904b22bfa3df9e8ab9a9b5b2c7d0820e",
+  "lac_sha256": "d341021ea5355a4c5926239c8d2c146ff5b5912d12f486e04d7391b8548f4b8c",
+  "emphysema_density": 0.06496076221044879,
+  "emphysema_voxel_frac_of_lung": 0.5534734285672847,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "17205",
+  "projection_series": "014",
+  "development_exposed": false,
+  "phantom_file": "phantom_17205_1080_1648_1376_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1376,
+   1648,
+   1080
+  ],
+  "phantom_sha256": "1e1b31386a4c60f7ef51bbb298f2e16b117d25783204eb5fe03119a1f75736d1",
+  "n_labels_present": 47,
+  "recon_shape": [
+   640,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 1625,
+  "recon_frac_at_min": 0.5126522064208985,
+  "recon_frac_eq_m1000": 0.5126522064208985,
+  "n_views": 10000,
+  "table_sha256": "b0613a40863e7b8f81355528efaa0c0d5b81dcc726dc557b787fdc09b527ce4f",
+  "lac_sha256": "603cf939914896c3fe508f84253c4efb7c34d7dd8bf5155001fdc67a44f8ef80",
+  "emphysema_density": 0.05965128394529962,
+  "emphysema_voxel_frac_of_lung": 0.023946479959839128,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "18058",
+  "projection_series": "049",
+  "development_exposed": false,
+  "phantom_file": "phantom_18058_1404_1814_1148_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1148,
+   1814,
+   1404
+  ],
+  "phantom_sha256": "2b40f7f140454111bc0582bb99cbad2b8f06abbefdbe056f1a27b9940ce2ab6a",
+  "n_labels_present": 47,
+  "recon_shape": [
+   576,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 904,
+  "recon_frac_at_min": 0.45742718084358874,
+  "recon_frac_eq_m1000": 0.45742718084358874,
+  "n_views": 9000,
+  "table_sha256": "06cc0f1f08385c34741bbab014269b60630bac9a895abb98342fa1b4cc15abef",
+  "lac_sha256": "3207e2590791bea652a5fdc5ebe91669a29b35647c1c56f71181fe141a6eb989",
+  "emphysema_density": 0.0700181453901864,
+  "emphysema_voxel_frac_of_lung": 0.03389552625805526,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "18096",
+  "projection_series": "059",
+  "development_exposed": false,
+  "phantom_file": "phantom_18096_1148_1768_1350_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1350,
+   1768,
+   1148
+  ],
+  "phantom_sha256": "33c697572681b0ff6cb8737b36d2785ec6cdcf9ad56c7079ac8dab4f0904cf7a",
+  "n_labels_present": 47,
+  "recon_shape": [
+   512,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 2991,
+  "recon_frac_at_min": 0.4722353584236569,
+  "recon_frac_eq_m1000": 0.4722353584236569,
+  "n_views": 8000,
+  "table_sha256": "bdf0a2f32026e577ac8218aa30630d95765ca6f1cde8295e3fbc5a9bfb7ed9e7",
+  "lac_sha256": "9470ef11f0855b38b11b33222f33f28952b01182bd6aa8d575f8f0f843b08e7d",
+  "emphysema_density": 0.05136689965370199,
+  "emphysema_voxel_frac_of_lung": 0.0701445943752735,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "18216",
+  "projection_series": "023",
+  "development_exposed": false,
+  "phantom_file": "phantom_18216_1090_1602_1244_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1244,
+   1602,
+   1090
+  ],
+  "phantom_sha256": "f0041ce5fef2d88bf8c35ad2f4425ffe6f17703088e2d836ffdb5a7644f9ef10",
+  "n_labels_present": 47,
+  "recon_shape": [
+   576,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 831,
+  "recon_frac_at_min": 0.5123754460134624,
+  "recon_frac_eq_m1000": 0.5123754460134624,
+  "n_views": 9000,
+  "table_sha256": "03e45d413c8e497ea72af3568575ee02f019fa94da8602f2d4da7d6bcb263bd3",
+  "lac_sha256": "57f28d741191ec8662793201536e31183bff752afd23442e6c3a1792e3f3b4ad",
+  "emphysema_density": 0.05783027637086963,
+  "emphysema_voxel_frac_of_lung": 0.015284494214812318,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "18314",
+  "projection_series": "009",
+  "development_exposed": false,
+  "phantom_file": "phantom_18314_1208_1650_1416_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1416,
+   1650,
+   1208
+  ],
+  "phantom_sha256": "41542b1d52c0e8c2de649b64994c4dffcfa81d9e723ac97c6e1de6e6a06eb897",
+  "n_labels_present": 47,
+  "recon_shape": [
+   576,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 4621,
+  "recon_frac_at_min": 0.519958864023656,
+  "recon_frac_eq_m1000": 0.519958864023656,
+  "n_views": 9000,
+  "table_sha256": "af5b24598640ba2ca1843a6731d9632b2f0ef9a84f9653009ba75ab56e70515e",
+  "lac_sha256": "d7483ec525dca8ce94411b39b315ef2b2503b8441bd7b8fdd6fb42042e9aea7c",
+  "emphysema_density": 0.06370159473938107,
+  "emphysema_voxel_frac_of_lung": 0.13664129769444328,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "18501",
+  "projection_series": "046",
+  "development_exposed": false,
+  "phantom_file": "phantom_18501_1040_1594_1240_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1240,
+   1594,
+   1040
+  ],
+  "phantom_sha256": "24399802a351a6e4bdbee069e454d799156773802f47f468528d2afafc52e500",
+  "n_labels_present": 47,
+  "recon_shape": [
+   576,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 811,
+  "recon_frac_at_min": 0.5250351605591951,
+  "recon_frac_eq_m1000": 0.5250351605591951,
+  "n_views": 9000,
+  "table_sha256": "40965f5d7311f91acbf96a82e0fb9f78bf03aa07614155b52a11ed26be5db993",
+  "lac_sha256": "c505eaae3510deac3a6bdaa304f77d9a8e2e5dde2cfa71c6efc1a9a6860f84a7",
+  "emphysema_density": 0.03672158805121094,
+  "emphysema_voxel_frac_of_lung": 0.012150138746229637,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "18518",
+  "projection_series": "020",
+  "development_exposed": false,
+  "phantom_file": "phantom_18518_984_1528_1440_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1440,
+   1528,
+   984
+  ],
+  "phantom_sha256": "389cbd2d78ecc33b3d8cba361b799f431ddc43df8d76ecf1e6a55ff6c2ae6ef8",
+  "n_labels_present": 47,
+  "recon_shape": [
+   640,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 1276,
+  "recon_frac_at_min": 0.5293661753336588,
+  "recon_frac_eq_m1000": 0.5293661753336588,
+  "n_views": 10000,
+  "table_sha256": "4bcc4da6ea963d3b5cf9f81c9c778447893187c1e5c749f3fef87781b198801f",
+  "lac_sha256": "bae8c2549ab1b49cfbe096125c72812f602b601e9ff346b2a02d645b0bf4bda4",
+  "emphysema_density": 0.08009397858238508,
+  "emphysema_voxel_frac_of_lung": 0.7682660524506434,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "18641",
+  "projection_series": "061",
+  "development_exposed": false,
+  "phantom_file": "phantom_18641_1226_1690_1130_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1130,
+   1690,
+   1226
+  ],
+  "phantom_sha256": "c6e2971a8116506cffb118a3e3794a0ab2d99a92d66922e062b5e3fde61b1521",
+  "n_labels_present": 47,
+  "recon_shape": [
+   512,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 868,
+  "recon_frac_at_min": 0.4814523491594527,
+  "recon_frac_eq_m1000": 0.4814523491594527,
+  "n_views": 8000,
+  "table_sha256": "f6780df6b8a047ce360501d2ba1c7e207b861ff1642c0afeacef1a9bb200d227",
+  "lac_sha256": "93b114c8eb852ccf43fb5124938c650a4018216113cd9f3d0b9313e7d0fca5ee",
+  "emphysema_density": 0.02560696727021698,
+  "emphysema_voxel_frac_of_lung": 5.3186990920714483e-05,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "18762",
+  "projection_series": "004",
+  "development_exposed": false,
+  "phantom_file": "phantom_18762_1624_2070_1376_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1376,
+   2070,
+   1624
+  ],
+  "phantom_sha256": "f7d99433d9abd8c7123dd1d7a650ff8e88eca663894e2865fa8c5db01ad85ba5",
+  "n_labels_present": 47,
+  "recon_shape": [
+   640,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 1875,
+  "recon_frac_at_min": 0.3860378636254205,
+  "recon_frac_eq_m1000": 0.3860378636254205,
+  "n_views": 10000,
+  "table_sha256": "510c61a66a06750599aacde2799b707f29dbfafe132b8d451610168b3e1a9016",
+  "lac_sha256": "a43122b7105391fad321a812c21c5127d74ade1f550d5ec3654dfa210e083fd7",
+  "emphysema_density": 0.02360758352426039,
+  "emphysema_voxel_frac_of_lung": 0.034925863137195326,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "18763",
+  "projection_series": "001",
+  "development_exposed": false,
+  "phantom_file": "phantom_18763_1286_1820_1472_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1472,
+   1820,
+   1286
+  ],
+  "phantom_sha256": "5f69575edf886e455e52671ef7ae04e8c47b3e8d9471bf539562b5710d0b85d9",
+  "n_labels_present": 47,
+  "recon_shape": [
+   640,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 1528,
+  "recon_frac_at_min": 0.4746472809049818,
+  "recon_frac_eq_m1000": 0.4746472809049818,
+  "n_views": 10000,
+  "table_sha256": "a6f85df5d3c78fbe05a982278224548c026720e739c61dba3eb7eb7a102b5437",
+  "lac_sha256": "60b879895ed1cf2796a2eb171280da0b0471dac54987bce661f89b44ade94404",
+  "emphysema_density": 0.05656117405331657,
+  "emphysema_voxel_frac_of_lung": 0.10072111971694284,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "18877",
+  "projection_series": "042",
+  "development_exposed": false,
+  "phantom_file": "phantom_18877_1152_1744_1484_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1484,
+   1744,
+   1152
+  ],
+  "phantom_sha256": "3f4cae30f1cc20cd8ee8c0c81e835ec72776eb67e3f4d92b232801742f0040d8",
+  "n_labels_present": 47,
+  "recon_shape": [
+   640,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 1619,
+  "recon_frac_at_min": 0.4943156401316325,
+  "recon_frac_eq_m1000": 0.4943156401316325,
+  "n_views": 10000,
+  "table_sha256": "2b5ffffde823bb72336d2ab8877f1642c1c18c01dd495d6e53ad3cfe50036203",
+  "lac_sha256": "dba6d6e3a17d0aadc09dcb05e57770a33f83c522155562e74d909ca6c424ae2d",
+  "emphysema_density": 0.05688211035875422,
+  "emphysema_voxel_frac_of_lung": 0.15575661640953123,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "18956",
+  "projection_series": "054",
+  "development_exposed": false,
+  "phantom_file": "phantom_18956_1172_1724_1472_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1472,
+   1724,
+   1172
+  ],
+  "phantom_sha256": "ad6b663a65339e82bda07ba1467ab96884635a3a25ddf551de19e64cfca665c6",
+  "n_labels_present": 47,
+  "recon_shape": [
+   640,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 1442,
+  "recon_frac_at_min": 0.49983894295162623,
+  "recon_frac_eq_m1000": 0.49983894295162623,
+  "n_views": 10000,
+  "table_sha256": "537def157eb0cb50e442798d876ee55279c3bfe6b5f00bb99d45c12ae9c94544",
+  "lac_sha256": "4eb8c69e1274393c2abebbd0b200586daf0c8758844446bf81b1612dfd46efd3",
+  "emphysema_density": 0.03960020719139805,
+  "emphysema_voxel_frac_of_lung": 0.05209434010250628,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "18965",
+  "projection_series": "041",
+  "development_exposed": false,
+  "phantom_file": "phantom_18965_1028_1586_1376_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1376,
+   1586,
+   1028
+  ],
+  "phantom_sha256": "78948a52d34ec572d307c42c74f3d855cdfbce12020fb7740b06974cb227d685",
+  "n_labels_present": 47,
+  "recon_shape": [
+   576,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 2051,
+  "recon_frac_at_min": 0.5066521403230266,
+  "recon_frac_eq_m1000": 0.5066521403230266,
+  "n_views": 9000,
+  "table_sha256": "c2e175e6f62f47f13d80279722c4c5a0d992fd6d965559c98eca09bb378d4a24",
+  "lac_sha256": "79e23bdc3bbb0c3437305a65094bc3f0900984e74cc43ee6341b9bd50fdda82f",
+  "emphysema_density": 0.03687701512305638,
+  "emphysema_voxel_frac_of_lung": 0.008357832687575709,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "19156",
+  "projection_series": "022",
+  "development_exposed": false,
+  "phantom_file": "phantom_19156_1014_1544_1148_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1148,
+   1544,
+   1014
+  ],
+  "phantom_sha256": "44671b7f12af01d845d5633d1cdb9b2acb44a67e57f8d35b465234d20e1483dc",
+  "n_labels_present": 47,
+  "recon_shape": [
+   576,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 869,
+  "recon_frac_at_min": 0.5216055946585573,
+  "recon_frac_eq_m1000": 0.5216055946585573,
+  "n_views": 9000,
+  "table_sha256": "1bf8af56717b5fa5587c356c477992d746d555fb8f179bbc93967f35a939e18c",
+  "lac_sha256": "f7a10d7c2f593aa1877e8bc45eaf1acab05dbab2148ca92660f50bce6a51e76e",
+  "emphysema_density": 0.06961334344257812,
+  "emphysema_voxel_frac_of_lung": 0.5906544514938381,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "19161",
+  "projection_series": "060",
+  "development_exposed": false,
+  "phantom_file": "phantom_19161_1120_1628_1356_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1356,
+   1628,
+   1120
+  ],
+  "phantom_sha256": "30e4b81a3ad8ebf0804bf97ffb5460104feda1095dcc5b11b24f1b5b8c135210",
+  "n_labels_present": 47,
+  "recon_shape": [
+   576,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 1871,
+  "recon_frac_at_min": 0.5059255994396445,
+  "recon_frac_eq_m1000": 0.5059255994396445,
+  "n_views": 9000,
+  "table_sha256": "a94190f30b8c230cee989920e9cd091a1593144dc0e614130ae81a75ab211194",
+  "lac_sha256": "53a5dcfc37e41cb2c30f162e8a55d1da1c471a4732c5bcf5ba9fdcf7a4288a5f",
+  "emphysema_density": 0.02444847850359724,
+  "emphysema_voxel_frac_of_lung": 0.006850568256574641,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "19215",
+  "projection_series": "015",
+  "development_exposed": false,
+  "phantom_file": "phantom_19215_1258_1550_996_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   996,
+   1550,
+   1258
+  ],
+  "phantom_sha256": "14cb0b87bb9021eca1fd6f84aabcb00e1cd348c42b4eea34c2194e3389cc526a",
+  "n_labels_present": 47,
+  "recon_shape": [
+   512,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 685,
+  "recon_frac_at_min": 0.5122084187136756,
+  "recon_frac_eq_m1000": 0.5122084187136756,
+  "n_views": 8000,
+  "table_sha256": "158361c8fe42d120e47da54399b42c921b4ba8317231596ea0997bbaa00bdf8c",
+  "lac_sha256": "318637aae0acdb5e9ef7a29186ead4f4ce37df3d5fc4eca42038057286dcba9c",
+  "emphysema_density": 0.03348341866759173,
+  "emphysema_voxel_frac_of_lung": 0.052385624892473094,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "19228",
+  "projection_series": "048",
+  "development_exposed": false,
+  "phantom_file": "phantom_19228_1456_1982_1120_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1120,
+   1982,
+   1456
+  ],
+  "phantom_sha256": "600909db68803368502ea9ed42eb2f2ac9e1bca632e94f4b1e771fedbd0ea346",
+  "n_labels_present": 47,
+  "recon_shape": [
+   576,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 718,
+  "recon_frac_at_min": 0.46014357790534877,
+  "recon_frac_eq_m1000": 0.46014357790534877,
+  "n_views": 9000,
+  "table_sha256": "03f1a58028a44f955915db9cb164d0e68d992813d7c9acb18026cbbbf7312ac8",
+  "lac_sha256": "7b3c9a795e30042a92f895a021144e047cf69166cc2020c2f345bc7539a219b2",
+  "emphysema_density": 0.02625664941396739,
+  "emphysema_voxel_frac_of_lung": 4.85064839688338e-05,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "19318",
+  "projection_series": "053",
+  "development_exposed": false,
+  "phantom_file": "phantom_19318_1394_1736_1280_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1280,
+   1736,
+   1394
+  ],
+  "phantom_sha256": "5e0658c695f9d71c382b566c4c5dcbd250b60c61b240d9d5fa50c061f0d7ad94",
+  "n_labels_present": 47,
+  "recon_shape": [
+   576,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 996,
+  "recon_frac_at_min": 0.4370232776359276,
+  "recon_frac_eq_m1000": 0.4370232776359276,
+  "n_views": 9000,
+  "table_sha256": "41f9ec5955e322104147fe56b38dee136e8013eefa70fd324d1f00244fae52f5",
+  "lac_sha256": "4844462f041a82775f4158f20665b55eaba991bcc1887e7c6dfac522ef06220d",
+  "emphysema_density": 0.04259905794950689,
+  "emphysema_voxel_frac_of_lung": 0.041200145502209275,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "19444",
+  "projection_series": "027",
+  "development_exposed": false,
+  "phantom_file": "phantom_19444_1184_1600_1126_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1126,
+   1600,
+   1184
+  ],
+  "phantom_sha256": "28108401ab7fbccac3cdbc72175c0aa5728ba2c434b3cfd07455e11c8bdb885d",
+  "n_labels_present": 47,
+  "recon_shape": [
+   512,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 832,
+  "recon_frac_at_min": 0.5014007720682356,
+  "recon_frac_eq_m1000": 0.5014007720682356,
+  "n_views": 8000,
+  "table_sha256": "0c05e098549cc29e5a8416c0c31b7e44d6f598ce265b9678f62b18f77485906e",
+  "lac_sha256": "3d55c6d47e3e725f5d47facfc24be190e5c75bc725e542d507ffe992f844e4a8",
+  "emphysema_density": 0.03201626634470674,
+  "emphysema_voxel_frac_of_lung": 0.038952235570311626,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "19453",
+  "projection_series": "007",
+  "development_exposed": false,
+  "phantom_file": "phantom_19453_1138_1504_1212_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1212,
+   1504,
+   1138
+  ],
+  "phantom_sha256": "ec2bd336a87ba9c05048e408df824cc59781eedcf1b77b54d981b222e6bccf07",
+  "n_labels_present": 47,
+  "recon_shape": [
+   512,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 2116,
+  "recon_frac_at_min": 0.4808480011092292,
+  "recon_frac_eq_m1000": 0.4808480011092292,
+  "n_views": 8000,
+  "table_sha256": "e6cec8c282ceb838dbccc7aaf85cca66808d85412ca9089047cf8c7dd5d0bb34",
+  "lac_sha256": "b7c7315042b1fb057e2363eb1d9447dcae504cb6b332f7dcd425053d96a8fd0f",
+  "emphysema_density": 0.06864131303203252,
+  "emphysema_voxel_frac_of_lung": 0.04231399709747956,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "19988",
+  "projection_series": "019",
+  "development_exposed": false,
+  "phantom_file": "phantom_19988_1114_1784_1460_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1460,
+   1784,
+   1114
+  ],
+  "phantom_sha256": "a5e02d7db0a2ad12507171378a68708859d294f8423e81224bbfa2d5d141de86",
+  "n_labels_present": 47,
+  "recon_shape": [
+   512,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 5607,
+  "recon_frac_at_min": 0.4658997489346398,
+  "recon_frac_eq_m1000": 0.4658997489346398,
+  "n_views": 8000,
+  "table_sha256": "b4d910ec4fdf175c22da0e418e68620f0dbc6fb0bbb23f4aaa646d51d102c1f0",
+  "lac_sha256": "e8150cd01d2219c7e9fbdb7d42976a4145480835be897ea45a457a8cd48133db",
+  "emphysema_density": 0.06450899145142616,
+  "emphysema_voxel_frac_of_lung": 0.04301017792327292,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "20168",
+  "projection_series": "003",
+  "development_exposed": false,
+  "phantom_file": "phantom_20168_1076_1672_1168_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1168,
+   1672,
+   1076
+  ],
+  "phantom_sha256": "6eb744fdf13290a278cdf7865bf0ca3dc6411bbb815c2a36b6da25a6fcf33d48",
+  "n_labels_present": 47,
+  "recon_shape": [
+   512,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 799,
+  "recon_frac_at_min": 0.5272755291726854,
+  "recon_frac_eq_m1000": 0.5272755291726854,
+  "n_views": 8000,
+  "table_sha256": "02856f6362a3fd31c64292c02f0fff491b18805b7921a13f054a41462c4bb663",
+  "lac_sha256": "98501487729b555abf0e719e86a16bc79bdffb62741cd3af0cac9d3a2af75769",
+  "emphysema_density": 0.06875349874567871,
+  "emphysema_voxel_frac_of_lung": 0.0005024992977775895,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "20391",
+  "projection_series": "056",
+  "development_exposed": false,
+  "phantom_file": "phantom_20391_1336_1794_1354_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1354,
+   1794,
+   1336
+  ],
+  "phantom_sha256": "e040cc5595a9e51ba62d467327107c7c7c471825d7eb958f3239c999aedb5427",
+  "n_labels_present": 47,
+  "recon_shape": [
+   576,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 1435,
+  "recon_frac_at_min": 0.4322074430960196,
+  "recon_frac_eq_m1000": 0.4322074430960196,
+  "n_views": 9000,
+  "table_sha256": "f8f89ccbc48ddcc6ad9195ed0a5e0acc92d4155630b3b873d03410a7e3517c90",
+  "lac_sha256": "6771903d04c574e6ee4b2f88cd9ed6756683f1c3940fd372c6ff13d0f1c8c432",
+  "emphysema_density": 0.05260325541468318,
+  "emphysema_voxel_frac_of_lung": 0.11127060265448256,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "20891",
+  "projection_series": "032",
+  "development_exposed": false,
+  "phantom_file": "phantom_20891_1314_1668_1308_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1308,
+   1668,
+   1314
+  ],
+  "phantom_sha256": "cff1c8661b3d34578553e7028defeac7585bdd9ece727c1cceb99f4e8b34772b",
+  "n_labels_present": 47,
+  "recon_shape": [
+   512,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 2579,
+  "recon_frac_at_min": 0.4479091962178548,
+  "recon_frac_eq_m1000": 0.4479091962178548,
+  "n_views": 8000,
+  "table_sha256": "010850a3581abbe62ba979cb8adc03fda82a4e06e11a7200fe5b27c0baf2b01a",
+  "lac_sha256": "ad0c51d4dbe24315a5e6ac0a36942122a7a0bba5e1979e102b4bf39c6a0f57d9",
+  "emphysema_density": 0.0528390101985317,
+  "emphysema_voxel_frac_of_lung": 4.866798481224812e-05,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "21043",
+  "projection_series": "013",
+  "development_exposed": false,
+  "phantom_file": "phantom_21043_1184_1706_1512_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1512,
+   1706,
+   1184
+  ],
+  "phantom_sha256": "c34d8202f51151170faa1b695f4dcc72c9cc3a4374c0dc55bf84288caff5b6a7",
+  "n_labels_present": 47,
+  "recon_shape": [
+   640,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 2134,
+  "recon_frac_at_min": 0.48136039310031464,
+  "recon_frac_eq_m1000": 0.48136039310031464,
+  "n_views": 10000,
+  "table_sha256": "50e93ce27936145ca1d376eaebed776dc830825087eaef98372851bc078dbea0",
+  "lac_sha256": "2c966756cf97d9248bb73b0ea0881b286c4ae976ef7e7daf45e107fdf1ef1a1b",
+  "emphysema_density": 0.02487657397507351,
+  "emphysema_voxel_frac_of_lung": 0.27942991453446314,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "21067",
+  "projection_series": "057",
+  "development_exposed": false,
+  "phantom_file": "phantom_21067_1196_1716_1268_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1268,
+   1716,
+   1196
+  ],
+  "phantom_sha256": "c723e1ad294ccebd8952400b4aa021f2a624abfc4262374469bc40dfd6efe6f1",
+  "n_labels_present": 47,
+  "recon_shape": [
+   576,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 885,
+  "recon_frac_at_min": 0.4875693792178307,
+  "recon_frac_eq_m1000": 0.4875693792178307,
+  "n_views": 9000,
+  "table_sha256": "cff7ed3db586ff3578f5cb3c8490e9800ab9cc3e62e7657009c53f2abf3d2942",
+  "lac_sha256": "46a16017f65afb34fe5a5421f55a3d8395c4bcd45445d9f24c787c345215ca26",
+  "emphysema_density": 0.02636408483580257,
+  "emphysema_voxel_frac_of_lung": 0.0843969744060631,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "21161",
+  "projection_series": "005",
+  "development_exposed": false,
+  "phantom_file": "phantom_21161_1110_1948_1392_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1392,
+   1948,
+   1110
+  ],
+  "phantom_sha256": "3f81fafddae4edc17bdcd1c68c2fdc92204edf40a8ebb6711afb5de642dfad20",
+  "n_labels_present": 47,
+  "recon_shape": [
+   448,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 2088,
+  "recon_frac_at_min": 0.48653858805459643,
+  "recon_frac_eq_m1000": 0.48653858805459643,
+  "n_views": 7000,
+  "table_sha256": "50a7c395dff42f8bb3a16ac5404782cc644703f25f50e5ef871e21e4df85e830",
+  "lac_sha256": "e683d6b599d1dd0ae79a283091ac7318ab737ef4ef9a7dfc98d784323aa7b9a3",
+  "emphysema_density": 0.07474149374561334,
+  "emphysema_voxel_frac_of_lung": 0.00014004340410976785,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "21400",
+  "projection_series": "055",
+  "development_exposed": false,
+  "phantom_file": "phantom_21400_1088_1442_1356_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1356,
+   1442,
+   1088
+  ],
+  "phantom_sha256": "2fd4c3d4c5a5b7faa6bb4fecb2780aa7318c59d4ce9b7c4fb402369051eae5d2",
+  "n_labels_present": 47,
+  "recon_shape": [
+   576,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 1785,
+  "recon_frac_at_min": 0.5256633846848099,
+  "recon_frac_eq_m1000": 0.5256633846848099,
+  "n_views": 9000,
+  "table_sha256": "1ad1206f8315f80023370d5e4f89c371d64858d254971e47f7eca1d36a9ecfc2",
+  "lac_sha256": "440bf3a33d5677135d6f8bbd4e5f58601523fdb811d977c36d3c9ac35697efc1",
+  "emphysema_density": 0.02259410434258368,
+  "emphysema_voxel_frac_of_lung": 0.6077093222071651,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "21535",
+  "projection_series": "031",
+  "development_exposed": false,
+  "phantom_file": "phantom_21535_872_1594_1252_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1252,
+   1594,
+   872
+  ],
+  "phantom_sha256": "e244c59340978670d674ada07089f4af157a7f9464ae33bec0121d0fe694fd4b",
+  "n_labels_present": 47,
+  "recon_shape": [
+   576,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 748,
+  "recon_frac_at_min": 0.5515961941377616,
+  "recon_frac_eq_m1000": 0.5515961941377616,
+  "n_views": 9000,
+  "table_sha256": "d2d63dcc6e8c264cd9004d9edae96f85fbb3f9ee4b9ff30c5a8396c8786e17a7",
+  "lac_sha256": "e3cf0d06e3de4d260e31b5488a9880c79a87e47f2528633e8445e3cc074d4290",
+  "emphysema_density": 0.05253944294429017,
+  "emphysema_voxel_frac_of_lung": 0.21611626553113086,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "21608",
+  "projection_series": "063",
+  "development_exposed": false,
+  "phantom_file": "phantom_21608_1468_1874_1396_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1396,
+   1874,
+   1468
+  ],
+  "phantom_sha256": "a3dd41e992875ae9dc7d7994534512fe517ed14ba8bd357613e8b1aa91980298",
+  "n_labels_present": 47,
+  "recon_shape": [
+   640,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 762,
+  "recon_frac_at_min": 0.4709229098425971,
+  "recon_frac_eq_m1000": 0.4709229098425971,
+  "n_views": 10000,
+  "table_sha256": "342d83d1a9b6633c4a08e9f364258dddab61213f012a778a506bc6e73c95c6c5",
+  "lac_sha256": "a94efffb5ae7993b1709413b11f22d273dd7e027f2302a6f8716b49c0a0a881b",
+  "emphysema_density": 0.04883852838285678,
+  "emphysema_voxel_frac_of_lung": 0.0022344956237465223,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "21899",
+  "projection_series": "025",
+  "development_exposed": false,
+  "phantom_file": "phantom_21899_1294_1716_1316_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1316,
+   1716,
+   1294
+  ],
+  "phantom_sha256": "7c1ff67b62119e6622f7db34c46aeea867b5ac1854ba55323b977e62be615ca6",
+  "n_labels_present": 47,
+  "recon_shape": [
+   576,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 1082,
+  "recon_frac_at_min": 0.47548162789992343,
+  "recon_frac_eq_m1000": 0.47548162789992343,
+  "n_views": 9000,
+  "table_sha256": "2a83e184221de753fc839bfd2407b6177d2d30e96946b3657509b7c08bf9c1e4",
+  "lac_sha256": "1febf387d884a6a1f10d2b9207a22393b3df60dd78ae9097bb29aeec461c9bab",
+  "emphysema_density": 0.03921077255118532,
+  "emphysema_voxel_frac_of_lung": 0.049404061344603595,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "22437",
+  "projection_series": "006",
+  "development_exposed": false,
+  "phantom_file": "phantom_22437_1112_1536_1180_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1180,
+   1536,
+   1112
+  ],
+  "phantom_sha256": "d19338bc68a519ca23dde2f52dcc65f61d4bfb0538a5f164da3e9290b38a83f9",
+  "n_labels_present": 47,
+  "recon_shape": [
+   512,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 1569,
+  "recon_frac_at_min": 0.5109433697329627,
+  "recon_frac_eq_m1000": 0.5109433697329627,
+  "n_views": 8000,
+  "table_sha256": "2fbc60f010efd1858a72c2a1edbcf390c3ac2f92a3f4f3c502a6013d65159e82",
+  "lac_sha256": "5e42e11d4931ad5dbaf6f807c004387a0c04bb2ea5c0752a9d7d38dcf8009e85",
+  "emphysema_density": 0.05057202173878946,
+  "emphysema_voxel_frac_of_lung": 0.000126335997730016,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "22728",
+  "projection_series": "011",
+  "development_exposed": false,
+  "phantom_file": "phantom_22728_1048_1438_1084_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1084,
+   1438,
+   1048
+  ],
+  "phantom_sha256": "4d9d2ecde605fded430feb2406fca8c209ebf217559e9d209819d45ebfaf4f12",
+  "n_labels_present": 47,
+  "recon_shape": [
+   512,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 815,
+  "recon_frac_at_min": 0.5362084905306498,
+  "recon_frac_eq_m1000": 0.5362084905306498,
+  "n_views": 8000,
+  "table_sha256": "371a7f5a5928c114d0ac7f1133d4a9109a371a51d9c35bd4c3c526a0fbb1bf34",
+  "lac_sha256": "ddffa145ddcea05bacb708ae1734224f3b987eb598b38a92425e4a1affcbcde7",
+  "emphysema_density": 0.02791643475571253,
+  "emphysema_voxel_frac_of_lung": 0.31618611625029275,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "22841",
+  "projection_series": "058",
+  "development_exposed": false,
+  "phantom_file": "phantom_22841_1090_1452_1172_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1172,
+   1452,
+   1090
+  ],
+  "phantom_sha256": "724a2f5f5f5657115a0a35ac46af4554276878e5061edc3b8873c145997b9d1f",
+  "n_labels_present": 47,
+  "recon_shape": [
+   512,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 977,
+  "recon_frac_at_min": 0.5260756512482961,
+  "recon_frac_eq_m1000": 0.5260756512482961,
+  "n_views": 8000,
+  "table_sha256": "9be176a49a88929567ec3e27b87f30b85e6ac911547898914e905c755109f49e",
+  "lac_sha256": "537aef0417ca59eacd4ebdf1460d192d49c2a520ec5900267a5fea23934000f0",
+  "emphysema_density": 0.07172300589444171,
+  "emphysema_voxel_frac_of_lung": 0.03780456517282274,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "23043",
+  "projection_series": "026",
+  "development_exposed": false,
+  "phantom_file": "phantom_23043_1320_1670_1308_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1308,
+   1670,
+   1320
+  ],
+  "phantom_sha256": "fbbc27f5d3f951ef220b34ff6551648c2280fe196127e4c919e9fcedbb76b733",
+  "n_labels_present": 47,
+  "recon_shape": [
+   576,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 1149,
+  "recon_frac_at_min": 0.4822173442369626,
+  "recon_frac_eq_m1000": 0.4822173442369626,
+  "n_views": 9000,
+  "table_sha256": "12f67b08f33ad9ab31d682b28442ac6fe03cfb794c641f97e820fdce8435645e",
+  "lac_sha256": "e817c8df3f57e65ff5d336857e48b0e83ddfaefaca3b92b384242e9e013ec11d",
+  "emphysema_density": 0.0677451578290158,
+  "emphysema_voxel_frac_of_lung": 0.1494683231225882,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "23235",
+  "projection_series": "024",
+  "development_exposed": false,
+  "phantom_file": "phantom_23235_1412_1868_1446_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1446,
+   1868,
+   1412
+  ],
+  "phantom_sha256": "f4775bcf7584e51055bbaacd39f8b7abcd3b0e06df78956256105aa06b425a53",
+  "n_labels_present": 47,
+  "recon_shape": [
+   576,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 4432,
+  "recon_frac_at_min": 0.4151951884046013,
+  "recon_frac_eq_m1000": 0.4151951884046013,
+  "n_views": 9000,
+  "table_sha256": "56079fcd51b3d797654f49eddccdfef8aa225cf2c127e476a029f93e6cccc983",
+  "lac_sha256": "d912e544eb855e22ab0be5a0e27e5f2dccd94599f6ccb0f917663b1c64268cc6",
+  "emphysema_density": 0.05627673816137407,
+  "emphysema_voxel_frac_of_lung": 0.2938965227681425,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "23342",
+  "projection_series": "037",
+  "development_exposed": false,
+  "phantom_file": "phantom_23342_1222_1714_1364_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1364,
+   1714,
+   1222
+  ],
+  "phantom_sha256": "f032b46cdda5d4c49e0c16b96f5231747281b68c7137b5d817391f1bda66ce1a",
+  "n_labels_present": 47,
+  "recon_shape": [
+   576,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 1399,
+  "recon_frac_at_min": 0.46555864958115567,
+  "recon_frac_eq_m1000": 0.46555864958115567,
+  "n_views": 9000,
+  "table_sha256": "2fdfc07a94afb12799f0dac42ac4cfe7bff16b119f0726279635dc29fc697b5a",
+  "lac_sha256": "5922f5e77c5721187cdcb90c71b70c8f87f40c1cbe609637d2695af05ba8e473",
+  "emphysema_density": 0.03240160571888205,
+  "emphysema_voxel_frac_of_lung": 0.42386568763616983,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "24080",
+  "projection_series": "062",
+  "development_exposed": false,
+  "phantom_file": "phantom_24080_1250_1750_1416_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1416,
+   1750,
+   1250
+  ],
+  "phantom_sha256": "39291f671fa624504086d8c2a03ec15a762811705c042d4503e4700f8628f545",
+  "n_labels_present": 47,
+  "recon_shape": [
+   576,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 4388,
+  "recon_frac_at_min": 0.4434467245031286,
+  "recon_frac_eq_m1000": 0.4434467245031286,
+  "n_views": 9000,
+  "table_sha256": "ec7b2ec4d4dc19b82d8e6467517725ed89a79ee11d7ba80c2dc51b15f20973cb",
+  "lac_sha256": "fd1a6a32464e3225ca0bb9fd30b795ff76c8fe91f1c53a5c42263c4fd7be5069",
+  "emphysema_density": 0.05918574090034763,
+  "emphysema_voxel_frac_of_lung": 0.619764153826818,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "24701",
+  "projection_series": "038",
+  "development_exposed": false,
+  "phantom_file": "phantom_24701_1518_1944_1280_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1280,
+   1944,
+   1518
+  ],
+  "phantom_sha256": "1c4c7480e08077588cf0abfc0bfe66a2f747f6e65d3c784d07380760d16834bb",
+  "n_labels_present": 47,
+  "recon_shape": [
+   576,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 1037,
+  "recon_frac_at_min": 0.412497658788422,
+  "recon_frac_eq_m1000": 0.412497658788422,
+  "n_views": 9000,
+  "table_sha256": "3baf41e51eba2e0a16a6af46600084e42e8bb051bae95c8cc544313db158420d",
+  "lac_sha256": "f6371c515d3309a44382ca59189737fdaeaa4b3c18da9b8b6775f738f50518f8",
+  "emphysema_density": 0.07335261086831912,
+  "emphysema_voxel_frac_of_lung": 0.04216229113603849,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "24803",
+  "projection_series": "039",
+  "development_exposed": false,
+  "phantom_file": "phantom_24803_1274_1844_1120_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1120,
+   1844,
+   1274
+  ],
+  "phantom_sha256": "dacb8bb308567b98c6bff422accb25034a8a60c4089dc0ff7b1cae29b18f50a7",
+  "n_labels_present": 47,
+  "recon_shape": [
+   512,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 926,
+  "recon_frac_at_min": 0.47556574477089775,
+  "recon_frac_eq_m1000": 0.47556574477089775,
+  "n_views": 8000,
+  "table_sha256": "3f881e124d8eb7c0d9fb45241fbbdbcaf2c3062433d6ccdebedf7332ddad3e4c",
+  "lac_sha256": "5f3d5ce899c36226c843324abcb5b4cf606d03faab4a120d6a9e813a696be474",
+  "emphysema_density": 0.07119232335192839,
+  "emphysema_voxel_frac_of_lung": 0.14488974226748227,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "25816",
+  "projection_series": "029",
+  "development_exposed": false,
+  "phantom_file": "phantom_25816_956_1604_1190_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1190,
+   1604,
+   956
+  ],
+  "phantom_sha256": "9bc8c532b24d9f6cc56864643ee1592b5e427766ed8ba9d4d3c868eec2a2b7c0",
+  "n_labels_present": 47,
+  "recon_shape": [
+   576,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 792,
+  "recon_frac_at_min": 0.5480783221162395,
+  "recon_frac_eq_m1000": 0.5480783221162395,
+  "n_views": 9000,
+  "table_sha256": "767eea50fe24284043649500410d3d213b3b343799cb5b3849c84c2fa2b28c78",
+  "lac_sha256": "bd56942fd740bdaffb12f1aadd1c6984fc0225a8f0973ec53bc0e6fa8cf485ea",
+  "emphysema_density": 0.04751423037828812,
+  "emphysema_voxel_frac_of_lung": 0.028497201078114105,
+  "file_level_status": "OK",
+  "flags": []
+ },
+ {
+  "id": "25950",
+  "projection_series": "044",
+  "development_exposed": false,
+  "phantom_file": "phantom_25950_1436_1766_1200_8bit_textured_copd_eroded_flipped.bin",
+  "phantom_shape_zyx": [
+   1200,
+   1766,
+   1436
+  ],
+  "phantom_sha256": "1d478d1547720c085778c100099ffd2e9e42ef2a78edcc1fd35eb968b8af422d",
+  "n_labels_present": 47,
+  "recon_shape": [
+   512,
+   768,
+   768
+  ],
+  "recon_dtype": "int16",
+  "recon_min": -1000,
+  "recon_max": 1152,
+  "recon_frac_at_min": 0.45300212171342635,
+  "recon_frac_eq_m1000": 0.45300212171342635,
+  "n_views": 8000,
+  "table_sha256": "5cd5879f5c53e49992c5e88e296a1579b4e22b2a10d97c3e2b78ddde93d2a8d5",
+  "lac_sha256": "13e4e17244a2c7017777bdbcc53e2e92a56dacb759833338475bca4232ba9a13",
+  "emphysema_density": 0.07999158737080844,
+  "emphysema_voxel_frac_of_lung": 0.07579282991885014,
+  "file_level_status": "OK",
+  "flags": []
+ }
+]
