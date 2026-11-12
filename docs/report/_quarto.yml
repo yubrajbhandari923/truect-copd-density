@@ -9,6 +9,8 @@ website:
         text: Overview
       - href: chapters/e00.qmd
         text: Dataset and geometry
+      - href: chapters/literature.qmd
+        text: Literature
       - href: chapters/results.qmd
         text: Results
       - href: chapters/limitations.qmd
