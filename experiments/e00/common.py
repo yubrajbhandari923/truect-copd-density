@@ -29,7 +29,10 @@ def phantom_file(sid):
 
 def xlsx_table(sid):
     """{organ_id: {name, density, mc_id, fractions{Z: mass %}}} plus the raw header."""
-    p = PH / f"material_tables/challenge_materials_copd_smeared_{sid}.xlsx"
+    return xlsx_table_path(PH / f"material_tables/challenge_materials_copd_smeared_{sid}.xlsx")
+
+
+def xlsx_table_path(p):
     rows = [r for r in openpyxl.load_workbook(p, data_only=True).active.iter_rows(values_only=True)
             if r and r[0] is not None]
     hdr = list(rows[0])
