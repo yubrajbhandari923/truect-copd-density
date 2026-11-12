@@ -1,0 +1,507 @@
+{
+ "code_commit": "983a8c0",
+ "job_id": "204684",
+ "subjects": {
+  "10313": {
+   "validation": {
+    "V1": {
+     "status": "PASS",
+     "reason": "size 3158401440 vs nx*ny*nz 3158401440; geometry dtype uint8 (uint8 -> 1 byte/voxel, no header)"
+    },
+    "V2": {
+     "status": "PASS",
+     "reason": "geometry dims (1308, 1802, 1340), filename dims (1308, 1802, 1340), voxel mm (0.25, 0.25, 0.25) (isotropic=True); voxel size is unverifiable against source (assumed 0.25 mm)"
+    },
+    "V3": {
+     "status": "PASS",
+     "reason": "47 distinct labels, max 120, NumberOfMaterials 121; labels not in table: []"
+    },
+    "V4": {
+     "status": "SKIP",
+     "reason": "needs a source reference volume; done by the exporter round-trip self-test, not by validate_package"
+    },
+    "V5": {
+     "status": "PASS",
+     "reason": "53 rows, header exact, ascending unique IDs, air first, no spaces in names"
+    },
+    "V6": {
+     "status": "PASS",
+     "reason": "fractions >= 0; sums outside [0.999,1.001] (source-known, flagged): ['emphysema=0.9680', 'lung=0.9680', 'lung_parenchyma=0.9680', 'skin=0.9622']"
+    },
+    "V7": {
+     "status": "PASS",
+     "reason": "nonpositive density IDs []; air density 0.001205 (expect 0.001205); train-range check not done (no train ranges supplied)"
+    },
+    "V8": {
+     "status": "PASS",
+     "reason": "name->MC->composition consistent; MC block names without .mcgpu in the shared 17-file catalogue: []"
+    },
+    "V9": {
+     "status": "PASS",
+     "reason": "53 IDs match the 53-ID COPD catalogue (name, MC ID, composition)"
+    },
+    "V10": {
+     "status": "PASS",
+     "reason": "ladder ratios (rel 1e-9 vs catalogue ratios) and lung 106-110 equality hold"
+    },
+    "V11": {
+     "status": "PASS",
+     "reason": "byte comparison of .in against make_conv_table text regenerated from the xlsx"
+    },
+    "V12": {
+     "status": "PASS",
+     "reason": "size ok; max rel |LAC/rho / catalogue mu_rho - 1| = 1.26e-07 (<1e-5); 68 unused rows == air"
+    },
+    "V13": {
+     "status": "SKIP",
+     "reason": "needs the source package for the same subject; done by the self-test round trip"
+    },
+    "V14": {
+     "status": "SKIP",
+     "reason": "needs a recon at 70 keV to compare against (mono HU definition); not checkable standalone"
+    }
+   },
+   "roundtrip": {
+    "in_byte_identical": true,
+    "in_len": [
+     2197,
+     2197
+    ],
+    "lac_shape_equal": true,
+    "lac_byte_identical": false,
+    "lac_max_abs": 0.00048828125,
+    "lac_max_rel": 1.1913881692304784e-07,
+    "lac_n_elements_differing": 1314,
+    "lac_n": 14520
+   }
+  },
+  "10368": {
+   "validation": {
+    "V1": {
+     "status": "PASS",
+     "reason": "size 2937442976 vs nx*ny*nz 2937442976; geometry dtype uint8 (uint8 -> 1 byte/voxel, no header)"
+    },
+    "V2": {
+     "status": "PASS",
+     "reason": "geometry dims (1348, 1822, 1196), filename dims (1348, 1822, 1196), voxel mm (0.25, 0.25, 0.25) (isotropic=True); voxel size is unverifiable against source (assumed 0.25 mm)"
+    },
+    "V3": {
+     "status": "PASS",
+     "reason": "47 distinct labels, max 120, NumberOfMaterials 121; labels not in table: []"
+    },
+    "V4": {
+     "status": "SKIP",
+     "reason": "needs a source reference volume; done by the exporter round-trip self-test, not by validate_package"
+    },
+    "V5": {
+     "status": "PASS",
+     "reason": "53 rows, header exact, ascending unique IDs, air first, no spaces in names"
+    },
+    "V6": {
+     "status": "PASS",
+     "reason": "fractions >= 0; sums outside [0.999,1.001] (source-known, flagged): ['emphysema=0.9680', 'lung=0.9680', 'lung_parenchyma=0.9680', 'skin=0.9622']"
+    },
+    "V7": {
+     "status": "PASS",
+     "reason": "nonpositive density IDs []; air density 0.001205 (expect 0.001205); train-range check not done (no train ranges supplied)"
+    },
+    "V8": {
+     "status": "PASS",
+     "reason": "name->MC->composition consistent; MC block names without .mcgpu in the shared 17-file catalogue: []"
+    },
+    "V9": {
+     "status": "PASS",
+     "reason": "53 IDs match the 53-ID COPD catalogue (name, MC ID, composition)"
+    },
+    "V10": {
+     "status": "PASS",
+     "reason": "ladder ratios (rel 1e-9 vs catalogue ratios) and lung 106-110 equality hold"
+    },
+    "V11": {
+     "status": "PASS",
+     "reason": "byte comparison of .in against make_conv_table text regenerated from the xlsx"
+    },
+    "V12": {
+     "status": "PASS",
+     "reason": "size ok; max rel |LAC/rho / catalogue mu_rho - 1| = 1.57e-07 (<1e-5); 68 unused rows == air"
+    },
+    "V13": {
+     "status": "SKIP",
+     "reason": "needs the source package for the same subject; done by the self-test round trip"
+    },
+    "V14": {
+     "status": "SKIP",
+     "reason": "needs a recon at 70 keV to compare against (mono HU definition); not checkable standalone"
+    }
+   },
+   "roundtrip": {
+    "in_byte_identical": true,
+    "in_len": [
+     2214,
+     2214
+    ],
+    "lac_shape_equal": true,
+    "lac_byte_identical": false,
+    "lac_max_abs": 0.00048828125,
+    "lac_max_rel": 1.914983722706154e-07,
+    "lac_n_elements_differing": 2128,
+    "lac_n": 14520
+   }
+  },
+  "10379": {
+   "validation": {
+    "V1": {
+     "status": "PASS",
+     "reason": "size 2866496256 vs nx*ny*nz 2866496256; geometry dtype uint8 (uint8 -> 1 byte/voxel, no header)"
+    },
+    "V2": {
+     "status": "PASS",
+     "reason": "geometry dims (1368, 1752, 1196), filename dims (1368, 1752, 1196), voxel mm (0.25, 0.25, 0.25) (isotropic=True); voxel size is unverifiable against source (assumed 0.25 mm)"
+    },
+    "V3": {
+     "status": "PASS",
+     "reason": "47 distinct labels, max 120, NumberOfMaterials 121; labels not in table: []"
+    },
+    "V4": {
+     "status": "SKIP",
+     "reason": "needs a source reference volume; done by the exporter round-trip self-test, not by validate_package"
+    },
+    "V5": {
+     "status": "PASS",
+     "reason": "53 rows, header exact, ascending unique IDs, air first, no spaces in names"
+    },
+    "V6": {
+     "status": "PASS",
+     "reason": "fractions >= 0; sums outside [0.999,1.001] (source-known, flagged): ['emphysema=0.9680', 'lung=0.9680', 'lung_parenchyma=0.9680', 'skin=0.9622']"
+    },
+    "V7": {
+     "status": "PASS",
+     "reason": "nonpositive density IDs []; air density 0.001205 (expect 0.001205); train-range check not done (no train ranges supplied)"
+    },
+    "V8": {
+     "status": "PASS",
+     "reason": "name->MC->composition consistent; MC block names without .mcgpu in the shared 17-file catalogue: []"
+    },
+    "V9": {
+     "status": "PASS",
+     "reason": "53 IDs match the 53-ID COPD catalogue (name, MC ID, composition)"
+    },
+    "V10": {
+     "status": "PASS",
+     "reason": "ladder ratios (rel 1e-9 vs catalogue ratios) and lung 106-110 equality hold"
+    },
+    "V11": {
+     "status": "PASS",
+     "reason": "byte comparison of .in against make_conv_table text regenerated from the xlsx"
+    },
+    "V12": {
+     "status": "PASS",
+     "reason": "size ok; max rel |LAC/rho / catalogue mu_rho - 1| = 1.47e-07 (<1e-5); 68 unused rows == air"
+    },
+    "V13": {
+     "status": "SKIP",
+     "reason": "needs the source package for the same subject; done by the self-test round trip"
+    },
+    "V14": {
+     "status": "SKIP",
+     "reason": "needs a recon at 70 keV to compare against (mono HU definition); not checkable standalone"
+    }
+   },
+   "roundtrip": {
+    "in_byte_identical": true,
+    "in_len": [
+     2218,
+     2218
+    ],
+    "lac_shape_equal": true,
+    "lac_byte_identical": false,
+    "lac_max_abs": 0.00048828125,
+    "lac_max_rel": 1.7534311136380154e-07,
+    "lac_n_elements_differing": 1861,
+    "lac_n": 14520
+   }
+  },
+  "10785": {
+   "validation": {
+    "V1": {
+     "status": "PASS",
+     "reason": "size 1823717376 vs nx*ny*nz 1823717376; geometry dtype uint8 (uint8 -> 1 byte/voxel, no header)"
+    },
+    "V2": {
+     "status": "PASS",
+     "reason": "geometry dims (1118, 1416, 1152), filename dims (1118, 1416, 1152), voxel mm (0.25, 0.25, 0.25) (isotropic=True); voxel size is unverifiable against source (assumed 0.25 mm)"
+    },
+    "V3": {
+     "status": "PASS",
+     "reason": "47 distinct labels, max 120, NumberOfMaterials 121; labels not in table: []"
+    },
+    "V4": {
+     "status": "SKIP",
+     "reason": "needs a source reference volume; done by the exporter round-trip self-test, not by validate_package"
+    },
+    "V5": {
+     "status": "PASS",
+     "reason": "53 rows, header exact, ascending unique IDs, air first, no spaces in names"
+    },
+    "V6": {
+     "status": "PASS",
+     "reason": "fractions >= 0; sums outside [0.999,1.001] (source-known, flagged): ['emphysema=0.9680', 'lung=0.9680', 'lung_parenchyma=0.9680', 'skin=0.9622']"
+    },
+    "V7": {
+     "status": "PASS",
+     "reason": "nonpositive density IDs []; air density 0.001205 (expect 0.001205); train-range check not done (no train ranges supplied)"
+    },
+    "V8": {
+     "status": "PASS",
+     "reason": "name->MC->composition consistent; MC block names without .mcgpu in the shared 17-file catalogue: []"
+    },
+    "V9": {
+     "status": "PASS",
+     "reason": "53 IDs match the 53-ID COPD catalogue (name, MC ID, composition)"
+    },
+    "V10": {
+     "status": "PASS",
+     "reason": "ladder ratios (rel 1e-9 vs catalogue ratios) and lung 106-110 equality hold"
+    },
+    "V11": {
+     "status": "PASS",
+     "reason": "byte comparison of .in against make_conv_table text regenerated from the xlsx"
+    },
+    "V12": {
+     "status": "PASS",
+     "reason": "size ok; max rel |LAC/rho / catalogue mu_rho - 1| = 1.29e-07 (<1e-5); 68 unused rows == air"
+    },
+    "V13": {
+     "status": "SKIP",
+     "reason": "needs the source package for the same subject; done by the self-test round trip"
+    },
+    "V14": {
+     "status": "SKIP",
+     "reason": "needs a recon at 70 keV to compare against (mono HU definition); not checkable standalone"
+    }
+   },
+   "roundtrip": {
+    "in_byte_identical": true,
+    "in_len": [
+     2220,
+     2220
+    ],
+    "lac_shape_equal": true,
+    "lac_byte_identical": false,
+    "lac_max_abs": 0.00048828125,
+    "lac_max_rel": 1.686379458298859e-07,
+    "lac_n_elements_differing": 1981,
+    "lac_n": 14520
+   }
+  },
+  "10997": {
+   "validation": {
+    "V1": {
+     "status": "PASS",
+     "reason": "size 2383393680 vs nx*ny*nz 2383393680; geometry dtype uint8 (uint8 -> 1 byte/voxel, no header)"
+    },
+    "V2": {
+     "status": "PASS",
+     "reason": "geometry dims (1206, 1532, 1290), filename dims (1206, 1532, 1290), voxel mm (0.25, 0.25, 0.25) (isotropic=True); voxel size is unverifiable against source (assumed 0.25 mm)"
+    },
+    "V3": {
+     "status": "PASS",
+     "reason": "47 distinct labels, max 120, NumberOfMaterials 121; labels not in table: []"
+    },
+    "V4": {
+     "status": "SKIP",
+     "reason": "needs a source reference volume; done by the exporter round-trip self-test, not by validate_package"
+    },
+    "V5": {
+     "status": "PASS",
+     "reason": "53 rows, header exact, ascending unique IDs, air first, no spaces in names"
+    },
+    "V6": {
+     "status": "PASS",
+     "reason": "fractions >= 0; sums outside [0.999,1.001] (source-known, flagged): ['emphysema=0.9680', 'lung=0.9680', 'lung_parenchyma=0.9680', 'skin=0.9622']"
+    },
+    "V7": {
+     "status": "PASS",
+     "reason": "nonpositive density IDs []; air density 0.001205 (expect 0.001205); train-range check not done (no train ranges supplied)"
+    },
+    "V8": {
+     "status": "PASS",
+     "reason": "name->MC->composition consistent; MC block names without .mcgpu in the shared 17-file catalogue: []"
+    },
+    "V9": {
+     "status": "PASS",
+     "reason": "53 IDs match the 53-ID COPD catalogue (name, MC ID, composition)"
+    },
+    "V10": {
+     "status": "PASS",
+     "reason": "ladder ratios (rel 1e-9 vs catalogue ratios) and lung 106-110 equality hold"
+    },
+    "V11": {
+     "status": "PASS",
+     "reason": "byte comparison of .in against make_conv_table text regenerated from the xlsx"
+    },
+    "V12": {
+     "status": "PASS",
+     "reason": "size ok; max rel |LAC/rho / catalogue mu_rho - 1| = 1.62e-07 (<1e-5); 68 unused rows == air"
+    },
+    "V13": {
+     "status": "SKIP",
+     "reason": "needs the source package for the same subject; done by the self-test round trip"
+    },
+    "V14": {
+     "status": "SKIP",
+     "reason": "needs a recon at 70 keV to compare against (mono HU definition); not checkable standalone"
+    }
+   },
+   "roundtrip": {
+    "in_byte_identical": true,
+    "in_len": [
+     2220,
+     2220
+    ],
+    "lac_shape_equal": true,
+    "lac_byte_identical": false,
+    "lac_max_abs": 0.00048828125,
+    "lac_max_rel": 2.130670166966553e-07,
+    "lac_n_elements_differing": 1902,
+    "lac_n": 14520
+   }
+  }
+ },
+ "negatives": {
+  "A_label_not_in_table": {
+   "expected_fail": "V3",
+   "statuses": {
+    "V1": "PASS",
+    "V2": "PASS",
+    "V3": "FAIL",
+    "V4": "SKIP",
+    "V5": "PASS",
+    "V6": "PASS",
+    "V7": "PASS",
+    "V8": "PASS",
+    "V9": "PASS",
+    "V10": "PASS",
+    "V11": "PASS",
+    "V12": "FAIL",
+    "V13": "SKIP",
+    "V14": "SKIP"
+   },
+   "hit": true,
+   "reason": "47 distinct labels, max 120, NumberOfMaterials 121; labels not in table: [60]"
+  },
+  "B_wrong_size": {
+   "expected_fail": "V1",
+   "statuses": {
+    "V1": "FAIL",
+    "V2": "FAIL",
+    "V3": "PASS",
+    "V4": "SKIP",
+    "V5": "PASS",
+    "V6": "PASS",
+    "V7": "PASS",
+    "V8": "PASS",
+    "V9": "PASS",
+    "V10": "PASS",
+    "V11": "PASS",
+    "V12": "PASS",
+    "V13": "SKIP",
+    "V14": "SKIP"
+   },
+   "hit": true,
+   "reason": "size 3158401440 vs nx*ny*nz 3160816120; geometry dtype uint8 (uint8 -> 1 byte/voxel, no header)"
+  },
+  "C_density_nonpositive": {
+   "expected_fail": "V7",
+   "statuses": {
+    "V1": "PASS",
+    "V2": "PASS",
+    "V3": "PASS",
+    "V4": "SKIP",
+    "V5": "PASS",
+    "V6": "PASS",
+    "V7": "FAIL",
+    "V8": "PASS",
+    "V9": "PASS",
+    "V10": "PASS",
+    "V11": "PASS",
+    "V12": "PASS",
+    "V13": "SKIP",
+    "V14": "SKIP"
+   },
+   "hit": true,
+   "reason": "nonpositive density IDs [4]; air density 0.001205 (expect 0.001205); train-range check not done (no train ranges supplied)"
+  },
+  "D_lac_truncated": {
+   "expected_fail": "V12",
+   "statuses": {
+    "V1": "PASS",
+    "V2": "PASS",
+    "V3": "PASS",
+    "V4": "SKIP",
+    "V5": "PASS",
+    "V6": "PASS",
+    "V7": "PASS",
+    "V8": "PASS",
+    "V9": "PASS",
+    "V10": "PASS",
+    "V11": "PASS",
+    "V12": "FAIL",
+    "V13": "SKIP",
+    "V14": "SKIP"
+   },
+   "hit": true,
+   "reason": "LAC size 57600 != 4*120*NumberOfMaterials 58080"
+  },
+  "E_lac_float64": {
+   "expected_fail": "V12",
+   "statuses": {
+    "V1": "PASS",
+    "V2": "PASS",
+    "V3": "PASS",
+    "V4": "SKIP",
+    "V5": "PASS",
+    "V6": "PASS",
+    "V7": "PASS",
+    "V8": "PASS",
+    "V9": "PASS",
+    "V10": "PASS",
+    "V11": "PASS",
+    "V12": "FAIL",
+    "V13": "SKIP",
+    "V14": "SKIP"
+   },
+   "hit": true,
+   "reason": "LAC size 116160 != 4*120*NumberOfMaterials 58080"
+  }
+ },
+ "V4_label_roundtrip": {
+  "subject": "10313",
+  "byte_identical": true,
+  "written_pkg_validation": {
+   "V1": "PASS",
+   "V2": "PASS",
+   "V3": "PASS",
+   "V4": "SKIP",
+   "V5": "PASS",
+   "V6": "PASS",
+   "V7": "PASS",
+   "V8": "PASS",
+   "V9": "PASS",
+   "V10": "PASS",
+   "V11": "PASS",
+   "V12": "PASS",
+   "V13": "SKIP",
+   "V14": "SKIP"
+  }
+ },
+ "code_commit_note": "code commit 983a8c0 executed; this report committed afterwards",
+ "pytest": "7 passed (synthetic fixtures; HPC venv python 3.11) at 983a8c0",
+ "output_dir": "/scratch/railabs/yb107/research-output/truect-copd-density/results/e00/export_validation",
+ "lac_roundtrip_diagnosis": "LAC not byte-identical: differences of ~1 float32 ulp (max rel ~2e-7, max abs 4.9e-4). Per-composition mass attenuation is reconstructed in float64 as row/density from float32 source rows (mean over IDs of a composition), so density*mu_rho differs from DukeSim double-precision values before float32 rounding. Not removable without xraylib/xcatattentab.",
+ "skips": {
+  "V4": "needs reference volume; covered by V4_label_roundtrip (byte identical)",
+  "V13": "covered by per-subject roundtrip block (.in exact, LAC ~2e-7 rel)",
+  "V14": "needs a recon at 70 keV"
+ }
+}
