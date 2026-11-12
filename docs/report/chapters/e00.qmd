@@ -1,0 +1,7 @@
+---
+title: 'Dataset qualification and geometry'
+---
+
+Record source inventory, pairing, geometry conventions, anatomical overlap,
+physical density definitions, validity masks, and uncertainty. Link only to
+measured case and cohort artifacts. Separate observed metadata from assumptions.

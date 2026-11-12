@@ -1,0 +1,702 @@
+# TrueCT COPD PLAN-001 -- scientific specification, not a ResearchOS task queue.
+# Autonomous agents may resolve technical details, implement experiments, run HPC,
+# validate evidence, and write reports. They must preserve the research questions.
+# Source assets are read-only. Paths are resolved from settings.yaml, not guessed.
+version: 1
+id: truect-copd-phantom-inference
+name: "TrueCT COPD: supervised CT-to-DukeSIM phantom inference"
+status: proposed
+execution_boundary: >-
+  Use only paired synthetic TrueCT COPD reconstructed CT images and their phantom
+  targets. E00 through E04 are the full study. There is no E05, no real-patient
+  CT prerequisite, and no attempt at real-patient inference or transfer testing.
+  Complete the report and terminate after held-out synthetic evaluation.
+
+question: >-
+  Using 67 paired DukeSIM-simulated TrueCT COPD reconstructions and their source
+  voxelized phantoms, how accurately can supervised U-Net models recover the
+  material and physical-property representation needed to simulate a patient
+  with DukeSIM? Which architectural, target, loss, and training choices matter,
+  and how does supervised CT-conditioned diffusion compare with deterministic
+  U-Nets on held-out synthetic TrueCT reconstructions?
+
+outcome: >-
+  A verified 67-subject source inventory; reproducible CT/phantom training pairs;
+  a documented DukeSIM-compatible target and output contract; supervised
+  baselines, U-Net variants, and conditional diffusion with prespecified
+  ablations; held-out phantom-level quantitative comparisons; DukeSIM-compatible
+  output verification on synthetic cases; and an evidence-linked research report
+  describing successes, failures, uncertainty, and next studies.
+
+scope:
+  required:
+    - Fully supervised learning from paired simulated CT and known phantom targets.
+    - Compare standard U-Net, meaningful U-Net variants, and CT-conditioned diffusion.
+    - Recover a usable material-label/property representation, not density alone.
+    - End the study after locked held-out synthetic TrueCT evaluation (E04).
+    - Use only the 67 COPD simulated CT/phantom pairs and source metadata.
+    - Let agents implement, troubleshoot, run, verify, analyze, and report autonomously.
+  excluded:
+    - Unsupervised, self-supervised, or unpaired training; domain adaptation.
+    - Any real-patient CT acquisition, discovery, inference, training, or evaluation
+      in this plan. Future clinical transfer requires a separate approved study.
+    - Test-subject phantom features as input, or tuning on held-out test labels.
+    - Claims of clinical voxelwise accuracy without clinical material ground truth.
+    - Projection-domain optimization or differentiable CT physics as a requirement.
+    - An assumption that one scalar density map fully specifies a DukeSIM phantom.
+  optional_follow_up_not_a_blocker:
+    - DukeSIM resimulation from predicted phantoms where software/access permit.
+    - Physics-consistency regularization as a later, separately labeled ablation.
+    - A separate future study of synthetic-to-real transfer, only after clinical
+      CT access and an evaluation protocol exist; do not execute it here.
+
+source_data:
+  location: "Resolve from settings.yaml hpc.datasets; do not hard-code copies."
+  permitted_use: read_only
+  expected_cohort:
+    source: TrueCT COPD/emphysema subset
+    paired_subjects: 67
+    rule: >-
+      Expect exactly 67 original COPD phantom/reconstruction pairs. Account for
+      every ID. Do not invent cases, silently drop difficult pairs, or substitute
+      a smaller convenience cohort. Mark unusable subjects with evidence and
+      continue feasible work; report usable N separately from 67.
+  observed_layout: [README.md, pairing, phantoms, projections, recons, reference]
+  known_examples:
+    - "Case 10313 is development-exposed; reference scripts under settings.yaml hpc.reference_scripts."
+    - "Per-subject material tables may include challenge_materials_copd_smeared_<ID>.xlsx."
+    - "Phantoms may include byte-coded voxelized .bin and material definitions for MC-GPU."
+  inspect_not_assume:
+    - Exact mapping of each recon to phantom and reconstruction variant.
+    - Native phantom dimensions, axis ordering, orientation, origin and spacing.
+    - Voxel label meaning (organ ID, material ID, submaterial ID, or other).
+    - Whether density varies per voxel, per material, per organ, or per subject.
+    - Material table fields (mass density, elemental mass fractions, identifiers).
+    - How available phantom files and tables are consumed by the DukeSIM version.
+    - Whether recon intensities are calibrated HU, HU-like, or attenuation units.
+    - Whether a consistently defined effective atomic number can be derived
+      from available material compositions for a secondary Valand-style analysis.
+    - Which synthetic reconstruction variants and simulator metadata are present
+      for controlled robustness tests without additional patient datasets.
+
+scientific_principles:
+  task_definition: >-
+    Invert the simulator's image-generation direction: reconstructed CT ->
+    predicted voxelized phantom plus material properties. Supervised targets
+    come exclusively from matched TrueCT phantoms. Preserve target semantics;
+    do not call density-only regression an end-to-end DukeSIM phantom recovery.
+  duke_sim_contract: >-
+    Verify the actual local DukeSIM or preprocessing interface. The candidate
+    contract is a voxel label volume with physical geometry, and a material
+    dictionary/table giving each used label its density and elemental
+    composition. Export in a validated local format, not a guessed file format.
+    If patient-specific table entries are unidentifiable from single-energy CT,
+    learn only a train-derived canonical material catalog, record information
+    loss, and never copy held-out subject-specific properties at inference.
+  optional_secondary_properties: >-
+    Effective atomic number or elemental fractions may be reported as secondary
+    supervised properties only when a defensible source-table definition and
+    a fixed train-derived inference dictionary exist. They are not required
+    for the primary DukeSIM label-plus-material-table deliverable.
+  reference_targets: >-
+    Preserve both original categorical phantom IDs and derived mass-density
+    maps in g/cm^3. Build a cross-subject canonical material ontology only after
+    examining the actual source tables. Do not equate unrelated case-local IDs.
+    Derive density from correct subject-specific material tables for supervision;
+    never use those tables or labels as held-out model input. Handle CT-resolution
+    volume fractions and native phantom-grid labels explicitly and separately.
+  inference_inputs: >-
+    Reconstructed synthetic CT image and acquisition metadata demonstrably
+    available for the held-out synthetic inference cases. CT-derived masks/ROIs
+    may be used; phantom-derived masks may be used for supervised losses or
+    evaluation, never as hidden inference inputs.
+  identifiability: >-
+    A single-energy CT reconstruction generally does not uniquely identify
+    elemental composition. Measure what can be predicted, what is resolved by
+    the learned training prior, and what remains unidentifiable. A canonical
+    material assignment is an approximation, not measured patient composition.
+  geometry: >-
+    Verify physical transforms, FOV, common z-coverage, slice direction, label
+    resampling, and DICOM scaling. Use physical voxel-volume-aware alignment.
+    Compare boundary and interior regions separately. Preserve original
+    phantom-grid exports when possible; do not upsample CT-derived detail and
+    call it recovered ground truth.
+  leakage: >-
+    All versions of one original phantom subject remain in one split. Pre-exposed
+    subjects including case 10313 are development-only and never blinded test.
+    Check that different source IDs do not represent duplicate or derivative
+    phantoms; if any do, group them together and document their provenance.
+    Do not read held-out phantom targets for model selection.
+  evaluation_unit: >-
+    Subjects are independent units for uncertainty, not voxels, patches, slices,
+    diffusion samples, or reconstructed variants.
+  negative_results: >-
+    Report false starts, NO_GO and inconclusive findings. Never fabricate a
+    metric, file, table, or conclusion to satisfy an expected artifact.
+
+study_design:
+  cohort:
+    count_expected: 67
+    strategy: use_all_qualified_pairs_with_documented_exclusions
+    minimum_to_continue: >-
+      No arbitrary minimum of 30. If some pairs fail QC, continue methods on
+      qualified cases, report N and statistical limitations, and avoid claims
+      that exceed the independent sample size. If a critical target cannot be
+      constructed for any subject, terminate the affected task with evidence.
+  split:
+    grouping: original_phantom_subject_id
+    initial_target_if_all_67_eligible: {train: 46, validation: 10, test: 11}
+    seed: 20261112
+    exposed_case_policy: force_into_training_development_or_exclude_from_evaluation
+    rules:
+      - Freeze subject membership after QC and before optimizing models.
+      - If exclusions change sizes, deterministically rebalance development only.
+      - Tune on training/validation or grouped CV within development, not test.
+      - Examine held-out test targets for metrics only after methods are frozen.
+      - If variants exist, test across them without cross-split subject leakage.
+  compute:
+    constraints: "Discover actual GPUs, RAM, Slurm partitions, quotas, and time limits."
+    requirements:
+      - Use chunked/streamed IO for very large native phantoms.
+      - Smoke-test GPU, dataloaders, target mapping, gradients and checkpoint restore.
+      - Make jobs checkpointed, restartable, and bounded in GPU-hour expenditure.
+      - Record actual GPU-hours, VRAM peak, training time and inference latency.
+      - Use paired seeds [11, 22, 33] for core comparators when resources allow.
+      - Reduce batch/patch size automatically after OOM and log the change.
+  common_preprocessing:
+    - Keep one reproducible CT intensity normalization chosen on TRAIN only.
+    - Apply consistent train-only augmentation across comparable architectures.
+    - Keep a clear common reference configuration, architecture, loss and budget
+      so each ablation changes one isolated methodological factor.
+    - Use patient-balanced sampling and preserve lung, soft tissue, bone, air.
+    - Construct CT-derived field-of-view masks and valid-overlap supervision masks.
+    - Evaluate predictions over the same physical region for every comparator.
+    - Distinguish complete in-body field from available phantom/CT overlap.
+  primary_endpoints:
+    - per_subject_in_body_density_MAE_g_cm3
+    - per_subject_in_body_density_RMSE_g_cm3
+    - per_subject_canonical_material_macro_Dice_or_macro_F1
+    - per_subject_dukesim_export_validity
+  secondary_endpoints:
+    - per_subject_density_bias_g_cm3
+    - lung_vs_nonlung_accuracy
+    - material_confusion_and_rare_class_sensitivity
+    - interior_vs_boundary_density_and_material_errors
+    - classwise_density_error_and_physical_plausibility
+    - structural_continuity_and_local_texture_comparison
+    - per_subject_computation_and_memory_cost
+    - robustness_by_recon_variant_intensity_shift_and_noise
+    - diffusion_sample_variability_calibration_and_point_accuracy
+  statistics: >-
+    Compute subject-level paired differences versus a prespecified baseline;
+    report 95% paired patient-bootstrap CIs, effect sizes, and per-subject plots.
+    Do not treat voxel counts as independent evidence. If test N is small,
+    state the resulting interval width and abstain from strong claims.
+
+literature:
+  agent_instructions: >-
+    Retrieve these sources and expand the review with primary papers. For each,
+    report task, input modality, ground truth, model/loss, training N, metrics,
+    any clinical validation claims in the cited work, and differences from
+    single-energy synthetic TrueCT. Do not perform clinical experiments. Tie
+    every major ablation to a research rationale and cite sources
+    in the Quarto report. Never copy a spectral-PCCT physics loss blindly.
+  seed_papers:
+    - key: valand_2026
+      title: Truth-based physics informed estimation of material composition in spectral CT in terms of density and effective atomic number
+      authors: "Valand et al."
+      year: 2026
+      doi: "10.1088/1361-6560/ae4284"
+      url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC13173581/"
+      role: >-
+        Closest motivation: supervised phantom truth -> density/material-property
+        prediction and regularization comparisons; discuss any clinical transfer
+        only as background. IMPORTANT: uses spectral photon-counting CT, not TrueCT
+        single-energy CT; reports rho and Z_eff, not DukeSIM-compatible labels.
+    - key: truect_challenge
+      title: AAPM Truth-based CT (TrueCT) reconstruction grand challenge
+      year: 2025
+      doi: "10.1002/mp.17619"
+      url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC11973969/"
+      role: Establish phantom construction, paired simulation and target limitations.
+    - key: dukesim
+      title: "DukeSim: A realistic, rapid, and scanner-specific simulation framework in computed tomography"
+      authors: "Abadi et al."
+      year: 2019
+      doi: "10.1109/TMI.2018.2886530"
+      url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC6598436/"
+      role: Define the simulator input/output interface and physical material requirements.
+    - key: salinas_2025
+      title: In-silico CT simulations of deep learning generated heterogeneous phantoms
+      authors: "Salinas et al."
+      year: 2025
+      doi: "10.1088/2057-1976/ade9c9"
+      url: "https://pubmed.ncbi.nlm.nih.gov/40587975/"
+      role: >-
+        Motivate realistic heterogeneous phantom representation and DukeSIM
+        integration; note this paper's model direction differs from CT-to-phantom.
+    - key: ron_mic_2015
+      title: "U-Net: Convolutional Networks for Biomedical Image Segmentation"
+      authors: "Ronneberger, Fischer and Brox"
+      year: 2015
+      doi: "10.1007/978-3-319-24574-4_28"
+      url: "https://arxiv.org/abs/1505.04597"
+      role: Base encoder-decoder with skip connections for spatial inference.
+    - key: nnunet_2021
+      title: "nnU-Net: a self-configuring method for deep learning-based biomedical image segmentation"
+      authors: "Isensee et al."
+      year: 2021
+      doi: "10.1038/s41592-020-01008-z"
+      url: "https://www.nature.com/articles/s41592-020-01008-z"
+      role: Justify consistent preprocessing and robust U-Net configuration choices.
+    - key: cicek_2016
+      title: "3D U-Net: Learning Dense Volumetric Segmentation from Sparse Annotation"
+      authors: "Cicek et al."
+      year: 2016
+      url: "https://arxiv.org/abs/1606.06650"
+      role: Test whether true volumetric context improves material/density inference.
+    - key: oktay_2018
+      title: "Attention U-Net: Learning Where to Look for the Pancreas"
+      authors: "Oktay et al."
+      year: 2018
+      url: "https://arxiv.org/abs/1804.03999"
+      role: Optional controlled architecture ablation for localization/context.
+    - key: ho_2020
+      title: Denoising Diffusion Probabilistic Models
+      authors: "Ho, Jain and Abbeel"
+      year: 2020
+      url: "https://arxiv.org/abs/2006.11239"
+      role: Define a genuine iterative diffusion objective and reverse sampler.
+    - key: palette_2022
+      title: "Palette: Image-to-Image Diffusion Models"
+      authors: "Saharia et al."
+      year: 2022
+      url: "https://arxiv.org/abs/2111.05826"
+      role: Motivate fully paired, CT-conditioned image-to-image diffusion.
+    - key: ddim_2021
+      title: Denoising Diffusion Implicit Models
+      authors: "Song, Meng and Ermon"
+      year: 2021
+      url: "https://arxiv.org/abs/2010.02502"
+      role: Controlled diffusion sampling-step and inference-cost ablations.
+    - key: dukesim_copd_validation
+      title: Scanner-specific validation of a CT simulator using a COPD-emulated anthropomorphic phantom
+      year: 2022
+      url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC9087304/"
+      role: Background on simulator validation and limitations of synthetic imaging;
+        do not add clinical CT experiments to this plan.
+
+agent_autonomy:
+  objective: >-
+    Execute scientifically permitted work end-to-end with minimal user debugging.
+    Agents own literature inspection, code, HPC jobs, environment repair, data
+    checks, ablations, quantitative analysis, visualization, and reports.
+  before_starting_any_experiment:
+    - Inspect the repository, settings.yaml, datasets, local code, and prior reports.
+    - Verify all prerequisite source files, permissions, formats and dimensions.
+    - Validate intended outputs and target schema before allocating expensive GPUs.
+    - Write a small plan-of-record with method/metric choices and reasons.
+  allowed_without_human_review:
+    - Resolve ambiguous paths/formats by inspection and independent tests.
+    - Choose documented implementation details consistent with the hypotheses.
+    - Repair package, parser, memory, Slurm, checkpoint and worktree failures.
+    - Tune operational limits, patch shapes and dataloader workers to available HPC.
+    - Add focused tests and controls when they can rule out known failure modes.
+    - Expand literature and transparently record interpretive choices.
+    - Analyze unexpected findings and conduct bounded diagnostic reruns on TRAIN/VAL.
+  never_do_silently:
+    - Replace the core supervised task with an easier density-only claim.
+    - Drop diffusion or mandatory comparisons simply because U-Net performs well.
+    - Change target meaning, cohort, split, primary endpoint, or test set after seeing outcomes.
+    - Leak phantom truth into inference or use non-TrueCT patient images.
+    - Extend the experiment to real-patient CT without a separate study plan.
+    - Disable verification, rewrite evidence, or fabricate expected artifacts.
+  when_uncertain: >-
+    Investigate independently, compare evidence, take the most conservative
+    reproducible interpretation, and state it in reports/decisions.md. Escalate
+    only if permissions/ethics forbid continuation, the data are irreparably
+    inadequate, or two reasonable interpretations would materially change the
+    scientific claim and cannot be resolved empirically.
+  failure_policy:
+    transient_hpc: retry_with_bounded_backoff
+    technical_code: diagnose_patch_test_retry
+    resource_limit: downscale_compute_not_scientific_comparison
+    dataset_ambiguity: inspect_validate_document_and_continue_if_possible
+    scientific_no_go: record_evidence_and_skip_only_affected_branch
+    irrecoverable: report_blocker_with_commands_logs_and_safe_recovery
+  verification:
+    - Artifact existence AND nonempty, schema-valid, numerically finite content.
+    - Pairing/geometry/units cross-checks and representative overlays.
+    - No train/validation/test subject overlap or target leakage.
+    - Checkpoint reload and reproducible inference on previously unseen input.
+    - Every numerical claim traceable to run/config/data/model IDs.
+    - Explicit status PASS, FAIL, NO_GO, SKIP or BLOCKED for each ablation.
+  reporting:
+    progress_index: state/STATUS.md
+    decisions: reports/decisions.md
+    run_manifest: reports/run_manifest.json
+    rule: >-
+      Keep live state and HPC logs outside this plan. Update status per stage;
+      deliver completed evidence and genuine blockers, not requests for routine
+      command-by-command troubleshooting. Never mistake expected file names for
+      proof that the experiments were run.
+
+experiments:
+  e00_pairs_and_dukesim_targets:
+    title: Verify all 67 matched CT/phantom pairs and define simulator-ready targets
+    question: >-
+      Which source phantom attributes and material definitions must be recovered
+      from CT, and can we build trustworthy supervised targets for all 67 pairs?
+    methods:
+      - Inventory exactly 67 COPD original phantom IDs and associated reconstructions.
+      - Inspect pairing index, TrueCT paper, density spreadsheets and binary labels.
+      - Verify how the voxel labels, densities and elemental definitions feed DukeSIM.
+      - Determine canonical material classes across subjects; preserve native IDs.
+      - Build density, class, valid-coverage and boundary targets on CT grid.
+      - Verify CT orientation/scale/transforms in both directions on diverse cases.
+      - Record eligible/ineligible/uncertain for every subject, with evidence.
+      - Freeze subject splits after checking for duplicate or derivative phantoms.
+      - Test roundtrip export to native phantom representation if feasible.
+    diagnostics:
+      - label_dictionary_and_density_table_roundtrip
+      - material_density_units_and_elemental_fractions_consistency
+      - inverse_transform_and_overlay_alignment
+      - partial_volume_and_target_resampling_sensitivity
+      - in_body_fov_and_common_z_coverage
+      - DukeSIM_export_schema_acceptance_or_mock_validator_if_unavailable
+    expected_artifacts:
+      - reports/e00/subjects_67.json
+      - reports/e00/dukesim_contract.md
+      - reports/e00/ontology_and_targets.json
+      - reports/e00/cohort_qc.json
+      - reports/e00/alignment_validation.json
+      - reports/e00/target_manifest.json
+      - configs/splits_copd.json
+      - docs/report/chapters/e00.qmd
+    large_outputs: "HPC workspace results/e00/; aligned patches/volumes and overlays."
+    exit_condition: >-
+      All 67 source IDs accounted for; a verified method exists for producing
+      training targets and exporting predictions, or a scientifically explicit
+      NO_GO explains what is impossible and how other targets can proceed.
+
+  e01_supervised_baselines:
+    title: Intensity and simple spatial baselines for density and material recovery
+    question: >-
+      How much of simulator-defined density/material mapping is accessible
+      without a full learned spatial U-Net?
+    methods:
+      - B0 physical HU-density approximation only if CT HU semantics verified.
+      - B1 global train-fitted monotone/piecewise CT-to-density mapping.
+      - B2 train-fitted flexible intensity-only regressor (small MLP/1x1 CNN).
+      - B3 CT-filtered intensity calibration with validation-selected filter.
+      - B4 supervised class prediction from intensity alone, if classes are definable.
+      - Use same subjects, target resampling, valid masks and metrics as deep models.
+      - Freeze baseline coefficients, ontology and decision rules before test.
+    expected_artifacts:
+      - reports/e01/baselines.json
+      - reports/e01/validation.json
+      - reports/e01/frozen_comparators.json
+      - docs/report/chapters/e01.qmd
+    large_outputs: "HPC workspace results/e01/."
+
+  e02_unet_and_variants:
+    title: Supervised CT-to-phantom U-Net family and controlled ablations
+    question: >-
+      Which form of spatial context, architecture and supervised output head
+      best predicts density and DukeSIM-relevant material categories?
+    required_core_models:
+      - U1 standard 2D U-Net, density regression head.
+      - U2 standard 2D U-Net, canonical material segmentation head.
+      - U3 same-backbone 2D multi-task U-Net, joint density and material heads.
+      - U4 2.5D U-Net with adjacent CT slices, same supervised targets.
+      - U5 patch-based 3D U-Net if memory permits after automatic patch reduction.
+    required_controls:
+      - Shared capacity/parameter count comparisons where feasible.
+      - Pure 1x1 convolution/MLP capacity control from E01.
+      - A consistent loss/mask/augmentation/training budget across comparable runs.
+      - CT-derived crop/inference pipeline without phantom oracle data.
+    supervised_losses:
+      density: [masked_L1, masked_Huber, masked_L1_plus_gradient]
+      class: [cross_entropy, cross_entropy_plus_Dice]
+      multitask: [weighted_class_plus_density, class_plus_lookup_density_consistency]
+      detail: >-
+        Normalize losses using TRAIN/VAL only. Implement lookup consistency using
+        the train-derived fixed material catalog, not per-test-subject tables.
+        Limit loss sweeps to the prespecified ablation subset, not all combinations.
+    approach:
+      - Smoke-test real patch loaders, inverse transforms, checkpoint and export.
+      - Train U1-U3 with seed 11, then extend core models to seeds 22 and 33.
+      - Use a common initial masked L1 density loss and cross-entropy class
+        loss for head comparisons, then vary losses in controlled ablations.
+      - Train U4 and U5 with matched supervision; record if 3D cannot fit.
+      - Apply selected loss and architecture ablations from ablation_matrix.
+      - Freeze checkpoint, normalization, ontology and output conversion on VAL.
+    expected_artifacts:
+      - reports/e02/model_registry.json
+      - reports/e02/smoke.json
+      - reports/e02/ablations.json
+      - reports/e02/validation.json
+      - reports/e02/frozen_models.json
+      - docs/report/chapters/e02.qmd
+    large_outputs: "HPC workspace checkpoints/e02/ and results/e02/."
+
+  e03_conditional_diffusion:
+    title: Supervised paired CT-conditioned generative phantom-property estimation
+    question: >-
+      When trained on the same paired TrueCT data, does conditional diffusion
+      improve density accuracy, spatial texture, and/or predictive diversity
+      compared with deterministic U-Nets, at what computational cost?
+    mandatory: true
+    supervision: >-
+      Train exclusively from (simulated reconstructed CT, matched density target)
+      pairs, with no unpaired data or target-domain adaptation. The reverse
+      diffusion process must be genuinely iterative and conditioned on CT.
+    comparable_task: >-
+      Primary generative comparison is continuous physical density on the same
+      test masks as U1. For DukeSIM export, couple sampled density with a frozen
+      supervised material classifier and the fixed train-only material catalog.
+      Do not apply a Gaussian continuous DDPM directly to arbitrary label IDs
+      and interpret them as discrete material identities.
+    methods:
+      - D1 paired conditional DDPM, CT plus noisy target as network input.
+      - Train noise-prediction objective with a documented schedule and scaling.
+      - Validate full reverse sampler and checkpoint resumption before long runs.
+      - Compare DDIM 25 and 50 step sampling on VAL, with 100 steps if feasible.
+      - Draw 4 fixed-seed samples per subject; do not select nearest-to-truth sample.
+      - Compare prespecified point summary (sample mean) and individual samples.
+      - Quantify sample diversity, error, boundary fidelity and density histogram.
+      - Compare matched U-Net parameter counts where practical and report walltime.
+      - Optionally explore class-conditional or categorical generative heads only
+        after the continuous-density ablation is complete and reported.
+    cost_policy: >-
+      This ablation is a requested study, not a casual optional extra. If a full
+      run is computationally impossible, execute a bounded real-data pilot,
+      estimate costs, record exact blocking resource and mark INCOMPLETE rather
+      than claiming SKIP because a deterministic method already works.
+    expected_artifacts:
+      - reports/e03/smoke.json
+      - reports/e03/sampler_validation.json
+      - reports/e03/diffusion_ablations.json
+      - reports/e03/validation.json
+      - reports/e03/frozen_diffusion.json
+      - docs/report/chapters/e03.qmd
+    large_outputs: "HPC workspace checkpoints/e03/ and results/e03/."
+
+  e04_locked_synthetic_evaluation:
+    title: Final independent synthetic-subject evaluation and simulator-ready output check
+    question: >-
+      Which supervised mapping best recovers phantom properties for unseen
+      synthetic COPD subjects, and what errors affect possible DukeSIM reuse?
+    methods:
+      - Verify subject isolation, frozen models, preprocessing and metrics.
+      - Run all frozen comparators once on the same subject-held-out test set.
+      - Compare material class Dice/F1, density MAE/RMSE/bias and boundaries.
+      - Analyze canonical material confusion, lung emphysema and non-lung regions.
+      - For diffusion, evaluate prespecified sampler and sample-mean protocol.
+      - Report whether comparing networks at comparable parameter counts or
+        compute budgets changes the apparent ranking; do not conceal imbalance.
+      - Validate output voxel labels against canonical table and physical geometry.
+      - Compare native-grid export against CT-grid evaluation; report artifacts.
+      - Run optional DukeSIM resimulation if authorized and actually available;
+        compare reconstructed outputs to the source CT only as a distinct check.
+      - Compute paired subject-bootstrap uncertainty and report all 67 accounting.
+      - Produce the final study verdict and stop; do not require real-patient CT.
+    expected_artifacts:
+      - reports/e04/locked_protocol.json
+      - reports/e04/test_results.json
+      - reports/e04/dukesim_export_validation.json
+      - reports/e04/statistics.json
+      - docs/report/chapters/e04.qmd
+    large_outputs: "HPC workspace results/e04/ and frozen synthetic qualitative galleries."
+    exit_condition: >-
+      All eligible frozen models and ablations are evaluated on held-out synthetic
+      subjects; DukeSIM-compatible outputs and limitations are documented; the
+      final report is complete. The plan TERMINATES here without clinical data.
+
+
+ablation_matrix:
+  policy: >-
+    Execute required comparisons first; conditional comparisons are attempted
+    when supported by available data and compute. Change ONE factor at a time
+    against a clearly named reference model; never launch the full Cartesian
+    product. Every row reports hypothesis, contrast, fixed controls, N, seeds,
+    runtime, verdict and relevant papers.
+  required:
+    - id: A01
+      factor: target_representation
+      compare: [density_only_U1, canonical_material_only_U2, joint_density_material_U3]
+      hypothesis: Joint supervision may improve consistency and simulator utility.
+      references: [valand_2026, salinas_2025, dukesim]
+    - id: A02
+      factor: deterministic_point_baseline
+      compare: [physical_or_monotone_HU, flexible_voxelwise_MLP, 2D_UNet]
+      hypothesis: Determine added value beyond local attenuation and nonlinear capacity.
+      references: [valand_2026, ron_mic_2015]
+    - id: A03
+      factor: simple_spatial_control
+      compare: [filtered_intensity_calibration, 2D_UNet]
+      hypothesis: Separate learned anatomy from straightforward denoising.
+      references: [nnunet_2021]
+    - id: A04
+      factor: spatial_context
+      compare: [single_slice_2D, three_slice_2p5D, patch_3D]
+      hypothesis: Inter-slice anatomy should help recover structures and materials.
+      references: [ron_mic_2015, cicek_2016]
+    - id: A05
+      factor: continuous_regression_loss
+      compare: [masked_L1, masked_Huber, masked_L1_plus_gradient]
+      hypothesis: Loss trade-offs affect quantitative density and sharp boundaries.
+      references: [valand_2026]
+    - id: A06
+      factor: material_segmentation_loss
+      compare: [cross_entropy, cross_entropy_plus_Dice]
+      hypothesis: Region overlap and rare classes may benefit from combined loss.
+      references: [nnunet_2021]
+    - id: A07
+      factor: head_consistency
+      compare: [separate_density_and_labels, joint_multitask, label_to_table_density]
+      hypothesis: Physically tied material outputs may trade pixel accuracy for consistency.
+      references: [dukesim, valand_2026]
+    - id: A08
+      factor: generation_method
+      compare: [deterministic_UNet_density, CT_conditional_DDPM_density]
+      hypothesis: Generative modeling changes texture and uncertainty versus point estimates.
+      references: [ho_2020, palette_2022]
+    - id: A09
+      factor: diffusion_sampling
+      compare: [DDIM_25, DDIM_50, DDIM_100_if_feasible]
+      hypothesis: Sampling cost and stochastic variability affect fidelity.
+      references: [ddim_2021, palette_2022]
+    - id: A10
+      factor: diffusion_prediction_summary
+      compare: [first_fixed_sample, mean_of_four_fixed_samples]
+      hypothesis: A sample mean may improve density MAE but suppress realistic texture.
+      references: [palette_2022]
+    - id: A11
+      factor: supervised_training_data_size
+      compare: [10_subjects, 20_subjects, 40_subjects, all_available_train_subjects]
+      hypothesis: Assess whether 67 subjects are limiting U-Net and diffusion performance.
+      protocol: >-
+        Construct nested deterministic TRAIN-only subject subsets; keep the same
+        frozen validation/test subjects and common preprocessing. Compare U-Net
+        sizes first, then diffusion if computationally feasible.
+      references: [nnunet_2021, valand_2026]
+    - id: A12
+      factor: synthetic_input_perturbation_robustness
+      compare: [original_synthetic_CT, same_CT_with_prespecified_noise, same_CT_with_prespecified_blur]
+      hypothesis: Test sensitivity to controlled synthetic-image changes without implying clinical generalization.
+      protocol: >-
+        Select perturbation types and magnitudes using TRAIN/VAL and documented
+        simulator/reconstruction characteristics before opening TEST metrics.
+        Apply the frozen networks to the same held-out synthetic subjects and
+        compare against their unchanged phantom targets. Clearly label this a
+        synthetic stress test, not validation on unseen scanners or patients.
+      references: [truect_challenge, dukesim_copd_validation, nnunet_2021]
+  conditional:
+    - id: A13
+      factor: UNet_skip_or_backbone_variant
+      compare: [standard_UNet, residual_UNet, attention_UNet]
+      trigger: Complete U1-U3 and select same task with stable VAL metrics.
+      hypothesis: More expressive feature fusion may better preserve small structures.
+      references: [ron_mic_2015, oktay_2018]
+    - id: A14
+      factor: geometry_and_resolution
+      compare: [native_CT_resolution, alternate_predefined_training_resolution]
+      trigger: Credible matching physical coverage across configurations.
+      hypothesis: Target smoothing and resolution can dominate voxelwise error.
+      references: [truect_challenge, nnunet_2021]
+    - id: A15
+      factor: target_construction
+      compare: [volume_averaged_density, point_or_interpolated_density]
+      trigger: E00 demonstrates a measurable partial-volume choice.
+      hypothesis: Training-label semantics especially affect edges and vessels.
+      references: [truect_challenge, valand_2026]
+    - id: A16
+      factor: robustness_to_reconstruction
+      compare: [matched_recon, held_out_recon_variant_if_available]
+      trigger: Multiple legitimate recon variants or acquisition settings exist.
+      hypothesis: Network performance is sensitive to reconstruction appearance.
+      references: [truect_challenge, valand_2026]
+    - id: A17
+      factor: training_augmentation
+      compare: [standard_augmentations, protocol_plausible_noise_and_blur]
+      trigger: Perturbation parameters can be motivated from TRAIN/VAL synthetic characteristics.
+      hypothesis: Noise/blur augmentation may improve held-out synthetic robustness.
+      references: [dukesim_copd_validation, nnunet_2021]
+    - id: A18
+      factor: metadata_conditioning
+      compare: [CT_only, CT_plus_available_protocol_metadata]
+      trigger: Same metadata consistently exists for eligible synthetic cases.
+      hypothesis: Explicit scan information could mitigate synthetic reconstruction variability.
+      references: [valand_2026, dukesim]
+    - id: A19
+      factor: training_seed_stability
+      compare: [seed_11, seed_22, seed_33]
+      trigger: Core models trained and checkpoints confirmed reproducible.
+      hypothesis: Quantify optimization variability rather than one lucky run.
+      references: [nnunet_2021]
+  ordering:
+    - A01
+    - A02
+    - A03
+    - A04
+    - A05
+    - A06
+    - A07
+    - A08
+    - A09
+    - A10
+    - A11
+    - A12
+    - A19
+    - A13
+    - A14
+    - A15
+    - A16
+    - A17
+    - A18
+  no_uncontrolled_search: >-
+    Predeclare each sweep's candidate choices on TRAIN/VAL, cap compute, and
+    prune only based on development metrics. Report all attempted runs and
+    selection criteria, not just winners.
+
+reporting:
+  central_outputs:
+    - README.md
+    - state/STATUS.md
+    - reports/run_manifest.json
+    - reports/decisions.md
+    - reports/ablation_registry.json
+    - docs/report/index.qmd
+    - docs/report/chapters/e00.qmd
+    - docs/report/chapters/e01.qmd
+    - docs/report/chapters/e02.qmd
+    - docs/report/chapters/e03.qmd
+    - docs/report/chapters/e04.qmd
+    - docs/report/chapters/literature.qmd
+    - docs/report/chapters/limitations.qmd
+  each_experiment_must_include:
+    - Research question, relevance and literature justification.
+    - Exact subjects, targets, units, masks and preprocessing.
+    - Models, losses, seeds, optimizer, sample counts and training time.
+    - Verification tests, failure analysis and any autonomous repairs.
+    - Tables and figures with per-subject results and effect uncertainty.
+    - Distinction between evidence, assumptions, choices and conclusions.
+    - Configuration, code commit, dataset manifest and artifact provenance.
+    - What to investigate next, without silently expanding this study.
+  visualizations:
+    - Side-by-side CT, phantom labels, predicted labels, reference/predicted density.
+    - Quantitative density residuals, material-confusion matrices and boundaries.
+    - 3D orthogonal slices with consistent physical coordinates and scales.
+    - Learning curves and ablation comparison with patient-level uncertainty.
+    - Diffusion variability/texture samples and speed-quality plots.
+    - Synthetic holdout perturbation galleries with reference phantom targets.
+    - DukeSIM export sanity checks and resimulation comparisons if available.
+  final_deliverables:
+    - Locked synthetic evaluation table covering all required completed comparators.
+    - Ablation matrix with attempted, passed, failed and infeasible runs.
+    - Reusable trained checkpoints and standalone CT-to-phantom inference script.
+    - A DukeSIM-compatible phantom export demonstrator and its validator.
+    - A bounded future-work section specifying prerequisites for a separate
+      real-patient CT transfer study; no such data or experiments are required.
+    - A Quarto scientific report with citations and proposed next experiments.

@@ -1,0 +1,167 @@
+# Human-readable research preferences. These are not Claude Code permission settings.
+# The dataset paths are supplied by the project owner; Claude must check they exist.
+version: 1
+
+project:
+  name: truect-copd-density
+  repository_root: .
+  scientific_plan: plans/
+  progress_index: state/STATUS.md
+  mission: >-
+    Infer physical mass density (g/cm^3) from reconstructed TrueCT COPD scans,
+    using trustworthy CT/phantom correspondence and leakage-free evaluation.
+
+paths:
+  shared_code: src/
+  shared_scripts: scripts/
+  shared_tests: tests/
+  experiment_code: experiments/           # Experiment-only code and configurations, on experiment branches.
+  small_results: reports/
+  run_manifests: reports/runs/
+  experiments_state: state/experiments/
+  decisions: state/decisions/
+  history: state/history/
+  progress_index: state/STATUS.md
+  local_bundles: .local_research/bundles/  # Git-ignored source snapshots.
+  quarto:
+    preferred_root: docs/report/
+    existing_project: null                # Inspect before creating or moving a Quarto project.
+    policy: >-
+      Keep reproducible scientific reports and figures in Quarto. Render from
+      small saved metrics, tables and figures. Never train models or run lengthy
+      CT transformations as an implicit QMD render side effect.
+
+hpc:
+  ssh_host_hint: plp-drcc-login2           # Verify that this SSH alias works.
+  scheduler: slurm
+
+  # Immutable input area: inspect and read, but do not modify anything here.
+  datasets:
+    truect:
+      root: /scratch/railabs/yb107/Datasets/TrueCT
+      access: read_only
+      rules: >-
+        No mkdir, edits, deletions, renames, archives, checkpoints, generated masks,
+        cache files, temporary files, or logs anywhere under this root. Do not
+        modify source ownership or permissions. Read in bounded batches. Set
+        all library caches/temp directories to the writable workspace.
+
+  # Reference only: inspect and copy useful ideas/scripts into OUR workspace.
+  reference_scripts:
+    root: /scratch/railabs/yb107/tmp/truect_case_10313_slides
+    access: read_only
+    policy: >-
+      Inspect scripts to accelerate orientation/geometry understanding, but
+      independently test assumptions and provenance. Copy or reimplement into
+      experiment code; do not execute in place or write to the reference tree.
+      Case 10313 is development-exposed and must not enter blinded validation/test.
+
+  # The ONLY default writable remote project root; create project directory here.
+  workspace:
+    parent: /scratch/railabs/yb107/research-output
+    project_directory: truect-copd-density
+    root: /scratch/railabs/yb107/research-output/truect-copd-density
+    create_if_missing: true
+    layout:
+      code: code/                  # Staged source snapshots and remote experiment code.
+      results: results/            # Derived volumes, transforms, small and large results.
+      checkpoints: checkpoints/    # Model weights and intermediate checkpoints.
+      runs: runs/                  # Per-run manifests, stdout/stderr and diagnostics.
+      logs: logs/
+      cache: cache/
+      tmp: tmp/
+      envs: envs/                  # Optional isolated experimental uv environments.
+    protect: >-
+      Never delete this project directory wholesale. Treat results and runs as
+      provenance-bearing data. Use distinct run keys and prefer resume to rerun.
+
+  # Compatibility for scripts/research_hpc.py (stage code ONLY here).
+  derived:
+    root: /scratch/railabs/yb107/research-output/truect-copd-density
+
+  python:
+    package_manager: uv
+    base_environment: /scratch/railabs/yb107/research-output/truect-copd-density/.venv
+    uv_cache: /scratch/railabs/yb107/research-output/truect-copd-density/cache/uv
+    python_download_cache: /scratch/railabs/yb107/research-output/truect-copd-density/cache/python
+    system_python: python3           # Inspect available Python and accelerator compatibility.
+    dependency_manifest: pyproject.toml
+    lockfile: uv.lock                 # Generate after choosing genuine compatible versions.
+    setup: >-
+      Use uv to create and maintain the project-local .venv; never install to
+      system Python or a pre-existing shared environment. Set UV_CACHE_DIR,
+      UV_PYTHON_INSTALL_DIR, UV_PROJECT_ENVIRONMENT, XDG_CACHE_HOME, TMPDIR,
+      HF_HOME, TORCH_HOME, MPLCONFIGDIR and PYTHONPYCACHEPREFIX inside the
+      writable workspace. Source .venv/bin/activate for interactive work; use
+      the absolute .venv/bin/python in Slurm jobs. Once a lockfile exists, use
+      uv sync --locked from the relevant source checkout. Verify PyTorch/CUDA
+      on an allocated GPU node, not from login-node assumptions.
+    concurrent_experiments: >-
+      Do not run uv sync simultaneously against one shared environment. Keep
+      the base .venv pinned to one coherent lockfile; if experiments need
+      different packages, make separate envs under workspace/envs/ and record
+      their lockfiles and exact interpreter paths per run.
+
+  slurm_defaults:
+    cpus: 2
+    gpus: 0
+    memory: 24G
+    time: '02:00:00'
+    note: Resource hints only. Adjust after measured memory, runtime and GPU checks.
+  rules: >-
+    Do not run heavy processing on login nodes. Check jobs and output folders
+    before submitting duplicates. Stage experiment worktree source into the
+    project workspace, record snapshot hash and scheduler ID. Keep large
+    derived outputs on HPC; copy only small figures, metrics and manifests
+    into the Git repository. Treat Slurm COMPLETED as a compute status, not
+    a scientific result.
+
+engineering:
+  primary_branch: main
+  worktree_root: .worktrees/              # Local, Git-ignored.
+  experiment_branch_pattern: experiment/{experiment}-{topic}
+  shared_module_root: src/
+  lead_is_sole_main_writer: true
+  policies: >-
+    Each implementing subagent uses its own branch/worktree; read-only reviews
+    can operate without one. Keep experiment-specific scripts, test fixtures,
+    configs and scratch files under experiments/<experiment>/ on experiment
+    branches. Do NOT merge whole experiment branches into main. The lead
+    selectively extracts well-tested reusable code into src/, shared scripts
+    into scripts/, and appropriate tests into tests/ on main. When a component
+    becomes useful in two experiments, refactor to core and update branches to
+    consume it. Do not delete experiment history or overwrite unmerged changes.
+  snapshots: >-
+    Compute on the exact code revision used for the run (a Git commit or
+    checksummed snapshot from the experiment worktree), not an unrelated main
+    checkout. Record uncommitted code explicitly if necessary.
+
+agents:
+  lead: Claude Code session launched from main
+  delegation: agent_decides
+  main_state_writer: lead_only
+  handoff_fields: [purpose, worktree, branch, commit, modified_files, tests, evidence, scientific_impact, unresolved]
+  concurrency: Avoid overlapping writes. Assign unique branches and files to parallel subagents.
+  discretion: >-
+    Resolve engineering problems autonomously; ask about significant changes
+    to the scientific claim, requested destructive operations outside generated
+    outputs, or unavailable credentials. No automatic gating, retry loop,
+    task dependency engine, or promotion infrastructure.
+
+records:
+  current_status: state/STATUS.md
+  experiment_journals: state/experiments/
+  format: 'Markdown for reasoning; JSON for run provenance and metrics; YAML for configuration and plan.'
+  keep_short: >-
+    STATUS.md is an index with experiment statuses, current HPC runs, important
+    uncertainty and the next useful action. Experiment journals have summaries
+    and evidence links; older details move to state/history/ on demand.
+  run_minimum: [experiment, run_key, slurm_job_id, code_snapshot, environment, config, source_manifest, command, seeds, outputs, status]
+  reporting: >-
+    At each milestone, record findings, bugs and the fix's scientific impact.
+    Link to actual metrics and artifacts, never fill in placeholder results.
+    Avoid treating expected_artifacts as required existence-based pass checks.
+  monitoring: >-
+    An active Claude session may periodically reconcile Slurm jobs. A later
+    session must recover from manifests, Git and actual scheduler state.
+    Remote control and scheduling are optional and require real connectivity.

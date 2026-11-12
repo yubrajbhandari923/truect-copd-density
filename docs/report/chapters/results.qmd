@@ -1,0 +1,6 @@
+---
+title: 'Evaluation results'
+---
+
+Results will be generated from saved, versioned experiment metrics after
+subject-level evaluation. No placeholder figures or results are supplied.

@@ -1,0 +1,7 @@
+---
+title: 'Limitations and interpretation'
+---
+
+Document CT intensity calibration uncertainty, CT/phantom geometry, phantom
+reference realism, FOV coverage, cohort diversity, patient-level uncertainty,
+model failures and the difference between exploratory and held-out findings.

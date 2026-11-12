@@ -1,0 +1,21 @@
+project:
+  type: website
+  output-dir: _site
+website:
+  title: 'TrueCT COPD — physical density recovery'
+  navbar:
+    left:
+      - href: index.qmd
+        text: Overview
+      - href: chapters/e00.qmd
+        text: Dataset and geometry
+      - href: chapters/results.qmd
+        text: Results
+      - href: chapters/limitations.qmd
+        text: Limitations
+format:
+  html:
+    toc: true
+    code-fold: true
+execute:
+  freeze: auto

@@ -1,0 +1,9 @@
+---
+title: 'TrueCT COPD — CT to physical density'
+---
+
+This is the scientific reporting home for the study defined in
+[`plans`](../../plans/). It will be populated with evidence-linked
+methods, results, figures and limitations as the experiments progress.
+
+No numerical scientific results are asserted in this starter report.
