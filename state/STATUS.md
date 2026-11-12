@@ -40,7 +40,7 @@ or scientific result is claimed here.
 
 ## Pointers
 
-- [Scientific plan](../plan.yaml)
+- [Scientific plan](../plans/plan-001.yaml)
 - [HPC and paths](../settings.yaml)
 - [Run records](../reports/runs/)
 - [Decisions](decisions/)
