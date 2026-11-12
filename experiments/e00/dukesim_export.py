@@ -235,20 +235,19 @@ def validate_package(pkg):
                 probs.append(f"ID {oid} name/MC/composition differs from catalogue")
         put("V9", not probs, "; ".join(probs[:8]) or f"{len(tab)} IDs match the 53-ID COPD catalogue (name, MC ID, composition)")
         # V10
-        lad = {"parenchyma 26-38": (range(26, 39), [1, 1.5, 2.1, 2.7, 3.3, 3.9, 4.5, 5.3, 6.1, 6.9, 7.7, 8.5, 9.2]),
-               "spine 39-43": (range(39, 44), [1, 1.07, 1.14, 1.21, 1.28]),
-               "ribs 45-49": (range(45, 50), [1, 1.069, 1.138, 1.207, 1.276]),
-               "scapula 50-54": (range(50, 55), [1, 1.069, 1.138, 1.207, 1.276]),
-               "sternum 55-59": (range(55, 60), [1, 1.071, 1.143, 1.214, 1.274])}
+        # ladder ratios taken from the catalogue (source subject), exact to ~1e-14 within a subject per the contract
+        lad = {n: (range(a, b + 1), [cat["ids"][str(i)]["density"] / cat["ids"][str(a)]["density"] for i in range(a, b + 1)])
+               for n, (a, b) in {"parenchyma 26-38": (26, 38), "spine 39-43": (39, 43), "ribs 45-49": (45, 49),
+                                 "scapula 50-54": (50, 54), "sternum 55-59": (55, 59)}.items()}
         probs = []
         for n, (rg, rat) in lad.items():
             if all(i in tab for i in rg):
                 base = tab[rg[0]]["density"]
-                bad = [i for i, q in zip(rg, rat) if abs(tab[i]["density"] / base / q - 1) > 1e-4]
+                bad = [i for i, q in zip(rg, rat) if abs(tab[i]["density"] / base / q - 1) > 1e-9]
                 probs += [f"{n}: ID {i} off ladder" for i in bad]
         if all(i in tab for i in range(106, 111)) and len({tab[i]["density"] for i in range(106, 111)}) != 1:
             probs.append("lung 106-110 densities unequal")
-        put("V10", not probs, "; ".join(probs) or "ladder ratios (rel 1e-4; contract values are rounded) and lung 106-110 equality hold")
+        put("V10", not probs, "; ".join(probs) or "ladder ratios (rel 1e-9 vs catalogue ratios) and lung 106-110 equality hold")
     else:
         for v in ("V5", "V6", "V7", "V8", "V9", "V10"):
             res.setdefault(v, dict(status="FAIL", reason="no/ambiguous xlsx"))
