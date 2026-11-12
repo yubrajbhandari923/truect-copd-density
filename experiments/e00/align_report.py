@@ -46,6 +46,7 @@ def main():
         if an["aorta_left_consistent_with_right_lung_larger"] is not True: flags.append("aorta_vs_lung_side_inconsistent")
         if an["lung_ratio_larger_over_smaller"] < 1.03: flags.append("lung_LR_ratio_weak_lt_1.03")
         if an["ap_dominance"] < 2: flags.append("ap_axis_ambiguous")
+        if an["spine_elongation"] < 2: flags.append("si_axis_ambiguous")
         for m in range(3):
             for k in ("recon_frac_in_phantom", "phantom_frac_in_recon"):
                 if robust_lo([cf(x, m, k) for x in J.values()], cf(j, m, k)): flags.append(f"coverage_outlier_axis{m}_{k}")

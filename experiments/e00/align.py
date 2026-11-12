@@ -149,12 +149,12 @@ def anatomy(L2, tab):
     lung, spine = m("lung", "lung_parenchyma", "emphysema"), m("spine_cortical", "spine_trabecular")
     stern, scap, aorta = m("sternum", "sternum_trabecular"), m("scapulas", "scapulas_trabecular"), m("aorta")
     c_sp, c_st, c_sc, c_lu = cen(spine), cen(stern), cen(scap), cen(lung)
-    d_ap = c_st - c_sp
-    ap = int(np.argmax(abs(d_ap)))
-    rest = [a for a in range(3) if a != ap]
-    d_si = c_sc - c_lu
-    si = rest[int(np.argmax(abs(d_si[rest])))]
-    lr = [a for a in rest if a != si][0]
+    sd = np.array([c.std() for c in np.nonzero(spine)])
+    si = int(np.argmax(sd))  # the spine is the long S-I column
+    d_ap, d_si = c_st - c_sp, c_sc - c_lu
+    rest = [a for a in range(3) if a != si]
+    ap = rest[int(np.argmax(abs(d_ap[rest])))]
+    lr = [a for a in rest if a != ap][0]
     lz = np.nonzero(lung)
     n_lo, n_hi = int((lz[lr] < c_sp[lr]).sum()), int((lz[lr] > c_sp[lr]).sum())
     right_is_low = n_lo > n_hi  # right lung larger
@@ -175,7 +175,8 @@ def anatomy(L2, tab):
                 sternum_minus_spine_mm=d_ap.round(1).tolist(), scapula_minus_lung_mm=d_si.round(1).tolist(),
                 lung_vox_1mm_low_side=n_lo, lung_vox_1mm_high_side=n_hi, lung_ratio_larger_over_smaller=round(max(n_lo, n_hi) / max(1, min(n_lo, n_hi)), 3),
                 lower_third_aorta_minus_spine_lr_mm=aorta_minus_spine_lr, aorta_left_consistent_with_right_lung_larger=aorta_left_ok,
-                ap_dominance=float(abs(d_ap[ap]) / (np.sort(abs(d_ap))[-2] + 1e-9)),
+                ap_dominance=float(abs(d_ap[ap]) / (abs(d_ap[lr]) + 1e-9)),
+                spine_elongation=float(sd[si] / np.sort(sd)[-2]), spine_sd_mm=sd.round(1).tolist(),
                 note="1 mm label grid; centroids in mm from phantom origin; letters assume normal situs")
 
 
@@ -245,21 +246,26 @@ def run(sid):
 
     def fit_t(C, sc):
         sim = np.vstack([C] + [C + np.eye(3)[i] for i in range(3)])
-        o = minimize(lambda q: -r_of(np.r_[q, sc]), C, method="Nelder-Mead",
-                     options=dict(initial_simplex=sim, xatol=0.02, fatol=1e-7, maxiter=400))
+        for _ in range(2):  # restart once: a single Nelder-Mead run stalled 0.4 mm short on 10313
+            o = minimize(lambda q: -r_of(np.r_[q, sc]), C, method="Nelder-Mead",
+                         options=dict(initial_simplex=sim, xatol=0.01, fatol=1e-8, maxiter=400))
+            C = o.x
+            sim = np.vstack([C] + [C + np.eye(3)[i] * 0.5 for i in range(3)])
         return np.r_[o.x, sc], -o.fun
 
     # start translation-only fits from the coarse C re-expressed for the fixed scale (keep x at recon centre)
+    toA = lambda p: (p[:3] - sg * p[3:] * yc).tolist()
     p_t1, r_t1 = fit_t(C0, np.ones(3))
     p_tz, r_tz = fit_t(C0, np.array([SZ_ALT, 1, 1]))
     starts = [np.r_[C0, s], p_t1, p_tz]
-    p_full, r_full = None, -2
+    p_full, r_full, ends = None, -2, []
     for p0 in starts:
         p0 = fit_t(p0[:3], p0[3:])[0]
         sim = np.vstack([p0] + [p0 + np.r_[np.eye(3)[i] * 0.5, 0, 0, 0] for i in range(3)]
                         + [p0 + np.r_[0, 0, 0, np.eye(3)[i] * 0.004] for i in range(3)])
         o = minimize(lambda q: -r_of(q), p0, method="Nelder-Mead",
                      options=dict(initial_simplex=sim, xatol=0.005, fatol=1e-8, maxiter=1500))
+        ends.append(dict(start_scale=p0[3:].tolist(), A_mm=toA(o.x), scale=o.x[3:].tolist(), r=-o.fun))
         if -o.fun > r_full:
             p_full, r_full = o.x, -o.fun
     sens = {}
@@ -268,7 +274,6 @@ def run(sid):
             q = p_full.copy(); q[m] += d; sens[f"shift_axis{m}_{d:+.0f}mm"] = r_of(q) - r_full
         for d in (-0.01, 0.01):
             q = p_full.copy(); q[3 + m] *= 1 + d; sens[f"scale_axis{m}_{d:+.2f}"] = r_of(q) - r_full
-    toA = lambda p: (p[:3] - sg * p[3:] * yc).tolist()
     print(sid, "fine r_t1", r_t1, "r_tz", r_tz, "full", r_full, p_full[3:], f"{time.time() - t0:.0f}s", flush=True)
 
     # (c) coverage under the full fit
@@ -301,7 +306,7 @@ def run(sid):
         runner_up=dict(perm=runner["perm"], flips=runner["flips"], r3mm=runner["r"], margin=best["r"] - runner["r"]),
         fine=dict(n_points=len(pts), translation_only_s1=dict(A_mm=toA(p_t1), r=r_t1),
                   translation_only_sz_0p5476=dict(A_mm=toA(p_tz), scale=[SZ_ALT, 1, 1], r=r_tz),
-                  full=dict(A_mm=toA(p_full), scale=p_full[3:].tolist(), r=r_full),
+                  full=dict(A_mm=toA(p_full), scale=p_full[3:].tolist(), r=r_full), full_fit_from_each_start=ends,
                   implied_recon_spacing_mm_if_phantom_0p25=(VR * p_full[3:]).tolist(),
                   sensitivity_delta_r=sens),
         coverage=list(cov.values()),
