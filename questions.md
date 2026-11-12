@@ -58,6 +58,12 @@ is not met. A12 (synthetic noise/blur perturbation) still covers robustness.
 record the corrections in the report.
 **Answer:**
 
+### Q9. What does "up to 64 GBs" limit?
+You said "up to 64 GBs and 4 GPUs and whatever mem for hpc runs up to 2 days long". Since
+memory is unrestricted, I read 64 as a concurrent CPU-core cap.
+**Default:** at most 64 CPU cores, 4 GPUs and 2 days per run, any memory.
+**Answer:**
+
 ### Q8. Anyone I could ask about the reconstructions?
 You do not know who produced `recons/dcm_recons_copd/` (see D2). If a lab contact might
 (the DICOMs are MATLAB secondary captures dated 2022-02-08, 768x768), a name would let you

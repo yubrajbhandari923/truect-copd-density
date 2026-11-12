@@ -108,6 +108,16 @@ hpc:
     memory: 24G
     time: '02:00:00'
     note: Resource hints only. Adjust after measured memory, runtime and GPU checks.
+  owner_budget:                      # Stated by the owner on 2026-11-12.
+    stated: "up to 64 GBs and 4 GPUs and whatever mem for hpc runs up to 2 days long"
+    max_gpus: 4
+    max_walltime: '2-00:00:00'
+    memory: unrestricted
+    max_cpus: 64                     # Conservative reading of "64 GBs"; confirm (questions.md Q9).
+    collection: >-
+      The lead must return and collect finished runs. Keep a background waiter on each job
+      and, for runs longer than about an hour, a scheduled fallback check as well; a later
+      session reconciles from squeue/sacct and reports/runs/.
   rules: >-
     Do not run heavy processing on login nodes. Check jobs and output folders
     before submitting duplicates. Stage experiment worktree source into the
