@@ -20,8 +20,8 @@
 ## Next action
 
 1. ~~Freeze split~~ done: `configs/splits_copd.json` (46/10/11, stratified, seed 20261112, 10313 in train, no exclusions). Test IDs are not to be looked at until E04.
-2. Check edge CT values in 18762 / 11989 (field-of-view truncation).
-3. E01 baselines (CPU), then E02 U-Nets (add torch, verify CUDA; ≤4 GPUs, ≤2 days).
+2. ~~FOV check~~ done: recon is a disc; eval/training region limited to r < 375 px (2d6bcc4).
+3. RUNNING (subagents, parallel): E01 baselines on `experiment/e01-baselines`; E02 torch install + U-Net smoke test on `experiment/e02-unet`. Then full U1–U3 runs (≤4 GPUs, ≤2 days).
    HPC style: one job reserving many cores/GPUs, parallel inside (owner preference).
 
 ## Experiments
