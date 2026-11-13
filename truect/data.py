@@ -31,7 +31,18 @@ def load(sid, names=ARRAYS, allow_test=False, root=TARGETS):
     return {n: np.load(root / sid / f"{n}.npy", mmap_mode="r") for n in names}, meta
 
 
+FOV_FRACTION = 375 / 384  # recon is a disc of radius ~384 px (CT == -1000 beyond 386 px); keep a ~5 mm margin
+
+
+def fov(shape):
+    """CT-derived reconstruction field of view for an in-plane shape (rows, cols): True inside the disc."""
+    n, m = shape[-2:]
+    yy, xx = np.mgrid[:n, :m]
+    return np.hypot(yy - (n - 1) / 2, xx - (m - 1) / 2) < FOV_FRACTION * min(n, m) / 2
+
+
 def eval_mask(t, i=slice(None)):
-    """Evaluation region: CT voxel fully inside the phantom and not outside-body air (organ ID 0).
-    Truth-defined, identical for every method, never a model input."""
-    return (np.asarray(t["valid"][i]) == 1) & (np.asarray(t["organ_pt"][i]) != 0)
+    """Evaluation region: CT voxel fully inside the phantom, not outside-body air (organ ID 0), and inside the
+    reconstruction field of view. Identical for every method, never a model input."""
+    v = np.asarray(t["valid"][i])
+    return (v == 1) & (np.asarray(t["organ_pt"][i]) != 0) & fov(v.shape)
