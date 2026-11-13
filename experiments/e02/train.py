@@ -1,6 +1,6 @@
 """E02 2D/2.5D U-Net training (U1 density, U2 class, U3 joint, U4 = context>0), resumable, with full-volume validation.
 
-Usage: python train.py configs/<run>.json [--kill-at STEP]
+Usage: python train.py configs/<run>.json [--kill-at STEP] [--validate]
 Outputs: results/e02/<run>/ (log.jsonl, attempts.jsonl, val_<step>.json, overlay_<step>.png, norm.json),
          checkpoints/e02/<run>/last.pt (overwritten atomically; resumed automatically).
 Loss region == truect.data.eval_mask (valid phantom voxel, in body, inside recon FOV). CT normalization uses
@@ -184,6 +184,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("config")
     ap.add_argument("--kill-at", type=int, help="smoke test only: SIGKILL self at this step (preemption test)")
+    ap.add_argument("--validate", action="store_true", help="only validate the saved checkpoint, then exit")
     args = ap.parse_args()
     cfg = json.load(open(args.config))
     name = Path(args.config).stem
@@ -211,6 +212,9 @@ def main():
                    cuda=torch.version.cuda, gpu=torch.cuda.get_device_name(), cfg=cfg,
                    n_params=sum(p.numel() for p in model.parameters()), time=time.strftime("%Y-%m-%dT%H:%M:%S"))
     print(json.dumps(attempt), flush=True)
+    if args.validate:
+        assert ck.exists(), "no checkpoint to validate"
+        return validate(model, cfg, norm, step, out_dir)
     with open(out_dir / "attempts.jsonl", "a") as f:
         f.write(json.dumps(attempt) + "\n")
 
