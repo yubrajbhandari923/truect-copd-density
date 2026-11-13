@@ -71,7 +71,7 @@ def fit_class_lut(x, cls):
 
 def fit_mlp(x, rho):
     sel = np.random.default_rng(SEED).choice(len(x), min(len(x), 1_000_000), replace=False)
-    m = MLPRegressor((32, 32), early_stopping=True, random_state=SEED, max_iter=200).fit(x[sel, None] / 1000, rho[sel])
+    m = MLPRegressor(hidden_layer_sizes=(32, 32), early_stopping=True, random_state=SEED, max_iter=200).fit(x[sel, None] / 1000, rho[sel])
     hu = np.arange(LO, HI + 1, dtype=np.float32)
     return m, m.predict(hu[:, None] / 1000).astype(np.float32)
 
