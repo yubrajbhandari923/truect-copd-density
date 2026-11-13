@@ -14,6 +14,9 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 
+# fd-based shared memory crashed a loader worker in job 204993 ("could not unlink the shared memory file")
+torch.multiprocessing.set_sharing_strategy("file_system")
+
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from truect.data import CLASSES, WORK, eval_mask, fov, load, split  # noqa: E402
 from truect.metrics import subject_metrics  # noqa: E402
