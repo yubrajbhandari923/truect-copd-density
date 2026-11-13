@@ -3,7 +3,8 @@
 Usage: python train.py configs/<run>.json [--kill-at STEP] [--validate]
 Outputs: results/e02/<run>/ (log.jsonl, attempts.jsonl, val_<step>.json, overlay_<step>.png, norm.json),
          checkpoints/e02/<run>/last.pt (overwritten atomically; resumed automatically).
-Loss region == truect.data.eval_mask (valid phantom voxel, in body, inside recon FOV). CT normalization uses
+Loss region: cfg loss_region "body" (default) == truect.data.eval_mask (valid phantom voxel, in body, inside recon FOV);
+"fov" adds outside-body air inside the recon disc so full-volume outputs are usable. Metrics are always on eval_mask. CT normalization uses
 only TRAIN CT inside the CT-derived FOV (no phantom data), so inference needs nothing but the CT.
 """
 import argparse, json, math, os, signal, sys, time
@@ -89,8 +90,10 @@ class Patches(torch.utils.data.Dataset):
         for _ in range(4):
             r, c = rng.integers(0, H - P + 1), rng.integers(0, W - P + 1)
             m = mz[r:r + P, c:c + P]
-            if m.mean() >= 0.05:
+            if m.mean() >= 0.05:  # patch choice always by in-body content, whatever the loss region
                 break
+        if self.cfg.get("loss_region", "body") == "fov":  # also learn outside-body air (organ 0) inside the recon disc
+            m = ((np.asarray(t["valid"][z]) == 1) & fov(mz.shape))[r:r + P, c:c + P]
         x = normalize(ct_stack(t["ct"], z, k)[:, r:r + P, c:c + P], self.norm)
         d = np.where(m, np.asarray(t["density"][z, r:r + P, c:c + P], np.float32), 0)
         cl = np.where(m, t["cls"][z, r:r + P, c:c + P], 255).astype(np.int64)
