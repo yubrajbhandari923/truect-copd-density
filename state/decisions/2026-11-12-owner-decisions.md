@@ -14,3 +14,9 @@ Owner asked for a proper NIfTI dataset of CT + phantom segmentations plus findin
 original dataset directory, mentioning only cases confirmed by analysis or by eye. Written under
 `/scratch/railabs/yb107/Datasets/TrueCT/derived/copd_nifti/` (code: `experiments/e00/export_nifti.py`,
 `check_nifti.py`, `dataset_docs.py` on `experiment/e00-qualification`). Source files are not modified.
+
+## Primary material metric = 9 DukeSim Monte-Carlo materials (lead, 2026-11-13)
+`truect.metrics` now reports `material_macro_dice` over the 9 MC material IDs (primary) besides the 19 anatomical
+name classes (secondary). Reason: the plan's endpoint is canonical / DukeSim-relevant material; several name
+classes (e.g. rib cortical vs trabecular) share one material. Noticed while reviewing E01 B4 (macro Dice 0.15 on
+names); decided before any U-Net result and applied to all methods. Commit on main after 012d657.
