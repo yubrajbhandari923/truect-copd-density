@@ -121,6 +121,7 @@ hpc:
     max_walltime: '2-00:00:00'
     memory: unrestricted
     max_cpus: 64                     # Conservative reading of "64 GBs"; confirm (questions.md Q9).
+                                     # This project's own cap; the owner's other jobs on yb107 (e.g. pv-sweep) do not count.
     collection: >-
       The lead must return and collect finished runs. Keep a background waiter on each job
       and, for runs longer than about an hour, a scheduled fallback check as well; a later

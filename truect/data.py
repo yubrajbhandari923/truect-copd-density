@@ -16,7 +16,10 @@ TARGETS = WORK / "results/e00/targets"
 CLASSES = ['air', 'aorta', 'body', 'emphysema', 'esophagus', 'fissure', 'lung', 'lung_parenchyma', 'muscle',
            'ribs_cortical', 'ribs_trabecular', 'scapulas', 'scapulas_trabecular', 'skin', 'spine_cortical',
            'spine_trabecular', 'sternum', 'sternum_trabecular', 'vessel']  # identical in every subject's meta.json
-ARRAYS = ("ct", "density", "cls", "purity", "organ_pt", "valid")
+MC_OF_CLASS = [1, 9, 2, 5, 4, 4, 5, 5, 4, 6, 6, 6, 6, 8, 7, 7, 3, 3, 9]  # DukeSim Monte-Carlo material ID per CLASSES entry
+MATERIALS = {1: "air", 2: "body_fat", 3: "sternum_bone", 4: "soft_tissue", 5: "lung", 6: "rib_scapula_bone",
+             7: "spine_bone", 8: "skin", 9: "blood"}  # names are descriptive; the IDs are what DukeSim uses
+ARRAYS =("ct", "density", "cls", "purity", "organ_pt", "valid")
 
 
 def split():
