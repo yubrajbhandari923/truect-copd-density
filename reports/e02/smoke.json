@@ -1,0 +1,353 @@
+{
+ "experiment": "e02",
+ "purpose": "GPU smoke test of the U-Net trainer (not a scientific result)",
+ "jobs": {
+  "final": {
+   "slurm_job_id": "204990",
+   "code_snapshot": "74adab7",
+   "snapshot_dir": "/scratch/railabs/yb107/research-output/truect-copd-density/code/74adab7",
+   "command": "sbatch -J e02-smoke --time=03:00:00 experiments/e02/run.sbatch ./smoke.sh",
+   "node": "node004",
+   "gpu": "NVIDIA RTX A5000 24 GB",
+   "cpus": 32,
+   "mem": "160G",
+   "elapsed": "00:06:33",
+   "max_rss_gb": 36.9
+  },
+  "superseded": {
+   "slurm_job_id": "204988",
+   "code_snapshot": "5f381ba",
+   "reason": "CT clip [p0.5,p99.5] = [-1000,227] HU erased bone contrast; fixed to [-1024,3071]. Outputs moved to results|checkpoints/e02/superseded_204988/"
+  }
+ },
+ "environment": {
+  "python": "3.11.14",
+  "torch": "2.14.1+cu126",
+  "cuda_runtime": "12.6",
+  "driver": "565.57.01 (CUDA 12.7)",
+  "env": "/scratch/railabs/yb107/research-output/truect-copd-density/.venv",
+  "matmul_check": "4096x4096 randn matmul on cuda OK (mean |a@a| = 51.04)"
+ },
+ "unit_tests": "experiments/e02/test_e02.py: 3 passed (heads/context shapes, ct_stack edge clamping, loss ignores voxels outside mask)",
+ "ct_norm": {
+  "lo": -1024.0,
+  "hi": 3071.0,
+  "mean": -610.7028198242188,
+  "std": 444.1949768066406,
+  "n_samples": 6220000,
+  "percentiles": {
+   "p0": -1000.0,
+   "p0.5": -1000.0,
+   "p99.5": 227.0,
+   "p99.99": 647.0000999998301,
+   "p100": 2582.0
+  },
+  "subjects": "train (configs/splits_copd.json)",
+  "region": "truect.data.fov, every 16th valid slice"
+ },
+ "data_mapping": {
+  "figure": "reports/e02/smoke_overlay_u3_step300_10379.png",
+  "observation": "Predicted density/class maps are spatially registered with target and CT (val 10379, z=254) after 300 its. Predictions outside the body are untrained (loss region = eval_mask)."
+ },
+ "loss": {
+  "u3_joint": {
+   "step10": 3.3239,
+   "step300": 0.6042,
+   "l1_step10": 0.3785758584737778,
+   "l1_step300": 0.04802037067711353,
+   "ce_step10": 2.945314717292786,
+   "ce_step300": 0.5561404198408126,
+   "curve": [
+    [
+     10,
+     3.3239
+    ],
+    [
+     20,
+     2.6352
+    ],
+    [
+     30,
+     2.1964
+    ],
+    [
+     40,
+     1.9372
+    ],
+    [
+     50,
+     1.6636
+    ],
+    [
+     60,
+     1.4188
+    ],
+    [
+     70,
+     1.3497
+    ],
+    [
+     80,
+     1.1241
+    ],
+    [
+     90,
+     1.0873
+    ],
+    [
+     100,
+     0.9803
+    ],
+    [
+     110,
+     0.9576
+    ],
+    [
+     120,
+     0.8478
+    ],
+    [
+     130,
+     0.871
+    ],
+    [
+     140,
+     0.7478
+    ],
+    [
+     150,
+     0.7875
+    ],
+    [
+     160,
+     0.7451
+    ],
+    [
+     170,
+     0.6866
+    ],
+    [
+     180,
+     0.6868
+    ],
+    [
+     190,
+     0.6737
+    ],
+    [
+     200,
+     0.6738
+    ],
+    [
+     210,
+     0.6491
+    ],
+    [
+     220,
+     0.6564
+    ],
+    [
+     230,
+     0.6534
+    ],
+    [
+     240,
+     0.6472
+    ],
+    [
+     250,
+     0.656
+    ],
+    [
+     210,
+     0.6491
+    ],
+    [
+     220,
+     0.6564
+    ],
+    [
+     230,
+     0.6534
+    ],
+    [
+     240,
+     0.6472
+    ],
+    [
+     250,
+     0.656
+    ],
+    [
+     260,
+     0.5834
+    ],
+    [
+     270,
+     0.6082
+    ],
+    [
+     280,
+     0.6171
+    ],
+    [
+     290,
+     0.6343
+    ],
+    [
+     300,
+     0.6042
+    ]
+   ]
+  },
+  "u1_density_l1": {
+   "step10": 0.23318086117506026,
+   "step30": 0.0765623316168785
+  },
+  "u2_ce": {
+   "step10": 2.459380400180817,
+   "step30": 1.8199220657348634
+  }
+ },
+ "gradients": {
+  "all_finite": true,
+  "skipped_steps": 0,
+  "u3_gnorm_step10": 5.507111120223999,
+  "u3_gnorm_step300": 1.797193169593811
+ },
+ "resume": {
+  "test": "U3: checkpoint every 100 its; SIGKILL at step 250 (exit 137); rerun resumed from step 200 and finished 300",
+  "attempts": [
+   {
+    "start_step": 0,
+    "resumed": false,
+    "job": "204990",
+    "host": "node004",
+    "gpu": "NVIDIA RTX A5000",
+    "n_params": 7763092
+   },
+   {
+    "start_step": 200,
+    "resumed": true,
+    "job": "204990",
+    "host": "node004",
+    "gpu": "NVIDIA RTX A5000",
+    "n_params": 7763092
+   }
+  ],
+  "loss_210_250_before_kill": [
+   [
+    210,
+    0.6491
+   ],
+   [
+    220,
+    0.6564
+   ],
+   [
+    230,
+    0.6534
+   ],
+   [
+    240,
+    0.6472
+   ],
+   [
+    250,
+    0.656
+   ]
+  ],
+  "loss_210_250_after_resume": [
+   [
+    210,
+    0.6491
+   ],
+   [
+    220,
+    0.6564
+   ],
+   [
+    230,
+    0.6534
+   ],
+   [
+    240,
+    0.6472
+   ],
+   [
+    250,
+    0.656
+   ]
+  ],
+  "verdict": "identical to <=1e-8 (index-deterministic sampler + saved RNG/optimizer/scheduler state)"
+ },
+ "speed": {
+  "config": "2D U-Net base 32 depth 4 (7.76M params), patch 384, batch 16, bf16 autocast, 24 loader workers",
+  "sec_per_it_steady": {
+   "u1": 0.08173648118972779,
+   "u2": 0.0887372374534607,
+   "u3": 0.09419412612915039,
+   "u4_context2": 0.09198803901672363
+  },
+  "data_wait_fraction_steady": "<0.2% (loader not a bottleneck; first 10 its include startup ~2-4 s/it)",
+  "peak_train_vram_gb": 5.416354179382324,
+  "oom_events": 0
+ },
+ "inference": {
+  "note": "full 768x768 slices, batch 8 slices, bf16; time is GPU + memmap read; first read of a volume from NFS is IO-bound",
+  "u3_step300": {
+   "10379": {
+    "infer_sec": 29.705652713775635,
+    "infer_slices": 498,
+    "infer_peak_vram_gb": 4.057194232940674
+   },
+   "11006": {
+    "infer_sec": 7.797088861465454,
+    "infer_slices": 512,
+    "infer_peak_vram_gb": 2.265082359313965
+   }
+  },
+  "u4_step30": {
+   "10379": {
+    "n_voxels": 125822009,
+    "density_mae": 0.25802260452802506,
+    "density_rmse": 0.2941266038689154,
+    "density_bias": -0.25517185920642216,
+    "density_mae_pure": 0.24829299593753232,
+    "density_mae_boundary": 0.36200818174382204,
+    "macro_dice": 0.09006411232512823,
+    "infer_sec": 74.76482009887695,
+    "infer_slices": 498,
+    "infer_peak_vram_gb": 4.161705493927002
+   }
+  },
+  "summary": "7.8 s/volume (~512 slices) warm cache; 30-75 s cold from NFS; peak inference VRAM 2.3-4.2 GB",
+  "validation_wallclock": "~45 s per subject incl. subject_metrics (2 subjects in ~1.5 min, from job timestamps)"
+ },
+ "val_metrics_after_300_its_not_meaningful": {
+  "10379": {
+   "n_voxels": 125822009,
+   "density_mae": 0.038000711753206066,
+   "density_rmse": 0.09446170661936834,
+   "density_bias": -0.014405519557535924,
+   "density_mae_pure": 0.029835143399829896,
+   "density_mae_boundary": 0.12527054698075718,
+   "macro_dice": 0.1891604752904196,
+   "infer_sec": 29.705652713775635,
+   "infer_slices": 498,
+   "infer_peak_vram_gb": 4.057194232940674
+  },
+  "11006": {
+   "n_voxels": 109073717,
+   "density_mae": 0.04603172411456382,
+   "density_rmse": 0.10054490484326253,
+   "density_bias": -0.01870158291907674,
+   "density_mae_pure": 0.03685529986193002,
+   "density_mae_boundary": 0.11711094730743891,
+   "macro_dice": 0.21293832235104276,
+   "infer_sec": 7.797088861465454,
+   "infer_slices": 512,
+   "infer_peak_vram_gb": 2.265082359313965
+  }
+ }
+}
