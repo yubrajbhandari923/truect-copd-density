@@ -21,7 +21,7 @@
 
 1. ~~Freeze split~~ done: `configs/splits_copd.json` (46/10/11, stratified, seed 20261112, 10313 in train, no exclusions). Test IDs are not to be looked at until E04.
 2. ~~FOV check~~ done: recon is a disc; eval/training region limited to r < 375 px (2d6bcc4).
-3. RUNNING (subagents, parallel): E01 baselines on `experiment/e01-baselines`; E02 torch install + U-Net smoke test on `experiment/e02-unet`. Then full U1–U3 runs (≤4 GPUs, ≤2 days).
+3. E01 done (B3 density MAE 0.053, B4 material Dice 0.345). E02 seed-11 U3: 0.023 / 0.934. RUNNING: E02 core runs job 204996 (U1–U3 x 3 seeds + U4, fov loss) and U1 seed-11 resume job 204994.
    HPC style: one job reserving many cores/GPUs, parallel inside (owner preference).
 
 ## Experiments
@@ -29,8 +29,8 @@
 | Study | Current state | Journal |
 |---|---|---|
 | E00 data qualification | Targets + NIfTI done; split frozen | [e00](experiments/e00.md) |
-| E01 calibration | Not started | [e01](experiments/e01.md) |
-| E02 U-Net | Not started | [e02](experiments/e02.md) |
+| E01 calibration | Done (validation) | [e01](experiments/e01.md) |
+| E02 U-Net | Core runs training | [e02](experiments/e02.md) |
 | E03 conditional diffusion | Optional; undecided | [e03](experiments/e03.md) |
 | E04 held-out evaluation | Not started | [e04](experiments/e04.md) |
 
