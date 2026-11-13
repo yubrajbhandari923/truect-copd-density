@@ -18,6 +18,14 @@
    "slurm_job_id": "204988",
    "code_snapshot": "5f381ba",
    "reason": "CT clip [p0.5,p99.5] = [-1000,227] HU erased bone contrast; fixed to [-1024,3071]. Outputs moved to results|checkpoints/e02/superseded_204988/"
+  },
+  "revalidation": {
+   "slurm_job_id": "204992",
+   "code_snapshot": "a1f7cb4",
+   "command": "run.sbatch python train.py configs/smoke_u3.json --validate",
+   "reason": "lead's shared-core metrics change (main 4cf2284): add DukeSim 9-material Dice (primary material metric)",
+   "elapsed": "00:02:08 for 2 subjects incl. startup",
+   "result": "density metrics identical to job 204990 (deterministic inference)"
   }
  },
  "environment": {
@@ -335,7 +343,8 @@
    "macro_dice": 0.1891604752904196,
    "infer_sec": 29.705652713775635,
    "infer_slices": 498,
-   "infer_peak_vram_gb": 4.057194232940674
+   "infer_peak_vram_gb": 4.057194232940674,
+   "material_macro_dice": 0.37504788960317087
   },
   "11006": {
    "n_voxels": 109073717,
@@ -347,7 +356,9 @@
    "macro_dice": 0.21293832235104276,
    "infer_sec": 7.797088861465454,
    "infer_slices": 512,
-   "infer_peak_vram_gb": 2.265082359313965
-  }
+   "infer_peak_vram_gb": 2.265082359313965,
+   "material_macro_dice": 0.35889998931408207
+  },
+  "note": "material_macro_dice from job 204992; other values from 204990"
  }
 }
