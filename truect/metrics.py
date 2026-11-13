@@ -2,20 +2,22 @@
 
 subject_metrics(t, pred_density=None, pred_cls=None) walks slices so a whole volume never sits in float64.
 Density: MAE, RMSE, bias (pred - true) in g/cm3, overall and split pure/boundary (purity == 255) and per true class.
-Material: per-class Dice and macro Dice over classes present in the truth region.
+Material (PRIMARY): Dice per DukeSim Monte-Carlo material (9 IDs, class -> MC_OF_CLASS) and macro over materials
+present in the truth region. Anatomical class (secondary): the same over the 19 name-level classes.
 """
 import numpy as np
 
-from truect.data import CLASSES, eval_mask
+from truect.data import CLASSES, MATERIALS, MC_OF_CLASS, eval_mask
 
 C = len(CLASSES)
+MC = np.array(MC_OF_CLASS + [0] * (256 - len(MC_OF_CLASS)))  # 0 for unknown / invalid predictions
 
 
 def subject_metrics(t, pred_density=None, pred_cls=None):
     n_slices = t["valid"].shape[0]
     z = lambda: np.zeros(C)
     acc = dict(n=z(), ae=z(), se=z(), err=z(), n_pure=0, ae_pure=0.0, n_edge=0, ae_edge=0.0,
-               tp=z(), n_true=z(), n_pred=z())
+               tp=z(), n_true=z(), n_pred=z(), tpm=np.zeros(10), ntm=np.zeros(10), npm=np.zeros(10))
     for i in range(n_slices):
         m = eval_mask(t, i)
         if not m.any():
@@ -36,6 +38,10 @@ def subject_metrics(t, pred_density=None, pred_cls=None):
             acc["tp"] += np.bincount(cls[p == cls], minlength=C)
             acc["n_true"] += np.bincount(cls, minlength=C)
             acc["n_pred"] += np.bincount(p[p < C], minlength=C)
+            pm, cm = MC[p], MC[cls]
+            acc["tpm"] += np.bincount(cm[pm == cm], minlength=10)
+            acc["ntm"] += np.bincount(cm, minlength=10)
+            acc["npm"] += np.bincount(pm, minlength=10)
     N = acc["n"].sum()
     out = dict(n_voxels=int(N))
     if pred_density is not None:
@@ -49,4 +55,9 @@ def subject_metrics(t, pred_density=None, pred_cls=None):
         dice = 2 * acc["tp"] / np.maximum(acc["n_true"] + acc["n_pred"], 1)
         out.update(dice_by_class={CLASSES[c]: float(dice[c]) for c in range(C) if present[c]},
                    macro_dice=float(dice[present].mean()))
+        pres_m = acc["ntm"] > 0
+        pres_m[0] = False
+        dm = 2 * acc["tpm"] / np.maximum(acc["ntm"] + acc["npm"], 1)
+        out.update(material_dice={MATERIALS[k]: float(dm[k]) for k in range(1, 10) if pres_m[k]},
+                   material_macro_dice=float(dm[pres_m].mean()))
     return {k: (float(v) if isinstance(v, np.floating) else v) for k, v in out.items()}

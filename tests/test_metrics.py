@@ -40,3 +40,13 @@ def test_known_errors():
     n0 = (t["cls"][mask] == 0).sum()
     assert abs(m["dice_by_class"][CLASSES[0]] - 2 * n0 / (n0 + mask.sum())) < 1e-9
     assert set(m["dice_by_class"]) == {CLASSES[c] for c in np.unique(t["cls"][mask])}
+
+
+def test_material_dice_merges_same_material():
+    t = fake()
+    # swap ribs_cortical <-> ribs_trabecular everywhere: wrong anatomy, same DukeSim material
+    a, b = CLASSES.index("ribs_cortical"), CLASSES.index("ribs_trabecular")
+    t["cls"][:] = np.where(t["cls"] == 0, a, np.where(t["cls"] == 1, b, t["cls"]))
+    pred = np.where(t["cls"] == a, b, np.where(t["cls"] == b, a, t["cls"]))
+    m = subject_metrics(t, None, pred)
+    assert m["material_macro_dice"] == 1.0 and m["macro_dice"] < 1.0
