@@ -30,7 +30,7 @@ for k, (name, axis) in enumerate([("axial", 2), ("coronal", 1), ("sagittal", 0)]
     lv = np.full(len(j), 255, np.uint8)
     lv[ok] = L[tuple(j[ok].T)]
     shp = [len(g) for g in grid]
-    img, lv = C[tuple(g if a != axis else g[0] for a, g in enumerate(grid))], lv.reshape(shp).squeeze(axis)
+    img, lv = np.take(C, c[axis], axis=axis), lv.reshape(shp).squeeze(axis)
     # canonical RAS+: i->Right, j->Anterior, k->Superior. Flip both so image left = patient right
     # (sagittal: image left = anterior) and top = anterior (axial) / superior (coronal, sagittal).
     img, lv = img.T[::-1, ::-1], lv.T[::-1, ::-1]
