@@ -19,7 +19,7 @@
 
 ## Next action
 
-1. Freeze split `configs/splits_copd.json` (make_split.py, stratified on emphysema fraction, 10313 in train).
+1. ~~Freeze split~~ done: `configs/splits_copd.json` (46/10/11, stratified, seed 20261112, 10313 in train, no exclusions). Test IDs are not to be looked at until E04.
 2. Check edge CT values in 18762 / 11989 (field-of-view truncation).
 3. E01 baselines (CPU), then E02 U-Nets (add torch, verify CUDA; ≤4 GPUs, ≤2 days).
    HPC style: one job reserving many cores/GPUs, parallel inside (owner preference).
@@ -28,7 +28,7 @@
 
 | Study | Current state | Journal |
 |---|---|---|
-| E00 data qualification | Targets + NIfTI done; split not frozen | [e00](experiments/e00.md) |
+| E00 data qualification | Targets + NIfTI done; split frozen | [e00](experiments/e00.md) |
 | E01 calibration | Not started | [e01](experiments/e01.md) |
 | E02 U-Net | Not started | [e02](experiments/e02.md) |
 | E03 conditional diffusion | Optional; undecided | [e03](experiments/e03.md) |
