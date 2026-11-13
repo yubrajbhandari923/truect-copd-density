@@ -75,10 +75,10 @@ class Patches(torch.utils.data.Dataset):
         return self.cfg["iters"] * self.cfg["batch"]
 
     def subject(self, sid):
-        if sid not in self.t:  # opened lazily so each worker has its own memmaps
-            t, meta = load(sid, ("ct", "density", "cls", "valid", "organ_pt"))
-            self.t[sid] = t, meta["valid_slices"]
-        return self.t[sid]
+        # Fresh memmaps per sample, dropped after it: workers that kept all subjects mapped grew to ~89 GB mapped each
+        # and, with kernel NUMA balancing on, spent ~70% of time in minor faults until training stalled (job 204996).
+        t, meta = load(sid, ("ct", "density", "cls", "valid", "organ_pt"))
+        return t, meta["valid_slices"]
 
     def __getitem__(self, i):
         rng = np.random.default_rng([self.cfg["seed"], i])
