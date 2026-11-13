@@ -112,6 +112,9 @@ hpc:
     memory: 24G
     time: '02:00:00'
     note: Resource hints only. Adjust after measured memory, runtime and GPU checks.
+  submission_style: >-
+    Owner preference (2026-11-12): one job that reserves many CPUs/GPUs and runs work in
+    parallel inside it, not many jobs or large arrays.
   owner_budget:                      # Stated by the owner on 2026-11-12.
     stated: "up to 64 GBs and 4 GPUs and whatever mem for hpc runs up to 2 days long"
     max_gpus: 4
