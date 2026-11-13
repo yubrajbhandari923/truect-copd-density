@@ -4,7 +4,7 @@
 
 ## Current phase
 
-**E00 — data qualification: nearly done.** Next: freeze split, then E01 baselines.
+**E02 — U-Net core runs training.** E00 done (split frozen), E01 done.
 
 ## Established (evidence in `reports/e00/`, details in `experiments/e00.md`)
 
