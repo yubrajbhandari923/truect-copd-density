@@ -30,3 +30,12 @@ def test_loss_ignores_outside_mask():
     out = {"density": torch.where(m, d, d + 100), "cls": logits}  # huge error only outside the mask
     L = losses(out, d, cl, m, cfg())
     assert L["l1"] < 1e-6 and L["ce"] < 1e-6
+
+
+def test_crop3d_pads_outside():
+    from train3d import crop
+    a = np.arange(4 * 5 * 6).reshape(4, 5, 6)
+    out = crop(a, np.array([-1, 3, 2]), 3, -7)
+    assert out.shape == (3, 3, 3)
+    assert (out[0] == -7).all() and (out[:, 2] == -7).all()  # z=-1 and row 5 are outside
+    assert out[1, 0, 0] == a[0, 3, 2] and out[2, 1, 2] == a[1, 4, 4]
