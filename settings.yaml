@@ -122,6 +122,13 @@ hpc:
     memory: unrestricted
     max_cpus: 64                     # Conservative reading of "64 GBs"; confirm (questions.md Q9).
                                      # This project's own cap; the owner's other jobs on yb107 (e.g. pv-sweep) do not count.
+    revised_2026-11-13: >-
+      Owner raised the limits: walltime up to 4 days; GPUs up to 8, but reserve at most 4 in
+      most cases and go above 4 only for genuinely heavy runs when the GPUs are free. CPUs: 64
+      per job; up to 128 only when the owner explicitly says so and the cores are free. The
+      3D U-Net (E02 U5) job is to take 4 GPUs and 64 cores.
+    max_gpus_revised: 8              # 4 is the normal ceiling; 5-8 only for heavy runs on free GPUs
+    max_walltime_revised: '4-00:00:00'
     collection: >-
       The lead must return and collect finished runs. Keep a background waiter on each job
       and, for runs longer than about an hour, a scheduled fallback check as well; a later
