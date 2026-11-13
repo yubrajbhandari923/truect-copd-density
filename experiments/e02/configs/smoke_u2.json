@@ -1,0 +1,19 @@
+{
+ "seed": 11,
+ "heads": "cls",
+ "context": 0,
+ "base": 32,
+ "depth": 4,
+ "patch": 384,
+ "batch": 16,
+ "iters": 30,
+ "warmup": 5,
+ "lr": 0.001,
+ "wd": 0.0001,
+ "w_cls": 1.0,
+ "workers": 24,
+ "log_every": 10,
+ "ckpt_every": 30,
+ "val_every": 30,
+ "val_subjects": []
+}
