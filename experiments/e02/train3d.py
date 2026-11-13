@@ -169,7 +169,7 @@ def main():
             n_skipped += 1
         sched.step(); step += 1
         for k, v in L.items():
-            acc.setdefault(k, []).append(float(v))
+            acc.setdefault(k, []).append(float(v.detach()))
         acc.setdefault("gnorm", []).append(float(gn))
         if rank == 0 and (step % cfg["log_every"] == 0 or step == cfg["iters"]):
             torch.cuda.synchronize(); dt = time.time() - t_last
