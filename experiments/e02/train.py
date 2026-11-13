@@ -32,14 +32,17 @@ def _ct_sample(sid, step=16, per_slice=4000):
 
 
 def ct_norm(workers):
-    """Train-only CT normalization: clip to [p0.5, p99.5] of train in-FOV CT, then z-score. Computed once, saved."""
+    """Train-only CT normalization: clip to the fixed 12-bit CT range [-1024, 3071] HU, then z-score with the mean/sd
+    of train in-FOV CT. Computed once, saved. (A percentile clip is wrong here: p99.5 of the in-FOV CT is ~227 HU,
+    which would erase all bone contrast; smoke job 204988.)"""
     if NORM_PATH.exists():
         return json.load(open(NORM_PATH))
     with Pool(workers) as p:
         v = np.concatenate(p.map(_ct_sample, split()["train"]))
-    lo, hi = np.percentile(v, [0.5, 99.5])
+    lo, hi = -1024.0, 3071.0
+    pct = dict(zip(["p0", "p0.5", "p99.5", "p99.99", "p100"], np.percentile(v, [0, 0.5, 99.5, 99.99, 100]).tolist()))
     v = np.clip(v, lo, hi)
-    norm = dict(lo=float(lo), hi=float(hi), mean=float(v.mean()), std=float(v.std()), n_samples=int(v.size),
+    norm = dict(lo=lo, hi=hi, mean=float(v.mean()), std=float(v.std()), n_samples=int(v.size), percentiles=pct,
                 subjects="train (configs/splits_copd.json)", region="truect.data.fov, every 16th valid slice")
     NORM_PATH.parent.mkdir(parents=True, exist_ok=True)
     json.dump(norm, open(NORM_PATH, "w"), indent=1)
