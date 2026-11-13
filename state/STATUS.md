@@ -21,7 +21,7 @@
 
 1. ~~Freeze split~~ done: `configs/splits_copd.json` (46/10/11, stratified, seed 20261112, 10313 in train, no exclusions). Test IDs are not to be looked at until E04.
 2. ~~FOV check~~ done: recon is a disc; eval/training region limited to r < 375 px (2d6bcc4).
-3. E01 done (B3 density MAE 0.053, B4 material Dice 0.345). E02 seed-11 U3: 0.023 / 0.934. U1 seed 11 done (0.0227). RUNNING: E02 core runs job 204996 (U1–U3 x 3 seeds + U4, fov loss; at 10k the fov runs trail the body runs in-body, judge at 60k) and U5 3D U-Net job 205034 (MONAI DynUNet, 4xA6000 DDP, 64 cores, 128^3 patches, global batch 16, 150k iters, ~0.39 s/it, ~17 h; snapshot code/e02-5bbcdf5; smoke 205033 passed incl. resume).
+3. E01 done (B3 density MAE 0.053, B4 material Dice 0.345). E02 seed-11 U3: 0.023 / 0.934. U1 seed 11 done (0.0227). RUNNING: E02 core runs job 205119 (resumed after 204996 stalled, see e02 journal) (U1–U3 x 3 seeds + U4, fov loss; at 10k the fov runs trail the body runs in-body, judge at 60k) and U5 3D U-Net job 205034 (MONAI DynUNet, 4xA6000 DDP, 64 cores, 128^3 patches, global batch 16, 150k iters, ~0.39 s/it, ~17 h; snapshot code/e02-5bbcdf5; smoke 205033 passed incl. resume).
    HPC style: one job reserving many cores/GPUs, parallel inside (owner preference).
 
 ## Experiments
