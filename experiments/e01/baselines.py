@@ -107,8 +107,9 @@ def summary(per_subject, method):
             out[k] = dict(median=float(np.median(v)), min=float(np.min(v)), max=float(np.max(v)), mean=float(np.mean(v)))
     for k in ["density_mae_by_class", "material_dice", "dice_by_class"]:
         if k in next(iter(per_subject.values()))[method]:
+            keys = sorted({c for d in per_subject.values() for c in d[method][k]})  # class or material names
             out[k + "_median"] = {c: float(np.median([d[method][k][c] for d in per_subject.values() if c in d[method][k]]))
-                                  for c in CLASSES if any(c in d[method][k] for d in per_subject.values())}
+                                  for c in keys}
     return out
 
 
