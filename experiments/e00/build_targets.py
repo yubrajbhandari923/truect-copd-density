@@ -85,7 +85,7 @@ def main(sid, fit_key):
         ct = pydicom.dcmread(d / fn).pixel_array
         out["ct"][i] = ct
         if cov[0][i] <= 0.999:
-            out["cls"][i] = 255
+            out["cls"][i] = out["organ_pt"][i] = 255  # slice not fully inside the phantom: unknown, not air
             continue
         row = Wz.getrow(i)
         slab = np.asarray(vol[row.indices.min():row.indices.max() + 1])
