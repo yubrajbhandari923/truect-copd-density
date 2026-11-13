@@ -1,6 +1,6 @@
 """E00 stage 4: supervised targets on the CT grid for one subject.
 
-usage: build_targets.py <subject_id|array_index> [fit_key]   (fit_key: full | translation_only_s1)
+usage: build_targets.py <subject_id|array_index> [fit_key]   (in a Slurm array the task id is the index)   (fit_key: full | translation_only_s1)
 
 Each CT voxel is treated as a box in phantom space (alignment JSON transform). Targets are exact
 box averages of the 0.25 mm phantom over that box (volume-weighted), not interpolation:
@@ -136,6 +136,6 @@ def main(sid, fit_key):
 
 
 if __name__ == "__main__":
-    a = sys.argv[1]
+    a = os.environ.get("SLURM_ARRAY_TASK_ID") or sys.argv[1]
     sid = pairing()[int(a)][0] if len(a) < 4 else a
     main(sid, sys.argv[2] if len(sys.argv) > 2 else "full")
