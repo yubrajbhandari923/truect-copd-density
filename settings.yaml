@@ -45,6 +45,10 @@ hpc:
         cache files, temporary files, or logs anywhere under this root. Do not
         modify source ownership or permissions. Read in bounded batches. Set
         all library caches/temp directories to the writable workspace.
+      writable_exception: >-
+        Owner authorized on 2026-11-12: write derived, reusable products under
+        derived/ (NIfTI export, docs, scripts) and append a pointer section to the
+        root README.md. Source files stay untouched.
 
   # Reference only: inspect and copy useful ideas/scripts into OUR workspace.
   reference_scripts:

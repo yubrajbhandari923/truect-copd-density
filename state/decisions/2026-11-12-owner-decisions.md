@@ -8,3 +8,9 @@
   the kernel, or the voxel size. Geometry rests on per-subject registration to the phantom.
 
 Open owner questions live in `questions.md` at the repository root.
+
+## Reusable NIfTI dataset in the source tree (2026-11-12)
+Owner asked for a proper NIfTI dataset of CT + phantom segmentations plus findings and scripts saved in the
+original dataset directory, mentioning only cases confirmed by analysis or by eye. Written under
+`/scratch/railabs/yb107/Datasets/TrueCT/derived/copd_nifti/` (code: `experiments/e00/export_nifti.py`,
+`check_nifti.py`, `dataset_docs.py` on `experiment/e00-qualification`). Source files are not modified.
