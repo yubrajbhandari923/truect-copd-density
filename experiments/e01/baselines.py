@@ -6,7 +6,7 @@ Every baseline is a 1-D lookup on (optionally Gaussian-smoothed) CT, so it is fr
   B1  isotonic (monotone) fit of per-bin median density vs raw CT
   B2  MLP (2x32 ReLU, squared loss) density from raw CT; tabulated exactly on every integer HU
   B3  B1 recipe on Gaussian-smoothed CT, sigma picked on validation (median subject density MAE)
-  B4  per-bin majority class vs CT (raw or smoothed), sigma picked on validation (median subject macro Dice)
+  B4  per-bin majority DukeSim material vs CT (raw or smoothed), sigma picked on validation (median material macro Dice)
 """
 import json, os, socket, sys, time
 from multiprocessing import Pool
@@ -16,7 +16,7 @@ from scipy.ndimage import gaussian_filter
 from sklearn.isotonic import IsotonicRegression
 from sklearn.neural_network import MLPRegressor
 
-from truect.data import CLASSES, eval_mask, load, split
+from truect.data import CLASSES, MC_OF_CLASS, eval_mask, load, split
 from truect.metrics import subject_metrics
 
 SEED = 20261113
@@ -63,10 +63,14 @@ def fit_density_lut(x, rho):
 
 
 def fit_class_lut(x, cls):
+    """Per CT bin: the most frequent DukeSim material, reported as its most frequent anatomical class."""
     counts = np.bincount(bin_of(x) * C + cls, minlength=len(CENTERS) * C).reshape(-1, C)
     full = np.flatnonzero(counts.sum(1))
-    nearest = full[np.abs(np.arange(len(CENTERS))[:, None] - full[None]).argmin(1)]  # empty bins: nearest filled bin
-    return counts[nearest].argmax(1).astype(np.uint8)
+    counts = counts[full[np.abs(np.arange(len(CENTERS))[:, None] - full[None]).argmin(1)]]  # empty bins: nearest filled bin
+    mc = np.array(MC_OF_CLASS)
+    per_mat = np.stack([counts[:, mc == k].sum(1) for k in range(10)], 1)
+    best = per_mat.argmax(1)
+    return np.where(mc[None] == best[:, None], counts, -1).argmax(1).astype(np.uint8)
 
 
 def fit_mlp(x, rho):
@@ -87,7 +91,7 @@ def evaluate_val(args):
     for s, x in ct_and_smoothed(t):
         tag = "raw" if s == 0 else f"s{s}"
         m = subject_metrics(t, apply_density(fit["B1"][s], x), fit["B4"][s][bin_of(x)])
-        res[f"B1_{tag}"] = {k: v for k, v in m.items() if not k.startswith(("dice", "macro"))}
+        res[f"B1_{tag}"] = {k: v for k, v in m.items() if k.startswith(("density", "n_"))}
         res[f"B4_{tag}"] = {k: v for k, v in m.items() if not k.startswith("density")}
         if s == 0:
             res["B0"] = subject_metrics(t, np.maximum(1 + x / 1000, 0.0012).astype(np.float32))
@@ -97,11 +101,11 @@ def evaluate_val(args):
 
 def summary(per_subject, method):
     out = {}
-    for k in ["density_mae", "density_rmse", "density_bias", "density_mae_pure", "density_mae_boundary", "macro_dice"]:
+    for k in ["density_mae", "density_rmse", "density_bias", "density_mae_pure", "density_mae_boundary", "material_macro_dice", "macro_dice"]:
         v = [per_subject[s][method][k] for s in per_subject if k in per_subject[s][method]]
         if v:
             out[k] = dict(median=float(np.median(v)), min=float(np.min(v)), max=float(np.max(v)), mean=float(np.mean(v)))
-    for k in ["density_mae_by_class", "dice_by_class"]:
+    for k in ["density_mae_by_class", "material_dice", "dice_by_class"]:
         if k in next(iter(per_subject.values()))[method]:
             out[k + "_median"] = {c: float(np.median([d[method][k][c] for d in per_subject.values() if c in d[method][k]]))
                                   for c in CLASSES if any(c in d[method][k] for d in per_subject.values())}
@@ -134,7 +138,7 @@ def main():
     tags = ["raw"] + [f"s{s}" for s in SIGMAS]
     med = lambda m, k: np.median([per_subject[s][m][k] for s in val])
     b3 = min(tags[1:], key=lambda g: med(f"B1_{g}", "density_mae"))
-    b4 = min(tags, key=lambda g: -med(f"B4_{g}", "macro_dice"))
+    b4 = min(tags, key=lambda g: -med(f"B4_{g}", "material_macro_dice"))
     sig = lambda g: 0.0 if g == "raw" else float(g[1:])
     chosen = {"B0": "B0", "B1": "B1_raw", "B2": "B2", "B3": f"B1_{b3}", "B4": f"B4_{b4}"}
 
@@ -153,7 +157,7 @@ def main():
                   B4=dict(sigma=sig(b4), class_lut=fit["B4"][sig(b4)].tolist(), classes=CLASSES,
                           apply="lut[clip((smooth(ct) - lo) // bin_width, 0, nbins-1)]"))
     baselines = dict(provenance=prov, grid=lut_grid, sigma_grid_voxels=SIGMAS, voxel_mm=0.6, chosen_variant=chosen,
-                     selection="B3: sigma minimising median val density MAE; B4: sigma (incl. raw) maximising median val macro Dice",
+                     selection="B3: sigma minimising median val density MAE; B4: sigma (incl. raw) maximising median val material macro Dice",
                      methods=__doc__, frozen_params="reports/e01/frozen_comparators.json")
     validation = dict(provenance=prov, chosen_variant=chosen,
                       summary={k: summary(per_subject, v) for k, v in chosen.items()},
@@ -161,7 +165,7 @@ def main():
                       per_subject=per_subject)
     for name, obj in [("baselines", baselines), ("validation", validation), ("frozen_comparators", frozen)]:
         json.dump(obj, open(f"{out_dir}/{name}.json", "w"), indent=1)
-    print(json.dumps({k: {m: v[m]["median"] for m in ("density_mae", "macro_dice") if m in v}
+    print(json.dumps({k: {m: v[m]["median"] for m in ("density_mae", "material_macro_dice", "macro_dice") if m in v}
                       for k, v in validation["summary"].items()}, indent=1))
 
 
