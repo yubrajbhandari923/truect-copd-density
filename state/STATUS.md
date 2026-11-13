@@ -1,46 +1,39 @@
 # TrueCT COPD density research — current status
 
-**Status recorded:** 2026-11-12. This is a clean start; no live HPC inspection
-or scientific result is claimed here.
+**Plan:** `plans/plan-001.yaml`. **Updated:** 2026-11-13.
 
 ## Current phase
 
-**E00 — source inventory, orientation and physical target qualification.**
+**E00 — data qualification: nearly done.** Next: freeze split, then E01 baselines.
+
+## Established (evidence in `reports/e00/`, details in `experiments/e00.md`)
+
+- 67/67 subjects paired; recon DICOMs carry no geometry → geometry from registration to phantom.
+- Alignment fitted for all 67 (same orientation everywhere, r 0.964–0.990); 8 overlays checked by eye, all aligned.
+  No exclusions.
+- CT-grid training targets built for all 67 (`$W/results/e00/targets/`, 162 GB): density, majority class,
+  purity, point label, valid mask. CT vs ideal 70 keV r 0.946–0.985.
+- Reusable NIfTI dataset written to `/scratch/railabs/yb107/Datasets/TrueCT/derived/copd_nifti/` (owner-
+  authorized; README, subjects.tsv, labels.tsv, code). Copies of the docs in `reports/e00/copd_nifti/`.
+- Bug fixed: organ_pt was 0 instead of 255 outside the phantom (7ace4e9; training masks unaffected).
 
 ## Next action
 
-1. Connect to DRCC and read `/scratch/railabs/yb107/Datasets/TrueCT/README.md`
-   and the contents of `pairing/`, `recons/`, `phantoms/`, `reference/` read-only.
-2. Check/create `/scratch/railabs/yb107/research-output/truect-copd-density/`
-   and bootstrap the project-local `uv` virtual environment there.
-3. Inspect reference scripts in `/scratch/railabs/yb107/tmp/truect_case_10313_slides/`
-   read-only, then start a small independent geometry audit in an E00 branch.
-4. Determine real source inventory and CT-to-phantom pairing without assuming
-   a previously reported subject count or completed QC.
+1. Freeze split `configs/splits_copd.json` (make_split.py, stratified on emphysema fraction, 10313 in train).
+2. Check edge CT values in 18762 / 11989 (field-of-view truncation).
+3. E01 baselines (CPU), then E02 U-Nets (add torch, verify CUDA; ≤4 GPUs, ≤2 days).
+   HPC style: one job reserving many cores/GPUs, parallel inside (owner preference).
 
 ## Experiments
 
 | Study | Current state | Journal |
 |---|---|---|
-| E00 data qualification | Not yet run in this workspace | [e00](experiments/e00.md) |
+| E00 data qualification | Targets + NIfTI done; split not frozen | [e00](experiments/e00.md) |
 | E01 calibration | Not started | [e01](experiments/e01.md) |
 | E02 U-Net | Not started | [e02](experiments/e02.md) |
 | E03 conditional diffusion | Optional; undecided | [e03](experiments/e03.md) |
 | E04 held-out evaluation | Not started | [e04](experiments/e04.md) |
 
-## Verified facts vs questions
+## Open owner questions
 
-- **User-provided source tree:** `README.md`, `pairing/`, `phantoms/`,
-  `projections/`, `recons/`, `reference/`.
-- **Not yet independently verified:** which files map to COPD subjects, exact
-  count of usable cases, recon intensity units, phantom geometry, mass-density
-  tables, device metadata, Slurm limits, Python/GPU package compatibility.
-- **Research caution:** 10313 is available as a development reference and must
-  not be treated as a blinded validation/test subject.
-
-## Pointers
-
-- [Scientific plan](../plans/plan-001.yaml)
-- [HPC and paths](../settings.yaml)
-- [Run records](../reports/runs/)
-- [Decisions](decisions/)
+`questions.md` (Q1–Q9); defaults are being followed. 10313 is development-exposed: never in validation/test.

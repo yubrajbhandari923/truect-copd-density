@@ -1,0 +1,4 @@
+align.py, align_report.py: commit 6d0cbb8 (branch experiment/e00-alignment)
+all other scripts: commit 7ace4e9 (branch experiment/e00-qualification)
+repo: truect-copd-density project (local git), workspace /scratch/railabs/yb107/research-output/truect-copd-density
+jobs: alignment 204685 + report 204761, targets 204843, NIfTI export 204981
