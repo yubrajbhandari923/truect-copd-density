@@ -14,6 +14,7 @@ import torch
 import torch.distributed as dist
 from monai.data import DataLoader
 from monai.inferers import sliding_window_inference
+from monai.losses import MaskedDiceLoss
 from monai.networks.nets import DynUNet
 
 from prep3d import CACHE
@@ -22,6 +23,16 @@ from truect.data import CLASSES, WORK, load, split
 from truect.metrics import subject_metrics
 
 C = len(CLASSES)
+DICE = MaskedDiceLoss(include_background=True, to_onehot_y=True, softmax=True, batch=True)
+
+
+def loss3d(out, d, cl, m, cfg):
+    """2D losses (masked L1 + w_cls * CE) plus optional cfg["dice"] * soft Dice over the 19 classes in the loss region."""
+    L = losses(out, d, cl, m, cfg)
+    if cfg.get("dice"):
+        L["dice"] = DICE(out["cls"].float(), torch.where(m, cl, 0)[:, None], m[:, None].float())
+        L["loss"] = L["loss"] + cfg["dice"] * L["dice"]
+    return L
 
 
 def crop(a, start, P, fill):
@@ -160,7 +171,7 @@ def main():
         opt.zero_grad(set_to_none=True)
         with torch.autocast("cuda", torch.bfloat16):
             out = split_out(ddp(x))
-        L = losses(out, d, cl, m, cfg)
+        L = loss3d(out, d, cl, m, cfg)
         L["loss"].backward()
         gn = torch.nn.utils.clip_grad_norm_(ddp.parameters(), cfg.get("clip", float("inf")))
         if torch.isfinite(gn):

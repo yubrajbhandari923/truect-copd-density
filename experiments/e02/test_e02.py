@@ -39,3 +39,13 @@ def test_crop3d_pads_outside():
     assert out.shape == (3, 3, 3)
     assert (out[0] == -7).all() and (out[:, 2] == -7).all()  # z=-1 and row 5 are outside
     assert out[1, 0, 0] == a[0, 3, 2] and out[2, 1, 2] == a[1, 4, 4]
+
+
+def test_dice_term_ignores_outside_mask():
+    from train3d import loss3d
+    m = torch.zeros(1, 4, 4, 4, dtype=torch.bool); m[0, :2] = True
+    cl = torch.where(m, 3, 255); d = torch.rand(1, 4, 4, 4)
+    logits = torch.full((1, 19, 4, 4, 4), -10.0); logits[:, 3] = 10
+    logits[:, :, 2:] = torch.randn(1, 19, 2, 4, 4)  # garbage only outside the mask
+    L = loss3d({"density": d, "cls": logits}, d, cl, m, dict(w_cls=1.0, dice=1.0))
+    assert L["dice"] < 1e-3 and L["ce"] < 1e-6
