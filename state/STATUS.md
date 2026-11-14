@@ -21,7 +21,7 @@
 
 1. ~~Freeze split~~ done: `configs/splits_copd.json` (46/10/11, stratified, seed 20261112, 10313 in train, no exclusions). Test IDs are not to be looked at until E04.
 2. ~~FOV check~~ done: recon is a disc; eval/training region limited to r < 375 px (2d6bcc4).
-3. E01 done (B3 density MAE 0.053, B4 material Dice 0.345). E02 seed-11 U3: 0.023 / 0.934. E02 2D runs done (reports/e02/validation_compare.json): fov loss costs in-body accuracy (material Dice -0.024, 10/10) -> keep body loss; 2.5D context and 3D help most on thin structures; U5 3D final (job 205034): density MAE 0.0207, material Dice 0.958, 19-class 0.839, best so far (10/10 density vs 2D). Nothing running. Next: 3D ablations, single seed (owner).
+3. E01 done (B3 density MAE 0.053, B4 material Dice 0.345). E02 seed-11 U3: 0.023 / 0.934. E02 2D runs done (reports/e02/validation_compare.json): fov loss costs in-body accuracy (material Dice -0.024, 10/10) -> keep body loss; 2.5D context and 3D help most on thin structures; U5 3D final (job 205034): density MAE 0.0207, material Dice 0.958, 19-class 0.839, best so far (10/10 density vs 2D). RUNNING: U5 ablations job 205319 (u5a_ref75k ~16 h, u5a_small ~8 h). Next: more 3D ablations, single seed (owner).
    HPC style: one job reserving many cores/GPUs, parallel inside (owner preference).
 
 ## Experiments
