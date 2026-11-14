@@ -14,7 +14,8 @@ import torch
 import torch.distributed as dist
 from monai.data import DataLoader
 from monai.inferers import sliding_window_inference
-from monai.losses import MaskedDiceLoss
+from monai.losses import DiceLoss
+from monai.networks.utils import one_hot
 from monai.networks.nets import DynUNet
 
 from prep3d import CACHE
@@ -23,14 +24,17 @@ from truect.data import CLASSES, WORK, load, split
 from truect.metrics import subject_metrics
 
 C = len(CLASSES)
-DICE = MaskedDiceLoss(include_background=True, to_onehot_y=True, softmax=True, batch=True)
+# MONAI's MaskedDiceLoss masks the *label map* before one-hot, so masked voxels become class 0 (= "air", a real class).
+# Mask after one-hot instead: probabilities and one-hot targets both zeroed outside the loss region.
+DICE = DiceLoss(include_background=True, batch=True)
 
 
 def loss3d(out, d, cl, m, cfg):
     """2D losses (masked L1 + w_cls * CE) plus optional cfg["dice"] * soft Dice over the 19 classes in the loss region."""
     L = losses(out, d, cl, m, cfg)
     if cfg.get("dice"):
-        L["dice"] = DICE(out["cls"].float(), torch.where(m, cl, 0)[:, None], m[:, None].float())
+        w = m[:, None].float()
+        L["dice"] = DICE(out["cls"].float().softmax(1) * w, one_hot(torch.where(m, cl, 0)[:, None], C) * w)
         L["loss"] = L["loss"] + cfg["dice"] * L["dice"]
     return L
 

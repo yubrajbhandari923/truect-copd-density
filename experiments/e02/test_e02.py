@@ -48,4 +48,4 @@ def test_dice_term_ignores_outside_mask():
     logits = torch.full((1, 19, 4, 4, 4), -10.0); logits[:, 3] = 10
     logits[:, :, 2:] = torch.randn(1, 19, 2, 4, 4)  # garbage only outside the mask
     L = loss3d({"density": d, "cls": logits}, d, cl, m, dict(w_cls=1.0, dice=1.0))
-    assert L["dice"] < 1e-3 and L["ce"] < 1e-6
+    assert L["dice"] < 0.01 and L["ce"] < 1e-6  # absent classes add ~smooth/(smooth+eps) each
