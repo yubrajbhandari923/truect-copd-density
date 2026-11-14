@@ -20,3 +20,6 @@ original dataset directory, mentioning only cases confirmed by analysis or by ey
 name classes (secondary). Reason: the plan's endpoint is canonical / DukeSim-relevant material; several name
 classes (e.g. rib cortical vs trabecular) share one material. Noticed while reviewing E01 B4 (macro Dice 0.15 on
 names); decided before any U-Net result and applied to all methods. Commit on main after 012d657.
+
+## 2026-11-13: no initial-seed replicates for ablations
+Owner: "don't run ablations on different initial seeds". One run per configuration (seed 11). The noise floor is the measured 2D seed spread (3 seeds each of U1/U2/U3 with fov loss: sd of the median ~0.0005 g/cm3 density MAE and ~0.0005 material Dice; reports/e02/validation_compare.json). The plan's multi-seed requirement is waived for ablations; ask the owner before spending compute on seed replicates even for final models.
