@@ -206,25 +206,25 @@
    "material_macro_dice": 0.9328967756939268
   },
   "u5_s11": {
-   "step": 60000,
+   "step": 150000,
    "n_subjects": 10,
-   "density_mae": 0.021660596217670157,
-   "density_mae_boundary": 0.0541111197265178,
-   "density_mae_pure": 0.0176794615706792,
-   "dice_emphysema": 0.9565290382019211,
-   "dice_fissure": 0.5859589849641211,
-   "dice_lung_parenchyma": 0.9898711132001589,
-   "dice_ribs_cortical": 0.7834267614965382,
-   "dice_spine_cortical": 0.45479742443147614,
-   "dice_vessel": 0.8969561224706561,
-   "macro_dice": 0.8244024419092774,
-   "mae_emphysema": 0.02532938928021336,
-   "mae_fissure": 0.1579652723368764,
-   "mae_lung_parenchyma": 0.03939992374929878,
-   "mae_ribs_cortical": 0.020893869889296347,
-   "mae_spine_cortical": 0.11888828281297847,
-   "mae_vessel": 0.08672792359551929,
-   "material_macro_dice": 0.9555076631101964
+   "density_mae": 0.02068544051283051,
+   "density_mae_boundary": 0.05177785228011571,
+   "density_mae_pure": 0.01635403400486636,
+   "dice_emphysema": 0.9589110625558089,
+   "dice_fissure": 0.6379268223119797,
+   "dice_lung_parenchyma": 0.9896877553365063,
+   "dice_ribs_cortical": 0.7976621013725917,
+   "dice_spine_cortical": 0.48590085775108244,
+   "dice_vessel": 0.9059840782214554,
+   "macro_dice": 0.8388686868357034,
+   "mae_emphysema": 0.01973818756132842,
+   "mae_fissure": 0.1338791270196525,
+   "mae_lung_parenchyma": 0.03862741021252347,
+   "mae_ribs_cortical": 0.020424548568850825,
+   "mae_spine_cortical": 0.09309461313227793,
+   "mae_vessel": 0.07292023372537898,
+   "material_macro_dice": 0.9576634764024767
   },
   "E01_B0": {
    "step": 0,
@@ -432,21 +432,21 @@
   },
   "u5_s11 - u3_s11: density_mae": {
    "n": 10,
-   "mean_diff": -0.0016397599137306282,
+   "mean_diff": -0.0029113153431361343,
    "ci95": [
-    -0.0025774876544876124,
-    -0.0005363472336590206
+    -0.0035620978762804937,
+    -0.0021647642817338936
    ],
-   "n_a_better": 8
+   "n_a_better": 10
   },
   "u5_s11 - u3_s11: material_macro_dice": {
    "n": 10,
-   "mean_diff": 0.020463369856131175,
+   "mean_diff": 0.02120791970084788,
    "ci95": [
-    0.015188344097423402,
-    0.025568779794247733
+    0.013991251371244249,
+    0.027811939168341394
    ],
-   "n_a_better": 10
+   "n_a_better": 9
   },
   "u4f_s11 - u3f_s11: mae_emphysema": {
    "n": 10,
@@ -504,55 +504,55 @@
   },
   "u5_s11 - u3_s11: dice_emphysema": {
    "n": 10,
-   "mean_diff": 0.040331023998833856,
+   "mean_diff": 0.02125362905871578,
    "ci95": [
-    0.02986901554767011,
-    0.052374988858722965
+    -0.0077719896847511455,
+    0.041221722169255584
    ],
-   "n_a_better": 10
+   "n_a_better": 9
   },
   "u5_s11 - u3_s11: dice_lung_parenchyma": {
    "n": 10,
-   "mean_diff": 0.011634912295119159,
+   "mean_diff": 0.012160123271851031,
    "ci95": [
-    0.008094931121842506,
-    0.01645620006467978
+    0.008221263956682557,
+    0.017501989234180747
    ],
    "n_a_better": 10
   },
   "u5_s11 - u3_s11: dice_fissure": {
    "n": 10,
-   "mean_diff": 0.34064026407929593,
+   "mean_diff": 0.38470983457370916,
    "ci95": [
-    0.3195536075792945,
-    0.36316680365880827
+    0.35956978313188015,
+    0.410470093556316
    ],
    "n_a_better": 10
   },
   "u5_s11 - u3_s11: dice_vessel": {
    "n": 10,
-   "mean_diff": 0.06797644298282475,
+   "mean_diff": 0.06935867126477105,
    "ci95": [
-    0.058893136419841965,
-    0.0743018757298876
+    0.04772997484483208,
+    0.08316754189832148
    ],
-   "n_a_better": 10
+   "n_a_better": 9
   },
   "u5_s11 - u3_s11: dice_spine_cortical": {
    "n": 10,
-   "mean_diff": 0.30849043149920297,
+   "mean_diff": 0.334544514740013,
    "ci95": [
-    0.2941574588428753,
-    0.32254177534865053
+    0.3220625112072744,
+    0.3475016982715562
    ],
    "n_a_better": 10
   },
   "u5_s11 - u3_s11: dice_ribs_cortical": {
    "n": 10,
-   "mean_diff": 0.12528041217755653,
+   "mean_diff": 0.1406786116201142,
    "ci95": [
-    0.10854477958397664,
-    0.14674739451389107
+    0.12561868865240258,
+    0.16072492428220736
    ],
    "n_a_better": 10
   }
@@ -564,8 +564,8 @@
    "u1_s11": "204993->204994",
    "u2_s11,u3_s11": "204993",
    "*f_s* (fov loss), u4f_s11": "204996 -> resumed 205119 (code e02-8e03f0f -> e02-68f680a, loader change only)",
-   "u5_s11": "205034 (INTERIM: step 60000 of 150000, code e02-5bbcdf5)"
+   "u5_s11": "205034 (final, step 150000, code e02-5bbcdf5, 16h49m on 4xA6000)"
   },
-  "note": "Validation subjects only (10). Test subjects untouched. u5_s11 is mid-training (cosine LR not annealed)."
+  "note": "Validation subjects only (10). Test subjects untouched."
  }
 }
