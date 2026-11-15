@@ -60,6 +60,9 @@ if __name__ == "__main__":
          ("u3_s11", "E01_B3", "density_mae"), ("u3_s11", "E01_B4", "material_macro_dice"),
          ("u5_s11", "u3_s11", "density_mae"), ("u5_s11", "u3_s11", "material_macro_dice")]
     C += [("u4f_s11", "u3f_s11", f"mae_{c}") for c in CLS] + [("u5_s11", "u3_s11", f"dice_{c}") for c in CLS]
+    for a in [n for n in rr if n.startswith("u5a_") and n != "u5a_ref75k"]:
+        C += [(a, "u5a_ref75k", k) for k in KEYS] + [(a, "u5a_ref75k", f"dice_{c}") for c in CLS]
+    C += [("u5a_small", "u3_s11", k) for k in KEYS] + [("u5a_ref75k", "u5_s11", k) for k in KEYS]
     pairs = {f"{a} - {b}: {k}": paired(rr[a][1], rr[b][1], k, rng) for a, b, k in C if a in rr and b in rr}
     json.dump(dict(medians=table, seed_mean_sd_of_medians=seeds, paired=pairs), open(OUT, "w"), indent=1)
     cols = ["step"] + KEYS
