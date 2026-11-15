@@ -226,6 +226,48 @@
    "mae_vessel": 0.07292023372537898,
    "material_macro_dice": 0.9576634764024767
   },
+  "u5a_ref75k": {
+   "step": 75000,
+   "n_subjects": 10,
+   "density_mae": 0.021277609352720148,
+   "density_mae_boundary": 0.054754555584323246,
+   "density_mae_pure": 0.016856911674664854,
+   "dice_emphysema": 0.9546591812218392,
+   "dice_fissure": 0.5916426055684149,
+   "dice_lung_parenchyma": 0.9894566274868299,
+   "dice_ribs_cortical": 0.7869941223219563,
+   "dice_spine_cortical": 0.46908206846447364,
+   "dice_vessel": 0.8990083135904474,
+   "macro_dice": 0.8347794155359463,
+   "mae_emphysema": 0.022431369219899175,
+   "mae_fissure": 0.14911479193338623,
+   "mae_lung_parenchyma": 0.03953414881411095,
+   "mae_ribs_cortical": 0.02104701025869457,
+   "mae_spine_cortical": 0.13041182429966086,
+   "mae_vessel": 0.08093622834296219,
+   "material_macro_dice": 0.9549183789057637
+  },
+  "u5a_small": {
+   "step": 75000,
+   "n_subjects": 10,
+   "density_mae": 0.025271978884308027,
+   "density_mae_boundary": 0.06973854167410265,
+   "density_mae_pure": 0.02032276121069368,
+   "dice_emphysema": 0.9435626129025646,
+   "dice_fissure": 0.34354462307566225,
+   "dice_lung_parenchyma": 0.9856720885934912,
+   "dice_ribs_cortical": 0.7605366572262822,
+   "dice_spine_cortical": 0.39926891653235264,
+   "dice_vessel": 0.8626570709576453,
+   "macro_dice": 0.7901400379318275,
+   "mae_emphysema": 0.029510328562953627,
+   "mae_fissure": 0.3009454171826852,
+   "mae_lung_parenchyma": 0.044071791349034925,
+   "mae_ribs_cortical": 0.02712137620846445,
+   "mae_spine_cortical": 0.15455425109589382,
+   "mae_vessel": 0.12207857828445783,
+   "material_macro_dice": 0.9462641835236855
+  },
   "E01_B0": {
    "step": 0,
    "n_subjects": 10,
@@ -555,16 +597,206 @@
     0.16072492428220736
    ],
    "n_a_better": 10
+  },
+  "u5a_small - u5a_ref75k: density_mae": {
+   "n": 10,
+   "mean_diff": 0.004538921516849181,
+   "ci95": [
+    0.004036923239291508,
+    0.00505596491840268
+   ],
+   "n_a_better": 0
+  },
+  "u5a_small - u5a_ref75k: density_mae_pure": {
+   "n": 10,
+   "mean_diff": 0.003434477580158882,
+   "ci95": [
+    0.003068242538635665,
+    0.0038411394438657696
+   ],
+   "n_a_better": 0
+  },
+  "u5a_small - u5a_ref75k: density_mae_boundary": {
+   "n": 10,
+   "mean_diff": 0.01395263496869854,
+   "ci95": [
+    0.011926802797833057,
+    0.016227172902706744
+   ],
+   "n_a_better": 0
+  },
+  "u5a_small - u5a_ref75k: material_macro_dice": {
+   "n": 10,
+   "mean_diff": -0.012386617718604631,
+   "ci95": [
+    -0.016255092157570466,
+    -0.009345570556240428
+   ],
+   "n_a_better": 0
+  },
+  "u5a_small - u5a_ref75k: macro_dice": {
+   "n": 10,
+   "mean_diff": -0.049768377013710965,
+   "ci95": [
+    -0.05333761123764583,
+    -0.04645777188293774
+   ],
+   "n_a_better": 0
+  },
+  "u5a_small - u5a_ref75k: dice_emphysema": {
+   "n": 10,
+   "mean_diff": -0.04481147966816325,
+   "ci95": [
+    -0.09615750917557218,
+    -0.008956945384293842
+   ],
+   "n_a_better": 0
+  },
+  "u5a_small - u5a_ref75k: dice_lung_parenchyma": {
+   "n": 10,
+   "mean_diff": -0.004896249209536319,
+   "ci95": [
+    -0.006603927215337613,
+    -0.0034643416824606766
+   ],
+   "n_a_better": 0
+  },
+  "u5a_small - u5a_ref75k: dice_fissure": {
+   "n": 10,
+   "mean_diff": -0.255813916214729,
+   "ci95": [
+    -0.2767576839591768,
+    -0.23476214778373472
+   ],
+   "n_a_better": 0
+  },
+  "u5a_small - u5a_ref75k: dice_vessel": {
+   "n": 10,
+   "mean_diff": -0.03430136287098341,
+   "ci95": [
+    -0.037074697761665144,
+    -0.031424205018542366
+   ],
+   "n_a_better": 0
+  },
+  "u5a_small - u5a_ref75k: dice_spine_cortical": {
+   "n": 10,
+   "mean_diff": -0.08365542081552897,
+   "ci95": [
+    -0.08986037137031869,
+    -0.07720886834483158
+   ],
+   "n_a_better": 0
+  },
+  "u5a_small - u5a_ref75k: dice_ribs_cortical": {
+   "n": 10,
+   "mean_diff": -0.03128367767559631,
+   "ci95": [
+    -0.03541589686786502,
+    -0.027242293263466142
+   ],
+   "n_a_better": 0
+  },
+  "u5a_small - u3_s11: density_mae": {
+   "n": 10,
+   "mean_diff": 0.0022159008288307673,
+   "ci95": [
+    0.001289634766209256,
+    0.003209498065242453
+   ],
+   "n_a_better": 0
+  },
+  "u5a_small - u3_s11: density_mae_pure": {
+   "n": 10,
+   "mean_diff": 0.0033311344865212906,
+   "ci95": [
+    0.0024690128547125603,
+    0.004302582471403908
+   ],
+   "n_a_better": 0
+  },
+  "u5a_small - u3_s11: density_mae_boundary": {
+   "n": 10,
+   "mean_diff": -0.006847275256090563,
+   "ci95": [
+    -0.010256357026041673,
+    -0.002941735469830232
+   ],
+   "n_a_better": 8
+  },
+  "u5a_small - u3_s11: material_macro_dice": {
+   "n": 10,
+   "mean_diff": 0.008713976773923483,
+   "ci95": [
+    0.0016697327574469463,
+    0.014658076646452628
+   ],
+   "n_a_better": 8
+  },
+  "u5a_small - u3_s11: macro_dice": {
+   "n": 10,
+   "mean_diff": 0.044568991789605814,
+   "ci95": [
+    0.03995048466796797,
+    0.04870007388378785
+   ],
+   "n_a_better": 10
+  },
+  "u5a_ref75k - u5_s11: density_mae": {
+   "n": 10,
+   "mean_diff": 0.000588294655117721,
+   "ci95": [
+    0.00024108044962979131,
+    0.0009336206311653332
+   ],
+   "n_a_better": 3
+  },
+  "u5a_ref75k - u5_s11: density_mae_pure": {
+   "n": 10,
+   "mean_diff": 0.00040182141977840503,
+   "ci95": [
+    8.45037945617629e-05,
+    0.0007342136126627725
+   ],
+   "n_a_better": 3
+  },
+  "u5a_ref75k - u5_s11: density_mae_boundary": {
+   "n": 10,
+   "mean_diff": 0.001968001767097255,
+   "ci95": [
+    2.9847042765255652e-05,
+    0.00339591795897361
+   ],
+   "n_a_better": 1
+  },
+  "u5a_ref75k - u5_s11: material_macro_dice": {
+   "n": 10,
+   "mean_diff": -0.00010732520831976399,
+   "ci95": [
+    -0.002980136388436968,
+    0.0033680758187121683
+   ],
+   "n_a_better": 4
+  },
+  "u5a_ref75k - u5_s11: macro_dice": {
+   "n": 10,
+   "mean_diff": -0.004668295524336885,
+   "ci95": [
+    -0.007367977860613783,
+    -0.0008146223649852037
+   ],
+   "n_a_better": 1
   }
  },
  "provenance": {
-  "script": "experiments/e02/compare.py @ 54b0159 (branch experiment/e02-unet)",
+  "script": "experiments/e02/compare.py @ d9936e1 (branch experiment/e02-unet)",
   "inputs": "results/e02/<run>/val_<last step>.json on HPC workspace; reports/e01/validation.json",
   "jobs": {
    "u1_s11": "204993->204994",
    "u2_s11,u3_s11": "204993",
    "*f_s* (fov loss), u4f_s11": "204996 -> resumed 205119 (code e02-8e03f0f -> e02-68f680a, loader change only)",
-   "u5_s11": "205034 (final, step 150000, code e02-5bbcdf5, 16h49m on 4xA6000)"
+   "u5_s11": "205034 (final, step 150000, code e02-5bbcdf5, 16h49m on 4xA6000)",
+   "u5a_ref75k,u5a_small": "205319 (code e02-553b875, 2 GPUs each, global batch 16)"
   },
   "note": "Validation subjects only (10). Test subjects untouched."
  }
