@@ -2,6 +2,7 @@
 # Smoke on 2 GPUs: unit tests (E02+E03), E02 A13 attention-U-Net memory vs DynUNet, D1 train 20 -> resume 40, D1 eval (DDIM 5).
 set -e
 W=/scratch/railabs/yb107/research-output/truect-copd-density
+python probe_mem.py
 rm -rf $W/checkpoints/e03/smoke_d1 $W/results/e03/smoke_d1
 (cd ../e02 && python -m pytest -q test_e02.py) && python -m pytest -q test_e03.py
 (cd ../e02 && python - <<'PY'
