@@ -16,7 +16,8 @@ from monai.data import DataLoader
 from monai.inferers import sliding_window_inference
 from monai.losses import DiceLoss
 from monai.networks.utils import one_hot
-from monai.networks.nets import DynUNet
+from monai.networks.nets import AttentionUnet, DynUNet
+import torch.nn.functional as F
 
 from prep3d import CACHE
 from train import NORM_PATH, losses, lr_at, normalize, overlay  # also sets the file_system sharing strategy
@@ -32,6 +33,17 @@ DICE = DiceLoss(include_background=True, batch=True)
 def loss3d(out, d, cl, m, cfg):
     """2D losses (masked L1 + w_cls * CE) plus optional cfg["dice"] * soft Dice over the 19 classes in the loss region."""
     L = losses(out, d, cl, m, cfg)
+    p, n = out["density"].float(), m.sum().clamp(min=1)
+    if cfg.get("huber"):  # A05: Huber (smooth-L1, quadratic below cfg["huber"] g/cm3, L1 slope above) replaces L1
+        L["huber"] = (F.smooth_l1_loss(p, d, beta=cfg["huber"], reduction="none") * m).sum() / n
+        L["loss"] = L["loss"] - L["l1"] + L["huber"]
+    if cfg.get("w_grad"):  # A05: + L1 of the error's finite differences along z, y, x, over voxel pairs both in the mask
+        e, g = (p - d) * m, 0
+        for ax in (1, 2, 3):
+            mm = m.narrow(ax, 1, m.shape[ax] - 1) & m.narrow(ax, 0, m.shape[ax] - 1)
+            g = g + (torch.diff(e, dim=ax).abs() * mm).sum() / mm.sum().clamp(min=1)
+        L["grad"] = g / 3
+        L["loss"] = L["loss"] + cfg["w_grad"] * L["grad"]
     if cfg.get("dice"):
         w = m[:, None].float()
         L["dice"] = DICE(out["cls"].float().softmax(1) * w, one_hot(torch.where(m, cl, 0)[:, None], C) * w)
@@ -72,8 +84,16 @@ class Patches3D(torch.utils.data.Dataset):
         return torch.from_numpy(x), torch.from_numpy(d), torch.from_numpy(lab.astype(np.int64)), torch.from_numpy(m)
 
 
+def train_subjects(cfg):
+    """A11: nested deterministic TRAIN subsets (first n of one fixed permutation); all 46 when n_train is unset."""
+    tr = sorted(split()["train"])
+    return [tr[i] for i in np.random.default_rng(20261116).permutation(len(tr))[:cfg.get("n_train", len(tr))]]
+
+
 def build(cfg):
     f, n = cfg["filters"], len(cfg["filters"])
+    if cfg.get("arch") == "attention":  # A13: MONAI Attention U-Net (Oktay 2018), same filters/depth, batch norm
+        return AttentionUnet(spatial_dims=3, in_channels=1, out_channels=1 + C, channels=f, strides=[2] * (n - 1))
     return DynUNet(spatial_dims=3, in_channels=1, out_channels=1 + C, kernel_size=[3] * n, strides=[1] + [2] * (n - 1),
                    upsample_kernel_size=[2] * (n - 1), filters=f, norm_name="instance", res_block=cfg.get("res_block", False))
 
@@ -155,7 +175,7 @@ def main():
     attempt = dict(start_step=step, resumed=ck.exists(), job=os.environ.get("SLURM_JOB_ID"), host=os.uname()[1],
                    world=world, snapshot=os.environ.get("SLURM_SUBMIT_DIR", os.getcwd()), torch=torch.__version__,
                    monai=__import__("monai").__version__, gpu=torch.cuda.get_device_name(), cfg=cfg,
-                   n_params=sum(p.numel() for p in model.parameters()), time=time.strftime("%Y-%m-%dT%H:%M:%S"))
+                   n_params=sum(p.numel() for p in model.parameters()), train_subjects=train_subjects(cfg), time=time.strftime("%Y-%m-%dT%H:%M:%S"))
     if rank == 0:
         print(json.dumps(attempt), flush=True)
         with open(out_dir / "attempts.jsonl", "a") as f:
@@ -163,7 +183,7 @@ def main():
 
     B, G = cfg["batch"], world  # batch is per GPU
     idx = [st * B * G + rank * B + j for st in range(step, cfg["iters"]) for j in range(B)]
-    dl = DataLoader(Patches3D(split()["train"], cfg, norm), batch_size=B, sampler=idx, num_workers=cfg["workers"],
+    dl = DataLoader(Patches3D(train_subjects(cfg), cfg, norm), batch_size=B, sampler=idx, num_workers=cfg["workers"],
                     pin_memory=True, prefetch_factor=4, persistent_workers=True)
     log = open(out_dir / "log.jsonl", "a") if rank == 0 else None
     torch.cuda.reset_peak_memory_stats()

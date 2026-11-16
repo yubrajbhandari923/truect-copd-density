@@ -49,3 +49,18 @@ def test_dice_term_ignores_outside_mask():
     logits[:, :, 2:] = torch.randn(1, 19, 2, 4, 4)  # garbage only outside the mask
     L = loss3d({"density": d, "cls": logits}, d, cl, m, dict(w_cls=1.0, dice=1.0))
     assert L["dice"] < 0.01 and L["ce"] < 1e-6  # absent classes add ~smooth/(smooth+eps) each
+
+
+def test_grad_and_huber_terms():
+    from train3d import loss3d
+    m = torch.zeros(1, 4, 4, 4, dtype=torch.bool); m[0, 1:3, 1:3, 1:3] = True
+    d = torch.rand(1, 4, 4, 4); cl = torch.where(m, 3, 255); logits = torch.zeros(1, 19, 4, 4, 4)
+    L = loss3d({"density": d + 0.3, "cls": logits}, d, cl, m, dict(w_cls=0.0, w_grad=1.0, huber=0.05))
+    assert L["grad"] < 1e-6  # a constant offset has no gradient error; mask-edge jumps are excluded
+    assert abs(L["huber"] - (0.3 - 0.025)) < 1e-5 and abs(L["loss"] - L["huber"]) < 1e-6
+
+
+def test_train_subsets_nested():
+    from train3d import train_subjects
+    s = [train_subjects(dict(n_train=n)) for n in (10, 20, 40)] + [train_subjects({})]
+    assert [len(x) for x in s] == [10, 20, 40, 46] and all(a == b[:len(a)] for a, b in zip(s, s[1:]))
