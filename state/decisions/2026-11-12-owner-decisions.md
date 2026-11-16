@@ -23,3 +23,11 @@ names); decided before any U-Net result and applied to all methods. Commit on ma
 
 ## 2026-11-13: no initial-seed replicates for ablations
 Owner: "don't run ablations on different initial seeds". One run per configuration (seed 11). The noise floor is the measured 2D seed spread (3 seeds each of U1/U2/U3 with fov loss: sd of the median ~0.0005 g/cm3 density MAE and ~0.0005 material Dice; reports/e02/validation_compare.json). The plan's multi-seed requirement is waived for ablations; ask the owner before spending compute on seed replicates even for final models.
+
+## 2026-11-16 — Stop adding U-Net ablations
+
+Owner: "dont spend too much time on ablations, rather on different methods" and "if they are already above 95, no
+point in adding ablations". U5 VAL median material Dice 0.958 (> 0.95), so queued A05 (206017), A11 (206018, 206020)
+and A13-attention (206020) were cancelled before starting. Running batch 3 (wide, lr3e4, res) completes. A05/A11 are
+plan-required: report them as NOT RUN by owner decision, not as negative results. A07 (eval-only) and A12 (E04) stay.
+Effort moves to different methods (E03 diffusion and other architectures).
