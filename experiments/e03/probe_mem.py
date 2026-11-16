@@ -1,7 +1,7 @@
 """Peak training VRAM / speed of candidate D1 sizes (one fwd+bwd, bf16), to pick what fits a 24 GB A5000."""
 import time, torch
 from ddpm3d import build
-for ch, b, P in [([32, 64, 128, 256], 2, 96), ([32, 64, 128, 256], 4, 96), ([48, 96, 192, 256], 2, 96), ([64, 128, 256, 256], 1, 96), ([64, 128, 256, 256], 4, 64)]:
+for ch, b, P in [([32, 64, 128, 256], 2, 96), ([32, 64, 128, 256], 4, 96), ([64, 128, 256, 256], 1, 96), ([64, 128, 256, 256], 4, 64)]:
     try:
         m = build(dict(channels=ch, res_blocks=2)).cuda(); torch.cuda.reset_peak_memory_stats()
         x = torch.randn(b, 2, P, P, P, device="cuda"); t = torch.randint(0, 1000, (b,), device="cuda")
