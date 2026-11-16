@@ -147,7 +147,7 @@ def eval_region(t, meta, margin=32):
     m = eval_mask(t, slice(z0 + 16, z0 + 80)).any(0)
     r, c = np.where(m)
     H, W = m.shape
-    return z0, (max(r.min() - margin, 0), min(r.max() + margin + 1, H)), (max(c.min() - margin, 0), min(c.max() + margin + 1, W))
+    return int(z0), (int(max(r.min() - margin, 0)), int(min(r.max() + margin + 1, H))), (int(max(c.min() - margin, 0)), int(min(c.max() + margin + 1, W)))
 
 
 def slab_metrics(t, z0, ys, xs, pred):

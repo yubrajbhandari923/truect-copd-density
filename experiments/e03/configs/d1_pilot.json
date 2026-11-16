@@ -1,0 +1,29 @@
+{
+ "seed": 11,
+ "channels": [
+  32,
+  64,
+  128,
+  256
+ ],
+ "res_blocks": 2,
+ "attn_last": true,
+ "head_ch": 32,
+ "patch": 96,
+ "batch": 2,
+ "iters": 80000,
+ "warmup": 1000,
+ "lr": 0.0001,
+ "wd": 0.0,
+ "ema": 0.999,
+ "clip": 1.0,
+ "workers": 12,
+ "log_every": 50,
+ "ckpt_every": 1000,
+ "eval_steps": [
+  25,
+  50,
+  100
+ ],
+ "sw_batch": 8
+}
