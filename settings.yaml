@@ -127,6 +127,8 @@ hpc:
       most cases and go above 4 only for genuinely heavy runs when the GPUs are free. CPUs: 64
       per job; up to 128 only when the owner explicitly says so and the cores are free. The
       3D U-Net (E02 U5) job is to take 4 GPUs and 64 cores.
+    nodes: >-
+      Owner (2026-11-16): submit only to node001 and node004 (sbatch --nodelist / -w); do not use node003.
     max_gpus_revised: 8              # 4 is the normal ceiling; 5-8 only for heavy runs on free GPUs
     max_walltime_revised: '4-00:00:00'
     collection: >-
