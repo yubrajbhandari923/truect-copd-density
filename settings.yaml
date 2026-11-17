@@ -50,6 +50,14 @@ hpc:
         derived/ (NIfTI export, docs, scripts) and append a pointer section to the
         root README.md. Source files stay untouched.
 
+    duhs_ct_chest_thin:
+      root: /scratch/railabs/yb107/Datasets/DUHS_CT_CHEST_thin
+      access: owner_data
+      source: /scratch/railabs/ld258/dataset/DUHS/VLM/CT_CHEST (another user's folder; read-only, never write)
+      note: >-
+        Owner request 2026-11-16: copy of the 54 thin-slice original axial chest series (53 patients, real
+        clinical CT, mostly contrast-enhanced) for test inference only. Manifest + checks.json in the folder.
+
   # Reference only: inspect and copy useful ideas/scripts into OUR workspace.
   reference_scripts:
     root: /scratch/railabs/yb107/tmp/truect_case_10313_slides
