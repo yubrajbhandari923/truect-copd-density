@@ -2,9 +2,12 @@
 compared with the real patient CT (ground truth). Exploratory; owner request 2026-11-17.
 
 Per series (inputs from infer.py, model u5_s11 by default, 0.6 mm grid in the training orientation):
-  mu(r, E) = rho_pred(r) * (mu/rho)_m(E), m = DukeSim MC material of the predicted class (truect MC_OF_CLASS), mass
-  attenuation from the dataset's own MC-GPU material files (1/total mean free path / nominal density).
-  Two-basis decomposition (muscle + densest bone, 20-120 keV) as drishya variant 2 -> LEAP helical forward projection
+  mu(r, E) = rho_pred(r) * (mu/rho)_c(E), c = predicted class; (mu/rho)_c = mean over the reference subject's organs of
+  that class name of lac(E)/density (TrueCT 10313 per-subject DukeSim tables material_lac/ + conversion_table: the
+  attenuation the training phantoms were simulated with; dev-exposed subject, drishya's calibration subject).
+  (The generic material_mcgpu/aorta.mcgpu is iodinated, unlike the per-subject tables, so it is not used.)
+  Two-basis decomposition exactly as drishya variant 2 (subject's muscle row + densest-bone row, 20-120 keV)
+  -> LEAP helical forward projection
   -> drishya variant 3 physics (120 kV spectrum + water BH, detector blur, smooth residual kernel, Poisson noise)
   -> fixed G_RECON LEAP FBP. Also the ideal 70 keV HU of the predicted map (no acquisition physics).
 Geometry: TrueCT 10313 scan (dcm_008) helical trajectory (view spacing, pitch), extended/shortened symmetrically to the
@@ -28,31 +31,34 @@ import leap_recon as R
 from physics import E, FIT, V3, Spectral, intensities, noisy, to_g
 
 TRUECT = Path("/scratch/railabs/yb107/Datasets/TrueCT")
-MC = Path("/scratch/railabs/yb107/Datasets/TrueCT/phantoms/COPD/material_mcgpu")
-MC_FILES = {1: "air", 2: "body", 3: "sternum", 4: "muscle", 5: "lung", 6: "scapulas", 7: "spine_cortical", 8: "skin", 9: "aorta"}
-MC_OF_CLASS = [1, 9, 2, 5, 4, 4, 5, 5, 4, 6, 6, 6, 6, 8, 7, 7, 3, 3, 9]  # truect/data.py
+LAC = TRUECT / "phantoms/COPD/material_lac/10313"
+CLASSES = ['air', 'aorta', 'body', 'emphysema', 'esophagus', 'fissure', 'lung', 'lung_parenchyma', 'muscle',
+           'ribs_cortical', 'ribs_trabecular', 'scapulas', 'scapulas_trabecular', 'skin', 'spine_cortical',
+           'spine_trabecular', 'sternum', 'sternum_trabecular', 'vessel']  # truect/data.py
 TRAIN_AX = ("I", "P", "L")
 PAD_XY, PAD_Z, N = 128, 64, 768
 
 
-def mass_att(name):
-    """(mu/rho)(E) in cm^2/g at E = 1..120 keV from an MC-GPU material file."""
-    lines = open(MC / f"{name}.mcgpu").read().splitlines()
-    rho = float(lines[lines.index(next(l for l in lines if "NOMINAL DENSITY" in l)) + 1].strip("# "))
-    n = int(lines[lines.index(next(l for l in lines if "NUMBER OF DATA VALUES" in l)) + 1].strip("# "))
-    i0 = next(i for i, l in enumerate(lines) if not l.startswith("#"))
-    tab = np.array([l.split()[:5] for l in lines[i0:i0 + n]], float)
-    return np.interp(E * 1000, tab[:, 0], 1.0 / tab[:, 4]) / rho, rho
-
-
 def materials():
-    mr = {m: mass_att(f)[0] for m, f in MC_FILES.items()}  # cm^2/g
-    rho = {m: mass_att(f)[1] for m, f in MC_FILES.items()}
-    bone = max((7, 3, 6), key=lambda m: mr[m][69] * rho[m])
-    B = np.stack([mr[4] * rho[4], mr[bone] * rho[bone]], 1) / 10.0  # mm^-1 at nominal density (drishya convention)
-    coef = {m: np.linalg.lstsq(B[FIT], mr[m][FIT] / 10.0, rcond=None)[0] for m in mr}  # per g/cm^3
-    err = max(float((np.abs(B[FIT] @ coef[m] - mr[m][FIT] / 10) / (mr[m][FIT] / 10)).max()) for m in mr)
-    return B, coef, mr, dict(bone_basis=MC_FILES[bone], max_rel_fit_err=err, nominal_rho=rho)
+    """Per-class 2-basis coefficients per g/cm^3 and (mu/rho) at 70 keV, from the reference subject's DukeSim tables."""
+    lac = np.fromfile(LAC / "lin_att_120kV_121materials.bin", np.float32).reshape(121, 120).astype(np.float64) / 10.0  # mm^-1
+    conv = {}
+    for line in (LAC / "conversion_table_120kV_121materials.in").read_text().splitlines():
+        if line.startswith("#[Monte"):
+            break
+        f = line.split()
+        if len(f) == 4 and f[0].isdigit():
+            conv[int(f[0])] = (f[1], float(f[3]))
+    b_row = int(np.argmax(lac[1:, 69])) + 1  # drishya forward_spectral.basis
+    B = np.stack([lac[4], lac[b_row]], 1)
+    mr, coef, err = {}, {}, {}
+    for c, name in enumerate(CLASSES):
+        rows = [o for o, (n, _) in conv.items() if n == name]
+        assert rows, f"class {name} not in the reference table"
+        mr[c] = np.mean([lac[o] / conv[o][1] for o in rows], 0)  # mm^-1 per g/cm^3
+        coef[c] = np.linalg.lstsq(B[FIT], mr[c][FIT], rcond=None)[0]
+        err[name] = float((np.abs(B[FIT] @ coef[c] - mr[c][FIT]) / mr[c][FIT]).max())
+    return B, coef, mr, dict(reference="10313", bone_row=b_row, bone_name=conv[b_row][0], max_rel_fit_err=max(err.values()), fit_err=err)
 
 
 def _hdr(p):
@@ -129,18 +135,13 @@ def run(series, ds, ts_dir, inf, out, model, B, coef, mr, ref, names):
     lab = np.asarray(seg["total"].dataobj).astype(np.int16); body = np.asarray(seg["body"].dataobj) > 0
     gt = np.where(body, np.clip(gt, -1024, 3071), -1000.0)
     Z, H, W = rho.shape
-    mat = np.array(MC_OF_CLASS)[cls]
     (sy, dy), (sx, dx) = fit768(H), fit768(W)
     c = np.zeros((2, Z, N, N), np.float32)
     for k in range(2):
-        lut = np.zeros(10, np.float32)
-        for m in coef:
-            lut[m] = coef[m][k]
-        c[k][:, dy, dx] = (rho * lut[mat])[:, sy, sx]
-    mu70 = np.zeros((Z, N, N), np.float32); lut70 = np.zeros(10, np.float32)
-    for m in mr:
-        lut70[m] = mr[m][69] / 10.0
-    mu70[:, dy, dx] = (rho * lut70[mat])[:, sy, sx]
+        lut = np.array([coef[i][k] for i in range(len(CLASSES))], np.float32)
+        c[k][:, dy, dx] = (rho * lut[cls])[:, sy, sx]
+    mu70 = np.zeros((Z, N, N), np.float32); lut70 = np.array([mr[i][69] for i in range(len(CLASSES))], np.float32)
+    mu70[:, dy, dx] = (rho * lut70[cls])[:, sy, sx]
     vols = [np.pad(v[::-1], ((PAD_Z, PAD_Z), (PAD_XY, PAD_XY), (PAD_XY, PAD_XY))) for v in c]  # LEAP k order (drishya)
     del c
     ang, zz, mas = trajectory(ref, Z)
@@ -217,7 +218,7 @@ if __name__ == "__main__":
         (out / d).mkdir(parents=True, exist_ok=True)
     B, coef, mr, info = materials()
     if rank == 0:
-        json.dump(dict(info, coef={MC_FILES[m]: v.tolist() for m, v in coef.items()}, v3_params=V3), open(out / "materials.json", "w"), indent=1)
+        json.dump(dict(info, coef={CLASSES[c]: v.tolist() for c, v in coef.items()}, v3_params=V3), open(out / "materials.json", "w"), indent=1)
     print("materials", info, flush=True)
     assert info["max_rel_fit_err"] < 0.02, info
     ref = ref_geometry(out / f"geom_dcm_008_rank{rank}.npz")
