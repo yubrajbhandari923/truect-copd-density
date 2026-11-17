@@ -1,0 +1,477 @@
+{
+ "n_cases": 54,
+ "orientation": {
+  "sternum_anterior": "53/53",
+  "desc_aorta_left": "53/53"
+ },
+ "per_model_p25_p50_p75": {
+  "u5_s11": {
+   "bone_fraction_in_ts_aorta": [
+    0.0009,
+    0.0039,
+    0.0133
+   ],
+   "bone_fraction_in_ts_heart": [
+    0.0003,
+    0.0014,
+    0.0139
+   ],
+   "density_median_aorta": [
+    1.0312,
+    1.0361,
+    1.041
+   ],
+   "density_median_heart": [
+    1.0312,
+    1.0312,
+    1.0388
+   ],
+   "density_median_lung": [
+    0.2615,
+    0.2666,
+    0.274
+   ],
+   "density_median_muscle": [
+    0.9977,
+    1.0,
+    1.0078
+   ],
+   "density_median_spine": [
+    0.9723,
+    0.9812,
+    0.9891
+   ],
+   "dice_ts_aorta": [
+    0.7458,
+    0.7744,
+    0.8157
+   ],
+   "dice_ts_esophagus": [
+    0.1587,
+    0.2885,
+    0.4229
+   ],
+   "dice_ts_lung": [
+    0.8794,
+    0.9364,
+    0.9548
+   ],
+   "dice_ts_ribs": [
+    0.6596,
+    0.695,
+    0.7142
+   ],
+   "dice_ts_scapula": [
+    0.2622,
+    0.3163,
+    0.3576
+   ],
+   "dice_ts_spine": [
+    0.6505,
+    0.6976,
+    0.7469
+   ],
+   "dice_ts_sternum": [
+    0.2916,
+    0.3549,
+    0.4326
+   ],
+   "emphysema_fraction_of_ts_lung": [
+    0.0152,
+    0.0271,
+    0.048
+   ],
+   "hu_median_aorta": [
+    149.965,
+    189.8917,
+    237.5583
+   ],
+   "hu_median_heart": [
+    125.5189,
+    149.8868,
+    193.9064
+   ],
+   "hu_median_lung": [
+    -849.4442,
+    -815.7075,
+    -761.296
+   ],
+   "hu_median_muscle": [
+    30.0789,
+    37.8311,
+    47.7278
+   ],
+   "hu_median_spine": [
+    229.0192,
+    278.2087,
+    327.8727
+   ],
+   "laa950": [
+    0.0015,
+    0.0031,
+    0.007
+   ],
+   "lung_density_minus_1+HU/1000_median": [
+    0.0404,
+    0.0793,
+    0.0976
+   ],
+   "lung_density_vs_hu_linear_r": [
+    0.8358,
+    0.8543,
+    0.8698
+   ]
+  },
+  "u5a_ref75k": {
+   "bone_fraction_in_ts_aorta": [
+    0.0003,
+    0.0015,
+    0.0054
+   ],
+   "bone_fraction_in_ts_heart": [
+    0.0007,
+    0.0041,
+    0.0198
+   ],
+   "density_median_aorta": [
+    1.0439,
+    1.0469,
+    1.0479
+   ],
+   "density_median_heart": [
+    1.0361,
+    1.0391,
+    1.042
+   ],
+   "density_median_lung": [
+    0.2605,
+    0.2672,
+    0.2728
+   ],
+   "density_median_muscle": [
+    1.0017,
+    1.0107,
+    1.0156
+   ],
+   "density_median_spine": [
+    0.9781,
+    0.988,
+    0.9932
+   ],
+   "dice_ts_aorta": [
+    0.7519,
+    0.7868,
+    0.8162
+   ],
+   "dice_ts_esophagus": [
+    0.2312,
+    0.3606,
+    0.5075
+   ],
+   "dice_ts_lung": [
+    0.8755,
+    0.9312,
+    0.9524
+   ],
+   "dice_ts_ribs": [
+    0.6515,
+    0.6778,
+    0.7069
+   ],
+   "dice_ts_scapula": [
+    0.2158,
+    0.2573,
+    0.3133
+   ],
+   "dice_ts_spine": [
+    0.6777,
+    0.7393,
+    0.7855
+   ],
+   "dice_ts_sternum": [
+    0.2918,
+    0.3408,
+    0.4139
+   ],
+   "emphysema_fraction_of_ts_lung": [
+    0.0214,
+    0.0335,
+    0.0739
+   ],
+   "hu_median_aorta": [
+    149.965,
+    189.8917,
+    237.5583
+   ],
+   "hu_median_heart": [
+    125.5189,
+    149.8868,
+    193.9064
+   ],
+   "hu_median_lung": [
+    -849.4442,
+    -815.7075,
+    -761.296
+   ],
+   "hu_median_muscle": [
+    30.0789,
+    37.8311,
+    47.7278
+   ],
+   "hu_median_spine": [
+    229.0192,
+    278.2087,
+    327.8727
+   ],
+   "laa950": [
+    0.0015,
+    0.0031,
+    0.007
+   ],
+   "lung_density_minus_1+HU/1000_median": [
+    0.0392,
+    0.0749,
+    0.0995
+   ],
+   "lung_density_vs_hu_linear_r": [
+    0.8278,
+    0.8489,
+    0.8703
+   ]
+  },
+  "u4f_s11": {
+   "bone_fraction_in_ts_aorta": [
+    0.0848,
+    0.2436,
+    0.3552
+   ],
+   "bone_fraction_in_ts_heart": [
+    0.067,
+    0.1328,
+    0.2338
+   ],
+   "density_median_aorta": [
+    1.0234,
+    1.0391,
+    1.0547
+   ],
+   "density_median_heart": [
+    1.0469,
+    1.0547,
+    1.0547
+   ],
+   "density_median_lung": [
+    0.1646,
+    0.2295,
+    0.2573
+   ],
+   "density_median_muscle": [
+    1.0469,
+    1.0469,
+    1.0469
+   ],
+   "density_median_spine": [
+    0.9609,
+    0.9688,
+    0.9766
+   ],
+   "dice_ts_aorta": [
+    0.0235,
+    0.0689,
+    0.1948
+   ],
+   "dice_ts_esophagus": [
+    0.0071,
+    0.0391,
+    0.1106
+   ],
+   "dice_ts_lung": [
+    0.8688,
+    0.9136,
+    0.9364
+   ],
+   "dice_ts_ribs": [
+    0.2226,
+    0.3283,
+    0.3961
+   ],
+   "dice_ts_scapula": [
+    0.0304,
+    0.0446,
+    0.0578
+   ],
+   "dice_ts_spine": [
+    0.1039,
+    0.1763,
+    0.2596
+   ],
+   "dice_ts_sternum": [
+    0.1853,
+    0.2186,
+    0.2812
+   ],
+   "emphysema_fraction_of_ts_lung": [
+    0.0589,
+    0.1807,
+    0.3354
+   ],
+   "hu_median_aorta": [
+    149.965,
+    189.8917,
+    237.5583
+   ],
+   "hu_median_heart": [
+    125.5189,
+    149.8868,
+    193.9064
+   ],
+   "hu_median_lung": [
+    -849.4442,
+    -815.7075,
+    -761.296
+   ],
+   "hu_median_muscle": [
+    30.0789,
+    37.8311,
+    47.7278
+   ],
+   "hu_median_spine": [
+    229.0192,
+    278.2087,
+    327.8727
+   ],
+   "laa950": [
+    0.0015,
+    0.0031,
+    0.007
+   ],
+   "lung_density_minus_1+HU/1000_median": [
+    -0.0067,
+    0.0053,
+    0.0176
+   ],
+   "lung_density_vs_hu_linear_r": [
+    0.831,
+    0.8607,
+    0.8934
+   ]
+  },
+  "u3_s11": {
+   "bone_fraction_in_ts_aorta": [
+    0.1508,
+    0.2931,
+    0.4887
+   ],
+   "bone_fraction_in_ts_heart": [
+    0.0378,
+    0.1001,
+    0.1802
+   ],
+   "density_median_aorta": [
+    1.0156,
+    1.0469,
+    1.0469
+   ],
+   "density_median_heart": [
+    1.0469,
+    1.0469,
+    1.0547
+   ],
+   "density_median_lung": [
+    0.248,
+    0.2559,
+    0.2656
+   ],
+   "density_median_muscle": [
+    1.0469,
+    1.0469,
+    1.0469
+   ],
+   "density_median_spine": [
+    0.9648,
+    0.9727,
+    0.9834
+   ],
+   "dice_ts_aorta": [
+    0.0538,
+    0.114,
+    0.1709
+   ],
+   "dice_ts_esophagus": [
+    0.0159,
+    0.044,
+    0.1083
+   ],
+   "dice_ts_lung": [
+    0.9249,
+    0.944,
+    0.9551
+   ],
+   "dice_ts_ribs": [
+    0.4072,
+    0.4957,
+    0.5556
+   ],
+   "dice_ts_scapula": [
+    0.0285,
+    0.0481,
+    0.0724
+   ],
+   "dice_ts_spine": [
+    0.1766,
+    0.2372,
+    0.3521
+   ],
+   "dice_ts_sternum": [
+    0.1516,
+    0.1782,
+    0.2035
+   ],
+   "emphysema_fraction_of_ts_lung": [
+    0.0202,
+    0.0569,
+    0.1559
+   ],
+   "hu_median_aorta": [
+    149.965,
+    189.8917,
+    237.5583
+   ],
+   "hu_median_heart": [
+    125.5189,
+    149.8868,
+    193.9064
+   ],
+   "hu_median_lung": [
+    -849.4442,
+    -815.7075,
+    -761.296
+   ],
+   "hu_median_muscle": [
+    30.0789,
+    37.8311,
+    47.7278
+   ],
+   "hu_median_spine": [
+    229.0192,
+    278.2087,
+    327.8727
+   ],
+   "laa950": [
+    0.0015,
+    0.0031,
+    0.007
+   ],
+   "lung_density_minus_1+HU/1000_median": [
+    0.0382,
+    0.059,
+    0.0697
+   ],
+   "lung_density_vs_hu_linear_r": [
+    0.8447,
+    0.8605,
+    0.8813
+   ]
+  }
+ }
+}
