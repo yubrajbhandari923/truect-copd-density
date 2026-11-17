@@ -84,7 +84,8 @@ def run_case(series, shared, ts_dir, out, models, norm, dev):
         chk["desc_aorta_left"] = bool(a.shape[1] and a[2].mean() > np.nonzero(sp)[2].mean())
     ct = np.where(body, np.clip(ct, -1024, 3071), -1000.0).astype(np.float32)
     Z, H, W = ct.shape
-    ph, pw = max(768 - H, 0), max(768 - W, 0)
+    up = lambda n: max(768, -(-n // 32) * 32) - n  # 2D U-Nets need in-plane size divisible by 2^depth
+    ph, pw = up(H), up(W)
     ctp = np.pad(ct, ((0, 0), (ph // 2, ph - ph // 2), (pw // 2, pw - pw // 2)), constant_values=-1000)
     crop = (slice(None), slice(ph // 2, ph // 2 + H), slice(pw // 2, pw // 2 + W))
     res = dict(series=series, shape_06mm=[Z, H, W], orientation_check=chk,
