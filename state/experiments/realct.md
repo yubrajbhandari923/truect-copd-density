@@ -33,6 +33,24 @@ this is a plausibility / domain-shift check, not an accuracy measurement. Not pa
 No density ground truth; 0.6 mm grid and HU calibration across vendors assumed; contrast is out of distribution.
 Overlays checked visually for one case only (RealCT-P05: anatomy and consolidation density plausible).
 
+## u5a_wide (job 206110, code/realct-8558f51) — reports/realct/u5a_wide/
+Orientation 53/53; aorta Dice vs TS 0.76, bone in TS aorta 0.5%; muscle 1.02, aorta 1.05, spine 0.98 g/cm3;
+lung offset vs 1+HU/1000 0.049 (smaller than earlier 3D, 0.075); emphysema 5.7% of TS lung (more than earlier 3D).
+
+## Simulated CT from u5a_wide predictions (job 206111, 54 cases) — reports/realct/simct_u5a_wide/
+Drishya E01 best variants (v3_noiseless, v3; experiments/realct/simct, copied from drishya, not edited) applied to
+mu = rho_pred x (mu/rho)_class (TrueCT 10313 per-subject LAC), 10313 helical geometry, constant reference mAs.
+Median over cases (HU; real / ideal70 / sim noiseless / sim noisy):
+muscle 37 / 10 / -23 / -28; liver 82 / 40 / 16 / 14; aorta 191 / 44 / 17 / 12; heart 150 / 40 / 12 / 9;
+spine 275 / 148 / 98 / 99; lung -816 / -754 / -742 / -741; Perc15 -870 / -801 / -788 / -809; LAA-950 0.3 / 0.1 / 0.0 / 0.2 %;
+body MAE vs real 81 / 90 / 99 HU; high-pass noise SD in muscle 26 / 15 / 11 / 50.
+Reading: three separable gaps. (1) Model: predicted density gives soft tissue ~25-30 HU low and lung ~60 HU high
+even at ideal 70 keV (consistent with the lung density offset above). (2) No iodine: aorta/heart contrast missing
+(~150 HU), by construction. (3) Simulator: ~30 HU darker than ideal 70 keV in soft tissue, bone ~50 HU lower
+(effective-energy / beam-hardening-correction difference; drishya's own E01 bias on TrueCT is +5..+28 HU, so the
+offset here is partly the ideal70 reference, not verified). Noisy sim noise ~2x real: reference mAs and recon kernel
+differ from the DUHS scans (patient mAs not used). Anatomy/geometry visually correct (example_fig.png, 2 cases viewed).
+
 ## Next
-Add u5a_wide; look at more overlays (worst aorta / lung-offset cases); non-contrast screening data
+Look at more overlays (worst aorta / lung-offset cases); non-contrast screening data
 (SHARED DLCS LungRads) would be a closer domain match.
