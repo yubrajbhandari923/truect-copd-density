@@ -28,7 +28,7 @@ norm = json.load(open(NORM_PATH))
 ct = torch.from_numpy(normalize(t["ct"][sl], norm))[None, None].to(dev)
 x0 = torch.from_numpy(np.asarray(t["density"][sl], np.float32) - 1)[None, None].to(dev)
 print("x0 mean/min/max", float(x0.mean()), float(x0.min()), float(x0.max()), "ct mean", float(ct.mean()), flush=True)
-acp = scheduler().alphas_cumprod.to(dev)
+acp = scheduler(cfg).alphas_cumprod.to(dev); V = cfg.get("pred") == "v"
 g = torch.Generator(dev).manual_seed(0)
 eps = torch.randn(x0.shape, generator=g, device=dev)
 
@@ -43,15 +43,16 @@ with torch.no_grad():
         for tt in (10, 100, 300, 500, 700, 900, 999):
             a = acp[tt]; xt = a.sqrt() * x0 + (1 - a).sqrt() * eps
             e = f(torch.cat([ct, xt], 1), tt)
-            x0h = (xt - (1 - a).sqrt() * e) / a.sqrt()
-            out.append(f"t{tt}: epsMSE {float(((e - eps) ** 2).mean()):.4f} x0MAE {float((x0h - x0).abs().mean()):.4f}")
+            x0h = a.sqrt() * xt - (1 - a).sqrt() * e if V else (xt - (1 - a).sqrt() * e) / a.sqrt()
+            tgt = a.sqrt() * eps - (1 - a).sqrt() * x0 if V else eps
+            out.append(f"t{tt}: outMSE {float(((e - tgt) ** 2).mean()):.4f} x0MAE {float((x0h - x0).abs().mean()):.4f}")
         print(label, " | ".join(out), flush=True)
     for label, f in [("ema bf16", net_eps(model)), ("ema fp32", fp32(model))]:
         for steps in (25, 100):
-            y_sw = sample(f, ct, steps, 0, (96, 96, 96))  # roi == patch: single window
+            y_sw = sample(f, ct, steps, 0, (96, 96, 96), cfg=cfg)  # roi == patch: single window
             print(label, f"ddim{steps} one-patch MAE {float((y_sw - x0).abs().mean()):.4f}  pred mean {float(y_sw.mean()):.4f}", flush=True)
     # no sliding window, plain loop
-    sch = scheduler(); sch.set_timesteps(25); x = torch.randn(ct.shape, generator=torch.Generator(dev).manual_seed(0), device=dev)
+    sch = scheduler(cfg); sch.set_timesteps(25); x = torch.randn(ct.shape, generator=torch.Generator(dev).manual_seed(0), device=dev)
     print("timesteps", sch.timesteps[:5].tolist(), "...", sch.timesteps[-3:].tolist(), flush=True)
     for tt in sch.timesteps:
         e = fp32(model)(torch.cat([ct, x], 1), int(tt)); x, _ = sch.step(e, int(tt), x)

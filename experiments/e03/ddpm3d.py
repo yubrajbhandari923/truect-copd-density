@@ -7,6 +7,8 @@ Training data, patch sampler, CT normalisation and cosine LR are the E02 U5 ones
 Target x0 = density - 1 g/cm3 (air -1, soft tissue ~0, cortical bone ~+0.9), no clipping. Input = [CT, x_t];
 epsilon prediction, MSE over the whole patch (outside the evaluation region the target is 0 density), linear beta
 schedule 1e-4..0.02 over 1000 steps (Ho 2020). EMA weights are used for sampling.
+D1b options (cfg): "pred": "v" -> v-prediction, target v = sqrt(a) eps - sqrt(1-a) x0; "zero_snr": true -> rescale the
+schedule to zero terminal SNR (Lin et al. 2024, Alg. 1), so t=999 is pure noise and the model must predict x0 from CT.
 
 Eval (prespecified, bounded pilot): per VAL subject, the 96 slices centred on the valid range, in-plane cropped to the
 evaluation-mask bbox + 32 px. Every method sees exactly this input; metrics use its central 64 slices (no slab-edge
@@ -41,14 +43,21 @@ def build(cfg):
                               num_res_blocks=cfg["res_blocks"], num_head_channels=cfg.get("head_ch", 32))
 
 
-def scheduler():
-    return DDIMScheduler(num_train_timesteps=1000, schedule="linear_beta", clip_sample=False, prediction_type="epsilon")
+def scheduler(cfg=None):
+    cfg = cfg or {}
+    s = DDIMScheduler(num_train_timesteps=1000, schedule="linear_beta", clip_sample=False,
+                      prediction_type="v_prediction" if cfg.get("pred") == "v" else "epsilon")
+    if cfg.get("zero_snr"):  # keep sqrt(abar_0), shift sqrt(abar_T) to 0; DDIM step only reads alphas_cumprod
+        r = s.alphas_cumprod.sqrt()
+        s.alphas_cumprod = ((r - r[-1]) * r[0] / (r[0] - r[-1])) ** 2
+    return s
 
 
 @torch.no_grad()
-def sample(eps_fn, ct, steps, seed, roi, sw_batch=8, overlap=0.25):
-    """DDIM (eta 0) from fixed noise. eps_fn(inp[N,2,...], t) -> eps; every step is a sliding window over the slab."""
-    s = scheduler(); s.set_timesteps(steps)
+def sample(eps_fn, ct, steps, seed, roi, sw_batch=8, overlap=0.25, cfg=None):
+    """DDIM (eta 0) from fixed noise. eps_fn(inp[N,2,...], t) -> model output (eps or v, per cfg); every step is a
+    sliding window over the slab."""
+    s = scheduler(cfg); s.set_timesteps(steps)
     g = torch.Generator(ct.device).manual_seed(seed)
     x = torch.randn(ct.shape, generator=g, device=ct.device)
     for t in s.timesteps:
@@ -103,7 +112,7 @@ def train(cfg, name, stop_at):
     ucfg = {**cfg, "seed": cfg["seed"]}  # same (seed, i) -> patch mapping as E02
     dl = DataLoader(Patches3D(train_subjects(cfg), ucfg, norm), batch_size=B, sampler=idx, num_workers=cfg["workers"],
                     pin_memory=True, prefetch_factor=4, persistent_workers=True)
-    ns = scheduler()
+    ns = scheduler(cfg)
     acp = ns.alphas_cumprod.to(dev)
     log = open(out_dir / "log.jsonl", "a") if rank == 0 else None
     t_last, acc = time.time(), []
@@ -118,7 +127,8 @@ def train(cfg, name, stop_at):
         opt.zero_grad(set_to_none=True)
         with torch.autocast("cuda", torch.bfloat16):
             pred = ddp(torch.cat([x, xt], 1), timesteps=t)
-        loss = ((pred.float() - eps) ** 2).mean()
+        target = a.sqrt() * eps - (1 - a).sqrt() * x0 if cfg.get("pred") == "v" else eps
+        loss = ((pred.float() - target) ** 2).mean()
         loss.backward()
         gn = torch.nn.utils.clip_grad_norm_(ddp.parameters(), cfg.get("clip", 1.0))
         opt.step(); ema.update_parameters(model); sched.step(); step += 1
@@ -195,7 +205,7 @@ def evaluate(cfg, name):
             S = []
             for k in range(4):
                 torch.cuda.synchronize(); t0 = time.time()
-                x = sample(net_eps(model), ct, steps, 10 * int(sid) + k, (cfg["patch"],) * 3, cfg.get("sw_batch", 8))
+                x = sample(net_eps(model), ct, steps, 10 * int(sid) + k, (cfg["patch"],) * 3, cfg.get("sw_batch", 8), cfg=cfg)
                 torch.cuda.synchronize()
                 S.append(x[0, 0].float().cpu().numpy() + 1.0)
                 r[f"ddim{steps}_s{k}"] = slab_metrics(t, z0, ys, xs, S[-1]); r[f"ddim{steps}_s{k}"]["sec"] = time.time() - t0
