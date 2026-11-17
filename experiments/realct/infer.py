@@ -1,6 +1,6 @@
 """Test inference of the frozen-so-far E02 models on real (DUHS) chest CT; plausibility metrics, no ground truth.
 
-Usage: python infer.py <shared_dir> <ts_dir> <out_dir> <rank> <world>   (one GPU per process; cases split rank::world)
+Usage: python infer.py <shared_dir> <ts_dir> <out_dir> <rank> <world> [model,model,...]   (one GPU per process; cases split rank::world)
 
 Per series: RAS -> resample to 0.6 mm isotropic (the TrueCT recon grid, itself an assumption) -> set voxels outside
 the TotalSegmentator body mask to -1000 HU (no patient table in training) -> clip to [-1024, 3071] -> reorient to the
@@ -48,9 +48,9 @@ def to_train(img):
                                                              nib.orientations.axcodes2ornt(TRAIN_AX)))
 
 
-def load_models(dev):
+def load_models(dev, names=MODELS):
     out = {}
-    for name in MODELS:
+    for name in names:
         s = torch.load(WORK / "checkpoints/e02" / name / "last.pt", map_location="cpu", weights_only=False)
         cfg = s["cfg"]
         is3d = "filters" in cfg
@@ -128,7 +128,7 @@ def run_case(series, shared, ts_dir, out, models, norm, dev):
                 mk = m_of(k)
                 if mk.any():
                     r[f"bone_fraction_in_ts_{k}"] = float(np.isin(pc[mk], BONE).mean())
-        if name == MODELS[0]:
+        if name == next(iter(models)):
             overlay(series, ct, pd, pc, lab, out / "overlays" / f"{series}.png")
         print(series, name, json.dumps({k: (round(v, 4) if isinstance(v, float) else v) for k, v in r.items()}), flush=True)
     return res
@@ -155,7 +155,7 @@ if __name__ == "__main__":
     (out / "pred").mkdir(parents=True, exist_ok=True); (out / "overlays").mkdir(exist_ok=True)
     dev = torch.device("cuda")
     norm = json.load(open(t2d.NORM_PATH))
-    models = load_models(dev)
+    models = load_models(dev, sys.argv[6].split(",") if len(sys.argv) > 6 else MODELS)
     series = sorted(p.name[:-7] for p in (shared / "images").glob("*.nii.gz"))[rank::world]
     for s in series:
         f = out / "metrics" / f"{s}.json"

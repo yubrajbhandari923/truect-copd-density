@@ -1,7 +1,7 @@
 """Real-patient round trip: predicted material/density map -> drishya variant-3 CT simulator (LEAP) -> simulated CT,
 compared with the real patient CT (ground truth). Exploratory; owner request 2026-11-17.
 
-Per series (inputs from infer.py, model u5_s11 by default, 0.6 mm grid in the training orientation):
+Per series (inputs from infer.py, model u5a_wide = best E02 model on VAL, 0.6 mm grid in the training orientation):
   mu(r, E) = rho_pred(r) * (mu/rho)_c(E), c = predicted class; (mu/rho)_c = mean over the reference subject's organs of
   that class name of lac(E)/density (TrueCT 10313 per-subject DukeSim tables material_lac/ + conversion_table: the
   attenuation the training phantoms were simulated with; dev-exposed subject, drishya's calibration subject).
@@ -9,7 +9,7 @@ Per series (inputs from infer.py, model u5_s11 by default, 0.6 mm grid in the tr
   Two-basis decomposition exactly as drishya variant 2 (subject's muscle row + densest-bone row, 20-120 keV)
   -> LEAP helical forward projection
   -> drishya variant 3 physics (120 kV spectrum + water BH, detector blur, smooth residual kernel, Poisson noise)
-  -> fixed G_RECON LEAP FBP. Also the ideal 70 keV HU of the predicted map (no acquisition physics).
+  -> fixed G_RECON LEAP FBP. Arms = drishya's best noiseless (v3_noiseless) and best noisy (v3) variants. Also the ideal 70 keV HU of the predicted map (no acquisition physics).
 Geometry: TrueCT 10313 scan (dcm_008) helical trajectory (view spacing, pitch), extended/shortened symmetrically to the
 patient's z length; tube current constant = median of 10313's mAs vector (real patients have no TCM vector here).
 Volume: in-plane centre-padded/cropped to 768 (0.6 mm) and padded like drishya (128 px, 64 slices of air).
@@ -184,7 +184,7 @@ def run(series, ds, ts_dir, inf, out, model, B, coef, mr, ref, names):
     res["gt"] = {f"{reg}_median_hu": float(np.median(gt[np.isin(lab, ids) & roi])) for reg, ids in G.items() if (np.isin(lab, ids) & roi).sum() > 500}
     res["gt"]["lung_qib"] = lung_qib(gt[np.isin(lab, G["lung"]) & roi])
     res["gt"]["noise_sd_hp"] = hp_sd(gt, ndi.binary_erosion(np.isin(lab, G["muscle"]) & roi, iterations=2))
-    figure(series, gt, sims, body, out / "fig" / f"{series}.png")
+    figure(series, gt, sims, body, out / "fig" / f"{series}__{model}.png")
     res["timing"]["total_s"] = time.perf_counter() - t00
     print(series, json.dumps({k: (v if not isinstance(v, dict) else {a: (round(b, 1) if isinstance(b, float) else b) for a, b in v.items()})
                               for k, v in res.items() if k in ("gt", "sim_noisy", "timing")}), flush=True)
@@ -213,7 +213,7 @@ def figure(series, gt, sims, body, path):
 if __name__ == "__main__":
     ds, ts_dir, inf, out = map(Path, sys.argv[1:5])
     rank, world = int(sys.argv[5]), int(sys.argv[6])
-    model = sys.argv[7] if len(sys.argv) > 7 else "u5_s11"
+    model = sys.argv[7] if len(sys.argv) > 7 else "u5a_wide"
     for d in ("vol", "fig", "metrics"):
         (out / d).mkdir(parents=True, exist_ok=True)
     B, coef, mr, info = materials()
