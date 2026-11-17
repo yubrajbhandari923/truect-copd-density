@@ -1,4 +1,4 @@
-"""Copy the thin-slice original axial chest series from the DUHS VLM CT_CHEST folder into the lab shared-data area,
+"""Copy the thin-slice original axial chest series from the DUHS VLM CT_CHEST folder into the owner data folder (settings.yaml hpc.datasets),
 verify the copies and record a manifest. Never writes to the source folder.
 
 Selection (one rule, applied to every JSON sidecar): 3-D volume with > 50 slices, slice spacing <= 1.25 mm,

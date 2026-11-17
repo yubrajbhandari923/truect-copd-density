@@ -3,7 +3,7 @@
 set -euo pipefail
 W=/scratch/railabs/yb107/research-output/truect-copd-density
 SRC=/scratch/railabs/ld258/dataset/DUHS/VLM/CT_CHEST
-DST=/scratch/railabs/SHARED/data/ct_images/duke/DUHS_VLM_CT_CHEST_thin
+DST=/scratch/railabs/yb107/Datasets/DUHS_CT_CHEST_thin  # owner data folder (settings.yaml hpc.datasets)
 TS=$W/results/realct/totalseg; OUT=$W/results/realct/inference
 export TOTALSEG_HOME_DIR=$W/cache/totalseg
 mkdir -p $TS $OUT
