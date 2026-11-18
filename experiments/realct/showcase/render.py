@@ -108,7 +108,7 @@ def body_masked(dens, body):
 def caption(case):
     if (case / "gt_class.nii.gz").exists():
         c = np.asarray(nib.load(case / "gt_class.nii.gz").dataobj)[::2, ::2, ::2]
-        return f"TrueCT validation subject {case.name.split('_')[1]}  ·  emphysema {100 * (c == 3).sum() / np.isin(c, [3, 5, 6, 7]).sum():.0f}% of lung (phantom)"
+        return f"TrueCT validation subject {case.name.split('_')[1]}  ·  emphysema {100 * (c == 3).sum() / np.isin(c, [3, 5, 6, 7]).sum():.1f}% of lung (phantom)"
     ct = np.asarray(nib.load(case / "ct.nii.gz").dataobj)
     lung = np.isin(np.asarray(nib.load(case / "totalseg_total.nii.gz").dataobj), [i for i, n in ts_names(case).items() if n.startswith("lung_")])
     return f"Real patient CT ({case.name.split('_', 1)[1].replace('_', ' ')}, contrast-enhanced)  ·  LAA-950 {100 * (ct[lung] < -950).mean():.1f}%"
