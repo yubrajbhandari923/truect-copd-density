@@ -29,7 +29,7 @@ from PIL import Image
 from skimage.measure import marching_cubes
 
 pv.OFF_SCREEN = True
-plt.rcParams.update({"font.family": ["Noto Sans", "DejaVu Sans"], "font.size": 11})
+plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 11})
 # name, colour, opacity, our class ids (truect.data.CLASSES), TotalSeg name test
 GROUPS = [("Lung", (0.66, 0.76, 0.93), 0.14, [3, 5, 6, 7], lambda n: n.startswith("lung_")),
           ("Bone", (0.957, 0.886, 0.776), 1.0, [9, 10, 11, 12, 14, 15, 16, 17],
@@ -41,8 +41,10 @@ GROUPS = [("Lung", (0.66, 0.76, 0.93), 0.14, [3, 5, 6, 7], lambda n: n.startswit
 DENS_CMAP = LinearSegmentedColormap.from_list("dens", [(0, "#ffd21a"), (0.04, "#ff7a1a"), (0.12, "#3d7bd9"),
                                                        (0.3, "#9fc3ff"), (0.45, "#e8e2d0"), (1, "#ffffff")])
 CLIM = (0.0, 2.0)  # g/cm3
-OPAC = np.interp(np.linspace(*CLIM, 256), [0, 0.03, 0.06, 0.12, 0.3, 0.6, 1.15, 1.3, 1.6, 2.0],
-                 [0, 0, 0.5, 0.12, 0.03, 0.0, 0.0, 0.25, 0.7, 0.9])  # emphysema/lung visible, soft tissue clear
+# opacity transfer function (density, opacity per UNIT_MM): emphysema/lung visible, soft tissue clear, bone opaque.
+# Set on the VTK property directly: pyvista's array `opacity=` silently rendered nothing here (vtk 9.3.1 / pv 0.47.1).
+TF = [(0, 0), (0.03, 0), (0.06, 0.5), (0.12, 0.12), (0.3, 0.03), (0.6, 0), (1.08, 0), (1.2, 0.35), (1.4, 0.8), (2.0, 0.95)]
+UNIT_MM = 8
 WIN = 1600
 TITLES = {"pred_class": "Predicted phantom (ours)", "gt_class": "Ground-truth phantom (TrueCT)",
           "totalseg": "TotalSegmentator", "ct": "CT input", "pred_density": "Predicted density (ours)",
@@ -81,9 +83,17 @@ def surf_meshes(lab, aff, ids_of):
     return out
 
 
-def body_masked(dens):
-    """Zero density outside the hole-filled, slightly eroded body so the skin/air boundary does not fog the render."""
-    body = np.stack([ndi.binary_fill_holes(s) for s in np.moveaxis(dens > 0.5, 2, 0)], 2)
+def body_mask(case, shape):
+    """CT-derived TotalSegmentator body mask (canonical) if it is on this grid, else None. Model outputs outside the
+    body (air, outside the TrueCT reconstruction disc) are meaningless, and the real-CT inference already zeroed them."""
+    b = nib.as_closest_canonical(nib.load(case / "totalseg_body.nii.gz"))
+    return np.asarray(b.dataobj) > 0 if b.shape == shape else None
+
+
+def body_masked(dens, body):
+    """Zero density outside the (eroded) body so the skin/air boundary does not fog the render."""
+    if body is None:
+        body = np.stack([ndi.binary_fill_holes(s) for s in np.moveaxis(dens > 0.5, 2, 0)], 2)
     return np.where(ndi.binary_erosion(body, iterations=2), dens, 0).astype(np.float32)
 
 
@@ -112,7 +122,10 @@ def render_panels(case, views, pdir):
     for src, (p, ids_of) in surf.items():
         if not p.exists():
             continue
-        meshes = surf_meshes(*canon(p), ids_of)
+        lab, aff = canon(p)
+        if src == "pred_class" and (b := body_mask(case, lab.shape)) is not None:
+            lab = np.where(b, lab, 0)
+        meshes = surf_meshes(lab, aff, ids_of)
         for view in views:
             pl = plotter(); pl.enable_depth_peeling(8)
             for n, m, col, op in meshes:
@@ -122,14 +135,19 @@ def render_panels(case, views, pdir):
         if not p.exists():
             continue
         v, aff = canon(p)
-        v = v[::2, ::2, ::2].astype(np.float32)  # 1.2 mm is ample for a volume render
+        b = body_mask(case, v.shape)
+        v, b = v[::2, ::2, ::2].astype(np.float32), (b[::2, ::2, ::2] if b is not None else None)  # 1.2 mm is ample
         if src == "ct":
             v = np.clip(1 + v / 1000, 0, 2.5)
         g = pv.ImageData(dimensions=v.shape, spacing=np.abs(np.diag(aff)[:3]) * 2, origin=aff[:3, 3])
-        g.point_data["density"] = body_masked(v).ravel(order="F")
+        g.point_data["density"] = body_masked(v, b).ravel(order="F")
         for view in views:
             pl = plotter()
-            pl.add_volume(g, scalars="density", cmap=DENS_CMAP, clim=CLIM, opacity=OPAC, shade=False, show_scalar_bar=False)
+            a = pl.add_volume(g, scalars="density", cmap=DENS_CMAP, clim=CLIM, opacity="linear", opacity_unit_distance=UNIT_MM,
+                              shade=False, show_scalar_bar=False)
+            f = a.prop.GetScalarOpacity(); f.RemoveAllPoints()
+            for x, o in TF:
+                f.AddPoint(x, o)
             shoot(pl, center, view, pdir / f"{src}_{view}.png")
 
 
