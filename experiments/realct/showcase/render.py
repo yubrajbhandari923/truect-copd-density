@@ -56,9 +56,11 @@ def canon(path):
     return np.asarray(img.dataobj), img.affine
 
 
-def plotter():
+def plotter(ssaa=True):
     pl = pv.Plotter(off_screen=True, window_size=(WIN, WIN), lighting="light_kit")
-    pl.enable_anti_aliasing("ssaa"); pl.enable_parallel_projection()
+    if ssaa:  # SSAA blanks GPU volume rendering on this VTK build (9.3.1, EGL): surfaces only
+        pl.enable_anti_aliasing("ssaa")
+    pl.enable_parallel_projection()
     return pl
 
 
@@ -147,7 +149,7 @@ def render_panels(case, views, pdir):
         g = pv.ImageData(dimensions=v.shape, spacing=np.abs(np.diag(aff)[:3]) * 2, origin=aff[:3, 3])
         g.point_data["density"] = body_masked(v, b).ravel(order="F")
         for view in views:
-            pl = plotter()
+            pl = plotter(ssaa=False)
             a = pl.add_volume(g, scalars="density", cmap=DENS_CMAP, clim=CLIM, opacity="linear", opacity_unit_distance=UNIT_MM,
                               shade=False, show_scalar_bar=False)
             f = a.prop.GetScalarOpacity(); f.RemoveAllPoints()
