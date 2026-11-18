@@ -62,12 +62,17 @@ def plotter():
     return pl
 
 
-def shoot(pl, center, view, path, scale=230):
+def shoot(pl, center, view, path, scale=230, volume=False):
     c = np.asarray(center)
     eye = {"anterior": (0, 1, 0), "left": (-1, 0, 0), "oblique": (-0.6, 0.8, 0.12)}[view]  # RAS: +y anterior, -x left
     pl.camera_position = [tuple(c + 1000 * np.asarray(eye)), tuple(c), (0, 0, 1)]
     pl.camera.parallel_scale = scale
-    pl.screenshot(path, transparent_background=True); pl.close()
+    if not volume:
+        pl.screenshot(path, transparent_background=True); pl.close(); return
+    # volume rays leave alpha at 0 in transparent screenshots: render on black, alpha from brightness (emission look)
+    pl.set_background("black"); rgb = pl.screenshot(None, return_img=True)[..., :3]; pl.close()
+    a = np.clip(rgb.max(-1).astype(np.float32) * 1.6, 0, 255)
+    Image.fromarray(np.dstack([np.clip(rgb / np.maximum(a[..., None] / 255, 1e-3), 0, 255), a]).astype(np.uint8)).save(path)
 
 
 def surf_meshes(lab, aff, ids_of):
@@ -148,7 +153,7 @@ def render_panels(case, views, pdir):
             f = a.prop.GetScalarOpacity(); f.RemoveAllPoints()
             for x, o in TF:
                 f.AddPoint(x, o)
-            shoot(pl, center, view, pdir / f"{src}_{view}.png")
+            shoot(pl, center, view, pdir / f"{src}_{view}.png", volume=True)
 
 
 def crop_view(pdir, view, pad=30):

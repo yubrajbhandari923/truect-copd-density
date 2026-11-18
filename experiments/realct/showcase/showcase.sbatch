@@ -27,4 +27,4 @@ REAL=(RealCT-P25-s04 RealCT-P30-s04 RealCT-P28-s04)
     $W/envs/totalseg/bin/TotalSegmentator -i $OUT/TrueCT_$s/ct.nii.gz -o $OUT/TrueCT_$s/totalseg_$task.nii.gz --ml -ta $task -q
   done; done; }
 for d in $OUT/TrueCT_* $OUT/RealCT_*; do $VIS render.py $d ${RENDER_ARGS:-}; done
-ls -R $OUT | head -100
+ls -R $OUT | head -100 || true
