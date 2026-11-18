@@ -44,6 +44,7 @@ CLIM = (0.0, 2.0)  # g/cm3
 # opacity transfer function (density, opacity per UNIT_MM): emphysema/lung visible, soft tissue clear, bone opaque.
 # Set on the VTK property directly: pyvista's array `opacity=` silently rendered nothing here (vtk 9.3.1 / pv 0.47.1).
 TF = [(0, 0), (0.03, 0), (0.06, 0.5), (0.12, 0.12), (0.3, 0.03), (0.6, 0), (1.08, 0), (1.2, 0.35), (1.4, 0.8), (2.0, 0.95)]
+TF_CT = TF[:6] + [(1.2, 0), (1.3, 0.35), (1.5, 0.8), (2.0, 0.95)]  # CT: contrast blood (1+HU/1000 up to ~1.3) is not bone
 UNIT_MM = 8
 WIN = 1600
 TITLES = {"pred_class": "Predicted phantom (ours)", "gt_class": "Ground-truth phantom (TrueCT)",
@@ -153,7 +154,7 @@ def render_panels(case, views, pdir):
             a = pl.add_volume(g, scalars="density", cmap=DENS_CMAP, clim=CLIM, opacity="linear", opacity_unit_distance=UNIT_MM,
                               shade=False, show_scalar_bar=False)
             f = a.prop.GetScalarOpacity(); f.RemoveAllPoints()
-            for x, o in TF:
+            for x, o in (TF_CT if src == "ct" else TF):
                 f.AddPoint(x, o)
             shoot(pl, center, view, pdir / f"{src}_{view}.png", volume=True)
 

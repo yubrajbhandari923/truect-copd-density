@@ -19,12 +19,12 @@ VIS=/home/yb107/MedImgResearch/.venv/bin/python  # owner's env (pyvista 0.47.1, 
 cd $SLURM_SUBMIT_DIR/experiments/realct/showcase
 echo "snapshot=$SLURM_SUBMIT_DIR job=$SLURM_JOB_ID host=$(hostname)"
 TRUE=(10379 24803 21400)
-REAL=(RealCT-P25-s04 RealCT-P30-s04 RealCT-P28-s04)
+REAL=(RealCT-P25-s04 RealCT-P30-s04 RealCT-P45-s04)  # RealCT-P28 dropped: 164 mm FOV recon
 [ "${SKIP_PREP:-0}" = 1 ] || {
   $W/.venv/bin/python prep.py $OUT truect "${TRUE[@]}"
   $W/.venv/bin/python prep.py $OUT realct "${REAL[@]}"
   for s in "${TRUE[@]}"; do for task in total body; do
-    $W/envs/totalseg/bin/TotalSegmentator -i $OUT/TrueCT_$s/ct.nii.gz -o $OUT/TrueCT_$s/totalseg_$task.nii.gz --ml -ta $task -q
+    [ -s $OUT/TrueCT_$s/totalseg_$task.nii.gz ] || $W/envs/totalseg/bin/TotalSegmentator -i $OUT/TrueCT_$s/ct.nii.gz -o $OUT/TrueCT_$s/totalseg_$task.nii.gz --ml -ta $task -q
   done; done; }
 for d in $OUT/TrueCT_* $OUT/RealCT_*; do $VIS render.py $d ${RENDER_ARGS:-}; done
 ls -R $OUT | head -100 || true

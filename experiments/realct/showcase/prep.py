@@ -25,6 +25,8 @@ R = WORK / "results/realct"
 def truect_case(sid, out, model):
     assert sid in split()["val"], f"{sid}: showcase uses validation subjects only (test is blinded until E04)"
     d = out / f"TrueCT_{sid}"; d.mkdir(parents=True, exist_ok=True)
+    if (d / f"pred_{MODEL}_class.nii.gz").exists():
+        return
     for f in ("ct.nii.gz", "density_ctgrid.nii.gz", "labels_ctgrid.nii.gz"):
         shutil.copy(TRUECT / sid / f, d / ("gt_" + f if f != "ct.nii.gz" else f))
     T = to_train(nib.load(TRUECT / sid / "ct.nii.gz"))
