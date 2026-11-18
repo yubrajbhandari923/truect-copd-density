@@ -19,7 +19,9 @@ VIS=/home/yb107/MedImgResearch/.venv/bin/python  # owner's env (pyvista 0.47.1, 
 cd $SLURM_SUBMIT_DIR/experiments/realct/showcase
 echo "snapshot=$SLURM_SUBMIT_DIR job=$SLURM_JOB_ID host=$(hostname)"
 TRUE=(10379 24803 21400)
-REAL=(RealCT-P25-s04 RealCT-P30-s04 RealCT-P45-s04)  # RealCT-P28 dropped: 164 mm FOV recon
+# Real-CT cases by anonymous ID; DUHS series names live only in the private map (never commit them).
+REAL=($(for a in RealCT-P25-s04 RealCT-P30-s04 RealCT-P45-s04; do awk -v a=$a '$1==a{print $2}' $W/private/realct_id_map.tsv; done))  # RealCT-P28 dropped: 164 mm FOV recon
+[ ${#REAL[@]} = 3 ] || { echo "realct_id_map.tsv lookup failed" >&2; exit 1; }
 [ "${SKIP_PREP:-0}" = 1 ] || {
   $W/.venv/bin/python prep.py $OUT truect "${TRUE[@]}"
   $W/.venv/bin/python prep.py $OUT realct "${REAL[@]}"

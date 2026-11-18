@@ -9,9 +9,9 @@ Made by `prep.py` + `render.py` (this folder), job `showcase.sbatch`; model u5a_
 | TrueCT_10379 | TrueCT VAL, near-normal lung (0.4% emphysema): prediction matches phantom incl. a small RLL emphysema focus |
 | TrueCT_24803 | TrueCT VAL, moderate (14%): emphysema pattern reproduced; best density slide (oblique view) |
 | TrueCT_21400 | TrueCT VAL, severe (61%) |
-| RealCT_RealCT-P45 | DUHS contrast CT, normal lung (LAA-950 0.2%); model calls some peri-mediastinal emphysema |
-| RealCT_RealCT-P25 | DUHS contrast CT, most emphysematous (LAA-950 14%); model over-calls (33% of lung), contrast heart -> "bone" |
-| RealCT_RealCT-P30 | DUHS contrast CT, typical case |
+| RealCT-P45 | DUHS contrast CT, normal lung (LAA-950 0.2%); model calls some peri-mediastinal emphysema |
+| RealCT-P25 | DUHS contrast CT, most emphysematous (LAA-950 14%); model over-calls (33% of lung), contrast heart -> "bone" |
+| RealCT-P30 | DUHS contrast CT, typical case |
 
 TrueCT cases are **validation** subjects (never trained on). Test subjects stay blinded until E04.
 
@@ -39,3 +39,6 @@ CT panel = 1+HU/1000 through the same function (display approximation; bone thre
 - Horizontal bands in predicted density = slab seams of the full-volume inference (96-slice slabs); a pipeline artefact, under investigation.
 - Real CT is contrast-enhanced (out of training distribution); TotalSeg has no emphysema class and only pulmonary veins.
 - Thin "emphysema" bits below the lungs in predictions = bowel/stomach gas labelled as emphysema.
+
+Real-CT cases are named by anonymous ID (RealCT-Pnn-sNN) in git. The DUHS series names and the HPC case folders
+(RealCT_Patient_*) are mapped in `$W/private/realct_id_map.tsv` (not in git; the repository is public).
