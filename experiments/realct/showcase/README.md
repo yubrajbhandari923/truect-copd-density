@@ -26,6 +26,11 @@ All volumes carry affines in one world frame: they overlay directly in 3D Slicer
 ## Renders (`renders/`)
 - `figure_{anterior,left,oblique}_{dark,light}.png`: composed comparison (surfaces top, density volume renders bottom, legend, colour bar)
 - `panels/<source>_<view>.png`: transparent, cropped to a common box per view (same scale across sources) for slide layouts
+- `nifti/`: the exact volumes the renders are made from (canonical RAS, overlay on `ct.nii.gz`):
+  `{pred_class,gt_class,totalseg}_groups.nii.gz` = surface label maps (1 Lung, 2 Bone, 3 Aorta, 4 Pulmonary vessels,
+  5 Esophagus, 6 Emphysema; prediction masked to the TotalSeg body), `{ct,pred_density,gt_density}_density.nii.gz` =
+  volume-rendered densities in g/cm3 (body-masked; CT as 1+HU/1000), `legend.json` = colours, colour map and opacity
+  transfer function, so 3D Slicer / ITK-SNAP can reproduce the same look.
 Surfaces = marching cubes per structure group (approach and colours from yb107 MedImgResearch visualizer.py), Taubin-smoothed.
 Densities = GPU volume rendering; transfer function: emphysema (<0.1 g/cm3) orange, lung parenchyma blue, soft tissue transparent, bone white.
 CT panel = 1+HU/1000 through the same function (display approximation; bone threshold raised so contrast blood is not bone).

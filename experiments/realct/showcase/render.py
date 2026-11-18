@@ -6,6 +6,10 @@ Outputs in <case_dir>/renders/:
   figure_<view>_{dark,light}.png  composed comparison: class-map surfaces (top) and density volume renders (bottom),
                                   titles, legend, density colour bar, case caption
   legend_*.png, colorbar_*.png    separate pieces
+  nifti/<source>_groups.nii.gz    exactly what the surfaces show: group label map (values in nifti/legend.json),
+                                  canonical RAS; prediction masked to the TotalSeg body; emphysema overrides lung
+  nifti/<source>_density.nii.gz   exactly what the volume renders show (g/cm3; CT as 1+HU/1000), body-masked, full
+                                  resolution (the renders use every 2nd voxel)
 Surface approach follows yb107 MedImgResearch src/research/utils/visualizer.py (marching cubes -> PyVista mesh in world
 coordinates, its organ colours). Density fields are continuous, so they are volume-rendered (an isosurface would show
 one density level only). Same groups / colours for our classes, TotalSegmentator and the TrueCT phantom. TotalSeg has
@@ -38,8 +42,8 @@ GROUPS = [("Lung", (0.66, 0.76, 0.93), 0.14, [3, 5, 6, 7], lambda n: n.startswit
           ("Pulmonary vessels", (0.62, 0.20, 0.42), 1.0, [18], lambda n: n == "pulmonary_vein"),
           ("Esophagus", (0.99, 0.55, 0.45), 1.0, [4], lambda n: n == "esophagus"),
           ("Emphysema", (1.0, 0.78, 0.05), 1.0, [3], lambda n: False)]
-DENS_CMAP = LinearSegmentedColormap.from_list("dens", [(0, "#ffd21a"), (0.04, "#ff7a1a"), (0.12, "#3d7bd9"),
-                                                       (0.3, "#9fc3ff"), (0.45, "#e8e2d0"), (1, "#ffffff")])
+DENS_STOPS = [(0, "#ffd21a"), (0.04, "#ff7a1a"), (0.12, "#3d7bd9"), (0.3, "#9fc3ff"), (0.45, "#e8e2d0"), (1, "#ffffff")]
+DENS_CMAP = LinearSegmentedColormap.from_list("dens", DENS_STOPS)
 CLIM = (0.0, 2.0)  # g/cm3
 # opacity transfer function (density, opacity per UNIT_MM): emphysema/lung visible, soft tissue clear, bone opaque.
 # Set on the VTK property directly: pyvista's array `opacity=` silently rendered nothing here (vtk 9.3.1 / pv 0.47.1).
@@ -159,6 +163,37 @@ def render_panels(case, views, pdir):
             shoot(pl, center, view, pdir / f"{src}_{view}.png", volume=True)
 
 
+def save_nifti(case, ndir):
+    """Write the volumes the renders are made from, so they can be re-rendered (Slicer, ITK-SNAP) with the same look."""
+    ndir.mkdir(parents=True, exist_ok=True)
+    pred = next(case.glob("pred_*_class.nii.gz")).name.split("_class")[0]
+    names = ts_names(case)
+    for src, p in {"pred_class": case / f"{pred}_class.nii.gz", "gt_class": case / "gt_class.nii.gz",
+                   "totalseg": case / "totalseg_total.nii.gz"}.items():
+        if not p.exists():
+            continue
+        lab, aff = canon(p)
+        if src == "pred_class" and (b := body_mask(case, lab.shape)) is not None:
+            lab = np.where(b, lab, 0)
+        out = np.zeros(lab.shape, np.uint8)
+        for k, (name, _, _, ids, ts) in enumerate(GROUPS, 1):  # later groups overwrite: emphysema on top of lung
+            ids = [i for i, n in names.items() if ts(n)] if src == "totalseg" else ids
+            if ids:
+                out[np.isin(lab, ids)] = k
+        nib.save(nib.Nifti1Image(out, aff), ndir / f"{src}_groups.nii.gz")
+    for src, p in {"ct": case / "ct.nii.gz", "pred_density": case / f"{pred}_density.nii.gz",
+                   "gt_density": case / "gt_density_ctgrid.nii.gz"}.items():
+        if not p.exists():
+            continue
+        v, aff = canon(p)
+        v = np.clip(1 + v.astype(np.float32) / 1000, 0, 2.5) if src == "ct" else v.astype(np.float32)
+        nib.save(nib.Nifti1Image(body_masked(v, body_mask(case, v.shape)), aff), ndir / f"{src}_density.nii.gz")
+    json.dump({"groups": {k: {"name": g[0], "rgb": g[1], "opacity": g[2]} for k, g in enumerate(GROUPS, 1)},
+               "density_g_cm3": {"clim": CLIM, "colormap_stops": [[x * CLIM[1], c] for x, c in DENS_STOPS],
+                                 "opacity_tf": TF, "opacity_tf_ct": TF_CT, "opacity_unit_mm": UNIT_MM}},
+              open(ndir / "legend.json", "w"), indent=1)
+
+
 def crop_view(pdir, view, pad=30):
     """Crop every panel of one view to the union of their non-transparent boxes (keeps one shared scale)."""
     fs = sorted(pdir.glob(f"*_{view}.png"))
@@ -194,8 +229,11 @@ def compose(case, pdir, view, theme):
 
 if __name__ == "__main__":
     a = argparse.ArgumentParser(); a.add_argument("case", type=Path); a.add_argument("--views", default="anterior,left,oblique")
-    a.add_argument("--compose-only", action="store_true")
+    a.add_argument("--compose-only", action="store_true"); a.add_argument("--nifti-only", action="store_true")
     x = a.parse_args()
+    save_nifti(x.case, x.case / "renders" / "nifti")
+    if x.nifti_only:
+        raise SystemExit(print(x.case.name, "nifti written", flush=True))
     views, pdir = x.views.split(","), x.case / "renders" / "panels"
     pdir.mkdir(parents=True, exist_ok=True)
     if not x.compose_only:
